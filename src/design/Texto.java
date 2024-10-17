@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class Texto extends Text{
-    public Texto(String text, int x, int y, String font, int size, Color color) {
+    public Texto(String text, double x, double y, String font, int size, Color color) {
         super(text);
         this.setX(x);
         this.setY(y);
