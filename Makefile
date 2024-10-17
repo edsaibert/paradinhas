@@ -40,6 +40,7 @@ $(BINDIR)/%.class: $(SRC_DIR)/%.java
 
 install:
 	@echo "Baixando JavaFX..."
+	@mkdir -p $(LIB_DIR)
 	@wget -q --show-progress -O $(LIB_DIR)/openjfx-21.0.5.zip https://download2.gluonhq.com/openjfx/21.0.5/openjfx-21.0.5_linux-x64_bin-sdk.zip
 	@unzip -q $(LIB_DIR)/openjfx-21.0.5.zip -d $(LIB_DIR)/
 	@mv $(LIB_DIR)/javafx-sdk-21.0.5/lib $(LIB_JAVAFX_DIR)
