@@ -10,8 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.Group;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import design.Texto;
 // import javafx.geometry.*;
 
 public class Main extends Application {
@@ -38,12 +37,9 @@ public class Main extends Application {
         stage.setFullScreen(true);
         // stage.setFullScreenExitHint("Pressione ESC para sair do modo de tela cheia");
 
-        Text text = new Text();
-        text.setText("Texto");
-        text.setX(50);
-        text.setY(50);
-        text.setFont(Font.font("Verdana", 50));
-        text.setFill(Color.BLUE);
+        Texto text = new Texto("Olá Mundo", 100, 100, "Arial", 30, new Color(0.1, 0.1, 0.1, 1.0));
+
+        root.getChildren().add(text);
        
         stage.setTitle("MonoPolitecnico");
         stage.setScene(scene);
