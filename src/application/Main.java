@@ -64,6 +64,7 @@ public class Main extends Application {
                 dado2.rolaDado();
                 dado1.setaImagem();
                 dado2.setaImagem();
+                System.out.println(dado1.valorDado() + " " + dado2.valorDado());
                 imgd1.setImage(dado1.valor());
                 imgd2.setImage(dado2.valor());
             } 
