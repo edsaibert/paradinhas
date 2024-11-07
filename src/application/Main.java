@@ -16,7 +16,6 @@ import javafx.scene.control.Button;
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler; 
 
-import application.dadoGraphic;
 import design.Texto;
 import design.RelativeSizing;
 
@@ -34,13 +33,13 @@ public class Main extends Application {
         dado1.rolaDado();
         dado1.setaImagem();
         dadoGraphic dado2 = new dadoGraphic();
-        dado1.rolaDado();
-        dado1.setaImagem();
+        dado2.rolaDado();
+        dado2.setaImagem();
         ImageView imgd1 = new ImageView(dado1.valor());
         imgd1.setX(1000);
         imgd1.setY(800);
         ImageView imgd2 = new ImageView(dado2.valor());
-        imgd2.setX(1100);
+        imgd2.setX(1200);
         imgd2.setY(800);
         Group root = new Group(imgd1, imgd2);
         Scene scene = new Scene(root, new Color(0.6, 0.6, 0.6, 1.0));
@@ -59,10 +58,10 @@ public class Main extends Application {
 
         EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
             public void handle(ActionEvent e) 
-            { 
+            {
                 dado1.rolaDado();
-                dado1.setaImagem();
                 dado2.rolaDado();
+                dado1.setaImagem();
                 dado2.setaImagem();
                 imgd1.setImage(dado1.valor());
                 imgd2.setImage(dado2.valor());
