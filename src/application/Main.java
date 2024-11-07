@@ -9,9 +9,14 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
+import javafx.event.ActionEvent; 
+import javafx.event.EventHandler; 
 
+import application.dadoGraphic;
 import design.Texto;
 import design.RelativeSizing;
 
@@ -23,8 +28,22 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Group root = new Group();
-        Scene scene = new Scene(root, new Color(0.9, 0.9, 0.9, 1.0));
+
+        //INICIA OS DADOS E SUAS IMAGENS
+        dadoGraphic dado1 = new dadoGraphic();
+        dado1.rolaDado();
+        dado1.setaImagem();
+        dadoGraphic dado2 = new dadoGraphic();
+        dado1.rolaDado();
+        dado1.setaImagem();
+        ImageView imgd1 = new ImageView(dado1.valor());
+        imgd1.setX(1000);
+        imgd1.setY(800);
+        ImageView imgd2 = new ImageView(dado2.valor());
+        imgd2.setX(1100);
+        imgd2.setY(800);
+        Group root = new Group(imgd1, imgd2);
+        Scene scene = new Scene(root, new Color(0.6, 0.6, 0.6, 1.0));
         RelativeSizing rs = new RelativeSizing();
         
         Image icon = new Image("file:src/application/assets/icone.png");
@@ -32,11 +51,27 @@ public class Main extends Application {
         
         stage.setFullScreen(true);
         setStageSize(stage, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
-        
         rs.setSize(50, 50);
-        Texto text = new Texto("Olá Mundo", rs.getVw(stage), rs.getVh(stage), "Arial", 30, new Color(0.1, 0.1, 0.1, 1.0));
-        root.getChildren().add(text);
 
+
+        /*BOTAO E EVENTOS DE BOTAO, IMPLEMENTADO COMO SE FOSSE UM MÉTODO*/
+        Button botaoDado = new Button("Rerole o dado");
+
+        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
+            public void handle(ActionEvent e) 
+            { 
+                dado1.rolaDado();
+                dado1.setaImagem();
+                dado2.rolaDado();
+                dado2.setaImagem();
+                imgd1.setImage(dado1.valor());
+                imgd2.setImage(dado2.valor());
+            } 
+        }; 
+
+        botaoDado.setOnAction(event);
+
+        root.getChildren().add(botaoDado);
         stage.setTitle("MonoPolitecnico");
         stage.setScene(scene);
         stage.show();
