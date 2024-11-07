@@ -15,6 +15,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler; 
+import javafx.scene.shape.Line;
 
 import design.Texto;
 import design.RelativeSizing;
@@ -69,7 +70,8 @@ public class Main extends Application {
         }; 
 
         botaoDado.setOnAction(event);
-
+        botaoDado.setTranslateX(1100);
+        botaoDado.setTranslateY(760);
         root.getChildren().add(botaoDado);
         stage.setTitle("MonoPolitecnico");
         stage.setScene(scene);
