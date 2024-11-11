@@ -14,11 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent; 
-import javafx.event.EventHandler; 
-import javafx.scene.shape.Line;
-
-import design.Texto;
-import design.RelativeSizing;
+import javafx.event.EventHandler;
 
 public class Main extends Application {
     public static void main(String[] args) {
@@ -42,16 +38,21 @@ public class Main extends Application {
         ImageView imgd2 = new ImageView(dado2.valor());
         imgd2.setX(1200);
         imgd2.setY(800);
-        Group root = new Group(imgd1, imgd2);
+
+        casa c = new casa(3, 1, 500, 100);
+        ImageView casas = new ImageView(c.haus());
+        casas.setX(800);
+        casas.setY(800);
+        Group root = new Group(imgd1, imgd2, casas);
         Scene scene = new Scene(root, new Color(0.6, 0.6, 0.6, 1.0));
-        RelativeSizing rs = new RelativeSizing();
+        //RelativeSizing rs = new RelativeSizing();
         
         Image icon = new Image("file:src/application/assets/icone.png");
         stage.getIcons().add(icon);
         
         stage.setFullScreen(true);
         setStageSize(stage, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
-        rs.setSize(50, 50);
+        //rs.setSize(50, 50);
 
 
         /*BOTAO E EVENTOS DE BOTAO, IMPLEMENTADO COMO SE FOSSE UM MÉTODO*/
@@ -65,7 +66,7 @@ public class Main extends Application {
                 dado1.setaImagem();
                 dado2.setaImagem(); 
                 imgd1.setImage(dado1.valor());
-                imgd2.setImage(dado2.valor());
+                   imgd2.setImage(dado2.valor());
             } 
         }; 
 
