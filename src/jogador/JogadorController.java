@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util. *;
 import jogador.Jogador;
 
 package Jogador;

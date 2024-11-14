@@ -11,7 +11,7 @@ public class Jogador {
 	ArrayList<int> casasCompraveis;
 	ArrayList<int> casasCompradas;
 	
-	public Joagdor(int id){
+	public Jogador(int id){
 		this.id = id;
 		this.casaAtual = 0;
 		this.carteira = 25000;
