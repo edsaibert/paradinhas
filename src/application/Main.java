@@ -16,6 +16,8 @@ import javafx.scene.control.Button;
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler;
 
+//import design.*;
+
 public class Main extends Application {
     public static void main(String[] args) {
         System.out.println("Olá Mundo");
@@ -39,7 +41,7 @@ public class Main extends Application {
         imgd2.setX(1200);
         imgd2.setY(800);
 
-        casa c = new casa(3, 1, 500, 100);
+        casa c = new casa(3, 1, 500, 100, "CARLOS");
         ImageView casas = new ImageView(c.haus());
         casas.setX(800);
         casas.setY(800);
