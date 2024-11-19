@@ -40,12 +40,13 @@ public class Main extends Application {
         ImageView imgd2 = new ImageView(dado2.valor());
         imgd2.setX(1200);
         imgd2.setY(800);
+        tabuleiro t = new tabuleiro();
+        t.iniciaTabuleiro();
 
-        casa c = new casa(3, 1, 500, 100, "CARLOS");
-        ImageView casas = new ImageView(c.haus());
-        casas.setX(800);
-        casas.setY(800);
-        Group root = new Group(imgd1, imgd2, casas);
+        Group root = new Group(imgd1, imgd2);
+        for(int i = 0;i < 40;i++) {
+            root.getChildren().add(t.getTodasImg().get(i));
+        }
         Scene scene = new Scene(root, new Color(0.6, 0.6, 0.6, 1.0));
         //RelativeSizing rs = new RelativeSizing();
         

@@ -12,7 +12,8 @@ public class casa {
     int valorAluguel;
     int idDono = 0;
     int categoria = 0;
-    int hipotecado = 0;
+    boolean pago = false;
+    boolean hipotecado = false;
 
     public Image haus() {
         return house;
@@ -60,7 +61,15 @@ public class casa {
         idDono = val;
     }
 
-    public int estaHipotecado() {
+    public void setPago(boolean pay) {
+        pago = pay;
+    }
+
+    public boolean foiPago() {
+        return pago;
+    }
+
+    public boolean estaHipotecado() {
         return hipotecado;
     }
     
@@ -69,7 +78,7 @@ public class casa {
     }
 
     public casa(int pos, int type, int pCom, int pAl, String name) {
-        house = new Image("src/application/assets/dado"+pos+".png", 70, 100, false, false);
+        house = new Image("src/application/assets/dado"+1+".png", 70, 100, false, false);
         nome = name;
         posi = pos;
         tipo = type;
@@ -87,18 +96,16 @@ public class casa {
     }
 
     public void hipoteca(/*Jogador pd */) {
-        switch(hipotecado) {
-            case 0:
-                hipotecado++;
+        if(hipotecado) {
+            if(true/*pd.carteira() >= (valorCompra/2) + (valorCompra/10)*/) {
+                hipotecado = false;
+                /*DÉBITO DE (valorCompra/2) + (valorCompra/10) DA CARTEIRA DO JOGADOR PD */
+            }
+        }
+        else {
+            hipotecado = true;
                 /*DEPÓSITO DE (valorCompra/2) DA CARTEIA DO JOGADOR PD */
                 /*TROCAR PARA IMAGEM DE "HIPOTECADO" PARA A CASA*/
-                break;
-            case 1:
-                if(true/*pd.carteira() >= (valorCompra/2) + (valorCompra/10)*/) {
-                    hipotecado--;
-                    /*DÉBITO DE (valorCompra/2) + (valorCompra/10) DA CARTEIRA DO JOGADOR PD */
-                }
-                break;
         }
     }
 
