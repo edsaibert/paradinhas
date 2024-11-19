@@ -15,10 +15,17 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler;
+import jogador.*;
 
 public class Main extends Application {
     public static void main(String[] args) {
         System.out.println("Olá Mundo");
+		JogadorController jogadores = new JogadorController(5);
+		jogadores.criarJogadores();
+		jogadores.atualizarCarteira(2, 100);
+		Jogador jogador = jogadores.getJogadorById(2);
+		System.out.println("Dinheiro jogador "+ Integer.toString(jogador.getCarteira()));
+
         launch(args);
     }
 
@@ -69,7 +76,6 @@ public class Main extends Application {
                    imgd2.setImage(dado2.valor());
             } 
         }; 
-
         botaoDado.setOnAction(event);
         botaoDado.setTranslateX(1100);
         botaoDado.setTranslateY(760);

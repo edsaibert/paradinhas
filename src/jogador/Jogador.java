@@ -1,6 +1,5 @@
+package jogador;
 import java.util.*;
-
-package Jogador;
 
 public class Jogador {
 	protected int id;
@@ -8,16 +7,16 @@ public class Jogador {
 	protected int carteira;
 	protected boolean ativo;
 
-	ArrayList<int> casasCompraveis;
-	ArrayList<int> casasCompradas;
+	protected HashSet<Integer> casasCompraveis;
+	protected HashSet<Integer> casasCompradas;
 	
 	public Jogador(int id){
 		this.id = id;
 		this.casaAtual = 0;
 		this.carteira = 25000;
 		this.ativo = true;
-		this.casasCompraveis = new HashSet<int>(); 
-		this.casasCompradas = new HashSet<int>();
+		this.casasCompraveis = new HashSet<>(); 
+		this.casasCompradas = new HashSet<>();
 	}
 
 	public int getCasaAtual(){
@@ -44,19 +43,19 @@ public class Jogador {
 		this.ativo = !(this.ativo);
 	}
 	
-	public HashSet<int> getCasasCompraveis(){
+	public HashSet<Integer> getCasasCompraveis(){
 		return this.casasCompraveis;
 	}
 
-	public HashSet<int> getCasasCompradas(){
+	public HashSet<Integer> getCasasCompradas(){
 		return this.casasCompradas;
 	}
 
-	public void setCasasCompraveis(HashSet<int> ht){
+	public void setCasasCompraveis(HashSet<Integer> ht){
 		this.casasCompraveis = ht;
 	}
 
-	public void setCasasCompradas(HashSet<int> ht){
+	public void setCasasCompradas(HashSet<Integer> ht){
 		this.casasCompradas = ht;
 	}
 
