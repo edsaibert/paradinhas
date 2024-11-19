@@ -20,11 +20,6 @@ import jogador.*;
 public class Main extends Application {
     public static void main(String[] args) {
         System.out.println("Olá Mundo");
-		JogadorController jogadores = new JogadorController(5);
-		jogadores.criarJogadores();
-		jogadores.atualizarCarteira(2, 100);
-		Jogador jogador = jogadores.getJogadorById(2);
-		System.out.println("Dinheiro jogador "+ Integer.toString(jogador.getCarteira()));
 
         launch(args);
     }
