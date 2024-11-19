@@ -35,11 +35,11 @@ public class Main extends Application {
         dado2.rolaDado();
         dado2.setaImagem();
         ImageView imgd1 = new ImageView(dado1.valor());
-        imgd1.setX(1000);
-        imgd1.setY(800);
+        /*imgd1.setX(1000);
+        imgd1.setY(800);*/
         ImageView imgd2 = new ImageView(dado2.valor());
-        imgd2.setX(1200);
-        imgd2.setY(800);
+        /*imgd2.setX(1200);
+        imgd2.setY(800);*/
         tabuleiro t = new tabuleiro();
         t.iniciaTabuleiro();
 

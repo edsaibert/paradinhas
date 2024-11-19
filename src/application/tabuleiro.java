@@ -32,7 +32,7 @@ public class tabuleiro {
 
     public void iniciaTabuleiro() {   
         iniciaCasas();
-        graficoCasas(800,800);
+        graficoCasas(1200,1200);
     }
 
     public void graficoCasas(int xIni, int yIni) {    
