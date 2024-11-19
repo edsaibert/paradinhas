@@ -43,16 +43,30 @@ public class JogadorController {
 		jogador.atualizarEstado();
 	}
 
+	public void comprarCasa(int idJogador, int idCasa){
+		Jogador jogador = this.jogadores.get(idJogador);
+
+		HashSet<Integer> casasCompraveis = jogador.getCasasCompraveis();
+		casasCompraveis.remove(idCasa);
+
+		HashSet<Integer> casasCompradas = jogador.getCasasCompradas();
+		casasCompradas.add(idCasa);
+	}
+
+	public void venderCasa(int idJogador, int idCasa){
+		Jogador jogador = this.jogadores.get(idJogador);
+
+		HashSet<Integer> casasCompraveis = jogador.getCasasCompraveis();
+		casasCompraveis.add(idCasa);
+
+		HashSet<Integer> casasCompradas = jogador.getCasasCompradas();
+		casasCompradas.remove(idCasa);
+	}
+
 	public void adicionarCasaCompravel(int idJogador, int idCasa){
 		Jogador jogador = this.jogadores.get(idJogador);
 		HashSet<Integer> casasCompraveis = jogador.getCasasCompraveis();
 		casasCompraveis.add(idCasa);
-	}
-	
-	public void adicionarCasaComprada(int idJogador, int idCasa){
-		Jogador jogador = this.jogadores.get(idJogador);
-		HashSet<Integer> casasCompradas = jogador.getCasasCompradas();
-		casasCompradas.add(idCasa);
 	}
 
 	public void removerCasaCompravel(int idJogador, int idCasa){
@@ -60,11 +74,4 @@ public class JogadorController {
 		HashSet<Integer> casasCompraveis = jogador.getCasasCompraveis();
 		casasCompraveis.remove(idCasa);
 	}
-
-	public void removerCasaComprada(int idJogador, int idCasa){
-		Jogador jogador = this.jogadores.get(idJogador);
-		HashSet<Integer> casasCompradas = jogador.getCasasCompradas();
-		casasCompradas.remove(idCasa);
-	}
-
 }

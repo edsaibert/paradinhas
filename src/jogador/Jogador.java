@@ -2,7 +2,7 @@ package jogador;
 import java.util.*;
 
 public class Jogador {
-	protected int id;
+	public int id;
 	protected int casaAtual;
 	protected int carteira;
 	protected boolean ativo;
