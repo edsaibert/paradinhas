@@ -29,7 +29,9 @@ public class JogadorController {
 	public void atualizarCasaAtual(int id, int numCasas){
 		Jogador jogador = this.jogadores.get(id);
 		int casaAtual = jogador.getCasaAtual();
-		jogador.setCasaAtual(casaAtual+numCasas);
+		if((casaAtual+numCasas) >= 40)
+			this.atualizarCarteira(id, 200);
+		jogador.setCasaAtual((casaAtual+numCasas) % 40);
 	}
 
 	public void atualizarCarteira(int id, int dinheiro){

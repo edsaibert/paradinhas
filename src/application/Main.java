@@ -34,10 +34,10 @@ public class Main extends Application {
         dadoGraphic dado2 = new dadoGraphic();
         dado2.rolaDado();
         dado2.setaImagem();
-        ImageView imgd1 = new ImageView(dado1.valor());
+        ImageView imgd1 = new ImageView(dado1.getImg());
         imgd1.setX(1000);
         imgd1.setY(800);
-        ImageView imgd2 = new ImageView(dado2.valor());
+        ImageView imgd2 = new ImageView(dado2.getImg());
         imgd2.setX(1200);
         imgd2.setY(800);
 
@@ -67,8 +67,8 @@ public class Main extends Application {
                 dado2.rolaDado();
                 dado1.setaImagem();
                 dado2.setaImagem(); 
-                imgd1.setImage(dado1.valor());
-                   imgd2.setImage(dado2.valor());
+                imgd1.setImage(dado1.getImg());
+                imgd2.setImage(dado2.getImg());
             } 
         }; 
         botaoDado.setOnAction(event);
