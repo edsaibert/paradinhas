@@ -1,6 +1,5 @@
 package jogador;
 import java.util. *;
-import jogador.Jogador;
 
 public class JogadorController {
 	protected ArrayList<Jogador> jogadores;

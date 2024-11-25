@@ -29,7 +29,7 @@ public class CasaCompravel extends Casa {
 
 	public void setDono(int idDono) { this.idDono = idDono; }
 
-	public int getDono() { return idDono; };
+	public int getDono() { return idDono; }
 
 	public boolean getPago() { return this.pago; }
 
@@ -40,4 +40,6 @@ public class CasaCompravel extends Casa {
 	public void atualizarHipotecado() { this.hipotecado = !this.hipotecado; }
 
 	public int getCategoria() { return categoria; }
+
+	public void setCategoria(int novaCat) { this.categoria = novaCat; }
 }

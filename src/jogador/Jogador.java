@@ -58,6 +58,4 @@ public class Jogador {
 	public void setCasasCompradas(HashSet<Integer> ht){
 		this.casasCompradas = ht;
 	}
-
-
 }
