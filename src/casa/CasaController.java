@@ -9,8 +9,9 @@ public class CasaController {
     protected ArrayList<Casa> todasCasas = new ArrayList<Casa>();
     protected ArrayList<CasaCompravel> compraveis = new ArrayList<CasaCompravel>();
 
-    public CasaController() {
-
+    public CasaController(Tabuleiro t) {
+        this.todasCasas = t.getTodasCasas();
+        this.compraveis = t.getCompraveis();
     }
 
     public void Hipoteca (Jogador p) {
@@ -45,5 +46,26 @@ public class CasaController {
 
         compraveis.get(idx).setCategoria(compraveis.get(idx).getCategoria()+1);
         compraveis.get(idx).setValorAluguel(compraveis.get(idx).getValorAluguel()*2);
+    }
+
+    public void Melhoria(Jogador p, int categoria) {
+        int idx = -1,i = 0;
+        while(idx == -1) {
+            if(compraveis.get(i).getId() == p.getCasaAtual()) {
+                idx = i;
+            }
+            i++;
+        }
+        int diff = compraveis.get(idx).getCategoria() - categoria;
+        compraveis.get(idx).setCategoria(categoria);
+        if(diff >= 0) 
+            for(i = 0;i < diff;i++) 
+                compraveis.get(idx).setValorAluguel(compraveis.get(idx).getValorAluguel()*2);
+        
+        else {
+            diff *= -1;
+            for(i = 0;i < diff;i++) 
+                compraveis.get(idx).setValorAluguel(compraveis.get(idx).getValorAluguel()/2);
+        }
     }
 }

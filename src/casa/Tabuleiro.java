@@ -8,8 +8,11 @@ public class Tabuleiro {
 
     protected ArrayList<ImageView> casasImg = new ArrayList<ImageView>();
     protected ArrayList<Casa> todasCasas = new ArrayList<Casa>();
+    protected ArrayList<CasaCompravel> compraveis = new ArrayList<CasaCompravel>();
     protected ArrayList<Casa> naoCompraveis = new ArrayList<Casa>();
     protected ArrayList<Integer> ordem = new ArrayList<Integer>();
+    
+    public ArrayList<CasaCompravel> getCompraveis() { return compraveis; }
 
     public ArrayList<Casa> getNaoCompraveis() { return naoCompraveis; }
 
@@ -97,9 +100,9 @@ public class Tabuleiro {
                     pA = 200;
                     break;
                 case 5:
-                    t = 0;
-                    pC = 10;
-                    pA = 10;
+                    t = 9;
+                    pC = 200;
+                    pA = 4;
                     break;
                 case 6:
                     t = 2;
@@ -132,9 +135,9 @@ public class Tabuleiro {
                     pA = 10;
                     break;
                 case 12:
-                    t = 0;
-                    pC = 0;
-                    pA = 0;
+                    t = 9;
+                    pC = 200;
+                    pA = 4;
                     break;
                 case 13:
                     t = 3;
@@ -147,9 +150,9 @@ public class Tabuleiro {
                     pA = 12;
                     break;
                 case 15:
-                    t = 0;
-                    pC = 0;
-                    pA = 0;
+                    t = 9;
+                    pC = 200;
+                    pA = 4;
                     break;
                 case 16:
                     t = 4;
@@ -197,9 +200,9 @@ public class Tabuleiro {
                     pA = 20;
                     break;
                 case 25:
-                    t = 0;
-                    pC = 0;
-                    pA = 0;
+                    t = 9;
+                    pC = 200;
+                    pA = 4;
                     break;
                 case 26:
                     t = 6;
@@ -212,9 +215,9 @@ public class Tabuleiro {
                     pA = 22;
                     break;
                 case 28:
-                    t = 0;
-                    pC = 10;
-                    pA = 10;
+                    t = 9;
+                    pC = 200;
+                    pA = 4;
                     break;
                 case 29:
                     t = 6;
@@ -247,9 +250,9 @@ public class Tabuleiro {
                     pA = 28;
                     break;
                 case 35:
-                    t = 0;
-                    pC = 0;
-                    pA = 0;
+                    t = 9;
+                    pC = 200;
+                    pA = 4;
                     break;
                 case 36:
                     t = 0;
@@ -273,8 +276,9 @@ public class Tabuleiro {
                     break;
             }
 
-            if (t >=1 && t <= 8) {
+            if (t >=1 && t <= 9) {
                 todasCasas.add(new CasaCompravel(i,"STRING PRA IMAGEM",t,"JONAS",pA,pC,0));
+                compraveis.add(new CasaCompravel(i,"STRING PRA IMAGEM",t,"JONAS",pA,pC,0));
             }
             else {
                 todasCasas.add(new Casa(i,"STRING PRA IMAGEM",t,"JONAS"));

@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler;
 import jogador.*;
+import design.*;
 
 public class Main extends Application {
     public static void main(String[] args) {
@@ -42,14 +43,14 @@ public class Main extends Application {
         imgd2.setY(800);
         Group root = new Group(imgd1, imgd2);
         Scene scene = new Scene(root, new Color(0.6, 0.6, 0.6, 1.0));
-        //RelativeSizing rs = new RelativeSizing();
+        RelativeSizing rs = new RelativeSizing();
         
         Image icon = new Image("file:src/application/assets/icone.png");
         stage.getIcons().add(icon);
         
         stage.setFullScreen(true);
         setStageSize(stage, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
-        //rs.setSize(50, 50);
+        rs.setSize(50, 50);
 
 
         /*BOTAO E EVENTOS DE BOTAO, IMPLEMENTADO COMO SE FOSSE UM MÉTODO*/
