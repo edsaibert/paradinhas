@@ -18,6 +18,8 @@ public class Tabuleiro {
 
     public ArrayList<Casa> getTodasCasas() { return todasCasas; }
 
+    public ImageView getImg(int index) { return casasImg.get(index); }
+
     public ArrayList<ImageView> getTodasImg() { return casasImg; }
 
     public Casa getCasaIndex(int index) { return todasCasas.get(index); }  
@@ -53,14 +55,22 @@ public class Tabuleiro {
     */
     public void graficoCasas(int xIni, int yIni) {    
         for(int i = 0;i < 40;i++) {
-            if(i <= 10) 
+            if(i < 10) 
                 xIni -= 70;
-            else if (i > 10 && i <= 20) 
+            else if(i == 10)
+                xIni -= 100;
+            else if (i > 10 && i < 20) 
+                yIni -= 70;
+            else if(i == 20)
                 yIni -= 100;
-            else if (i > 20 && i <= 30) 
+            else if(i == 21)
+                xIni += 100;
+            else if (i > 21 && i < 31) 
                 xIni += 70;
-            else 
+            else if(i == 31)
                 yIni += 100;
+            else
+                yIni += 70;
 
 
             casasImg.add(new ImageView(getCasaImg(i)));
@@ -277,12 +287,28 @@ public class Tabuleiro {
             }
 
             if (t >=1 && t <= 9) {
-                todasCasas.add(new CasaCompravel(i,"STRING PRA IMAGEM",t,"JONAS",pA,pC,0));
-                compraveis.add(new CasaCompravel(i,"STRING PRA IMAGEM",t,"JONAS",pA,pC,0));
+                if((i > 10 && i < 20) || i > 30) {
+                    todasCasas.add(new CasaCompravel(i,"application/assets/casas/casa11.png",t,"JONAS",pA,pC,0));
+                    compraveis.add(new CasaCompravel(i,"application/assets/casas/casa11.png",t,"JONAS",pA,pC,0));
+                }
+                else {
+                    todasCasas.add(new CasaCompravel(i,"application/assets/casas/casa1.png",t,"JONAS",pA,pC,0));
+                    compraveis.add(new CasaCompravel(i,"application/assets/casas/casa1.png",t,"JONAS",pA,pC,0));
+                }
             }
             else {
-                todasCasas.add(new Casa(i,"STRING PRA IMAGEM",t,"JONAS"));
-                naoCompraveis.add(new Casa(i,"STRING PRA IMAGEM",t,"JONAS"));
+                if((i > 10 && i < 20) || i > 30) {
+                    todasCasas.add(new CasaCompravel(i,"application/assets/casas/casa11.png",t,"JONAS",pA,pC,0));
+                    compraveis.add(new CasaCompravel(i,"application/assets/casas/casa11.png",t,"JONAS",pA,pC,0));
+                }
+                else if(i % 10 == 0) {
+                    todasCasas.add(new Casa(i,"application/assets/casas/casa"+i+".png",t,"JONAS"));
+                    naoCompraveis.add(new Casa(i,"application/assets/casas/casa"+i+".png",t,"JONAS"));
+                }
+                else {
+                    todasCasas.add(new Casa(i,"application/assets/casas/casa1.png",t,"JONAS"));
+                    naoCompraveis.add(new Casa(i,"application/assets/casas/casa1.png",t,"JONAS"));
+                }
             }
         }
     }

@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler;
 import jogador.*;
+import casa.*;
 import design.*;
 
 public class Main extends Application {
@@ -41,7 +42,15 @@ public class Main extends Application {
         ImageView imgd2 = new ImageView(dado2.getImg());
         imgd2.setX(1200);
         imgd2.setY(800);
-        Group root = new Group(imgd1, imgd2);
+        Tabuleiro t = new Tabuleiro();
+        t.iniciaTabuleiro();
+        Group root = new Group();
+        root.getChildren().add(imgd1);
+        root.getChildren().add(imgd2);
+
+        for(int i = 0;i < 40;i++) {
+            root.getChildren().add(t.getImg(i));
+        }
         Scene scene = new Scene(root, new Color(0.6, 0.6, 0.6, 1.0));
         RelativeSizing rs = new RelativeSizing();
         
