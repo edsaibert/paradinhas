@@ -22,6 +22,8 @@ public class Casa {
 
 	public int getTipo() { return tipo;	}
 
+	public void setImg(String img) { this.pathImagem = img; }
+
 	public String getImg() { return pathImagem; }
 
 	public String getNome() { return nome; }
