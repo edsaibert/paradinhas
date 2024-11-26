@@ -40,12 +40,7 @@ public class Main extends Application {
         ImageView imgd2 = new ImageView(dado2.getImg());
         imgd2.setX(1200);
         imgd2.setY(800);
-
-        casa c = new casa(3, 1, 500, 100);
-        ImageView casas = new ImageView(c.haus());
-        casas.setX(800);
-        casas.setY(800);
-        Group root = new Group(imgd1, imgd2, casas);
+        Group root = new Group(imgd1, imgd2);
         Scene scene = new Scene(root, new Color(0.6, 0.6, 0.6, 1.0));
         //RelativeSizing rs = new RelativeSizing();
         
