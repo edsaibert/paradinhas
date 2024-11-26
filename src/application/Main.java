@@ -17,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import jogador.*;
 
+
 public class Main extends Application {
     public static void main(String[] args) {
         System.out.println("Olá Mundo");
