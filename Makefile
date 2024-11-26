@@ -33,10 +33,13 @@ CLASS_FILES=$(patsubst $(SRC_DIR)/%.java, $(BINDIR)/%.class, $(JAVA_FILES))
 # Regra para compilar todos os arquivos .java
 compile: $(CLASS_FILES)
 
+$(BINDIR)/CasaController.class: $(BINDIR)/Jogador.class
+
 # Regra para compilar cada arquivo .java individualmente
 $(BINDIR)/%.class: $(SRC_DIR)/%.java
 	@mkdir -p $(dir $@)
 	$(JAVAC) $(JCFLAGS) $<
+
 
 install:
 	@echo "Baixando JavaFX..."

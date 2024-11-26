@@ -2,7 +2,7 @@ package casa;
 
 import java.util.ArrayList;
 
-//import jogador.Jogador;
+import jogador.Jogador;
 
 public class CasaController {
 
@@ -13,7 +13,7 @@ public class CasaController {
 
     }
 
-    /*public void Hipoteca (Jogador p) {
+    public void Hipoteca (Jogador p) {
         int idx = -1,i = 0;
         while(idx == -1) {
             if(compraveis.get(i).getId() == p.getCasaAtual()) {
@@ -45,5 +45,5 @@ public class CasaController {
 
         compraveis.get(idx).setCategoria(compraveis.get(idx).getCategoria()+1);
         compraveis.get(idx).setValorAluguel(compraveis.get(idx).getValorAluguel()*2);
-    }*/
+    }
 }
