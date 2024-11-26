@@ -42,20 +42,10 @@ public class Layout1Builder implements Builder<Region> {
                         "-fx-background-position: center;" // Centraliza a imagem
         );
 
+        Button buttonNovoJogo = new MenuButton("Iniciar Novo Jogo").createButton();
+        Button buttonRetomarJogo = new MenuButton("Retomar Jogo").createButton();
+        Button buttonFechar = new MenuButton("Sair").createButton();
 
-        Button buttonNovoJogo = new Button("Iniciar Novo Jogo");
-        buttonNovoJogo.setFont(Font.font("Ubuntu Mono", FontWeight.BOLD, 20));
-
-        Button buttonRetomarJogo = new Button("Retomar Jogo");
-        buttonRetomarJogo.setFont(Font.font("Ubuntu Mono", FontWeight.BOLD, 20));
-
-        Button buttonFechar = new Button("Sair");
-        buttonFechar.setFont(Font.font("Ubunto Mono", FontWeight.BOLD, 18));
-
-        // Action when the button is clicked
-        // buttonNovoJogo.setOnAction(event -> onAction.run());
-        // buttonRetomarJogo.setOnAction(event -> onAction.run());
-        // buttonFechar.setOnAction(event -> onAction.run());
 
         buttonConfigurator.accept(buttonNovoJogo);
         buttonConfigurator.accept(buttonRetomarJogo);
