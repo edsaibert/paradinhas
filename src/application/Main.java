@@ -15,7 +15,6 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler;
-import jogador.*;
 
 public class Main extends Application {
     public static void main(String[] args) {

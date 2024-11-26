@@ -19,7 +19,5 @@ public class dadoGraphic extends dados{
 
     public Image getImg() { return img; }
 
-    public void setaImagem(){
-        img = new Image("src/application/assets/dado"+ this.valorDado() + ".png", 100, 100, false, false);
-    }
+    public void setaImagem(){ img = new Image("src/application/assets/dado"+ this.valorDado() + ".png", 100, 100, false, false); }
 }

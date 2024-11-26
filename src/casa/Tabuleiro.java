@@ -9,7 +9,7 @@ public class Tabuleiro {
     protected ArrayList<ImageView> casasImg = new ArrayList<ImageView>();
     protected ArrayList<Casa> todasCasas = new ArrayList<Casa>();
     protected ArrayList<Casa> naoCompraveis = new ArrayList<Casa>();
-    protected int[] ordem;
+    protected ArrayList<Integer> ordem = new ArrayList<Integer>();
 
     public ArrayList<Casa> getNaoCompraveis() { return naoCompraveis; }
 
@@ -27,16 +27,21 @@ public class Tabuleiro {
         graficoCasas(900,900);
     }
 
-    public void setOrdem(int numeros[], int qual) {
-        
+    public void setOrdem(ArrayList<Integer> numeros) {
+        int maior = 0;
+
+        for(int j = 0;j <= 5; j++) {
+            for(int i = 1; i < numeros.size();i++) {
+                if(!this.ordem.contains(numeros.get(i)) && numeros.get(i) > numeros.get(maior))
+                    maior = i;
+            }
+            this.ordem.add(maior);
+        }
     }
 
     public void atualizaOrdem() {
-        int temp = this.ordem[0];
-        for(int i = 0;i < 5;i++) {
-            this.ordem[i] = this.ordem[i+1];
-        }
-        this.ordem[5] = temp;
+        int a = this.ordem.remove(0);
+        this.ordem.add(a);
     }
 
     /* VALORES DE SHIFT DO INI COM TODA CERTEZA VÃO MUDAR QUANDO
@@ -273,6 +278,7 @@ public class Tabuleiro {
             }
             else {
                 todasCasas.add(new Casa(i,"STRING PRA IMAGEM",t,"JONAS"));
+                naoCompraveis.add(new Casa(i,"STRING PRA IMAGEM",t,"JONAS"));
             }
         }
     }

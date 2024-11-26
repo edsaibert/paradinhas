@@ -1,5 +1,4 @@
 package casa;
-import java.util.*;
 
 public class CasaCompravel extends Casa {
 	protected int valorAluguel;

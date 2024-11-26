@@ -19,43 +19,23 @@ public class Jogador {
 		this.casasCompradas = new HashSet<>();
 	}
 
-	public int getCasaAtual(){
-		return this.casaAtual;
-	}
+	public int getCasaAtual(){ return this.casaAtual; }
 
-	public int getCarteira(){
-		return this.carteira;
-	}
+	public int getCarteira(){ return this.carteira;	}
 
-	public void setCasaAtual(int casa){
-		this.casaAtual = casa;
-	}
+	public void setCasaAtual(int casa){ this.casaAtual = casa; }
 
-	public void setCarteira(int dinheiro){
-		this.carteira = dinheiro;
-	}
+	public void setCarteira(int dinheiro){ this.carteira = dinheiro; }
 
-	public boolean getEstado(){
-		return this.ativo;
-	}
+	public boolean getEstado(){ return this.ativo; }
 
-	public void atualizarEstado(){
-		this.ativo = !(this.ativo);
-	}
+	public void atualizarEstado(){ this.ativo = !(this.ativo); }
 	
-	public HashSet<Integer> getCasasCompraveis(){
-		return this.casasCompraveis;
-	}
+	public HashSet<Integer> getCasasCompraveis(){ return this.casasCompraveis; }
 
-	public HashSet<Integer> getCasasCompradas(){
-		return this.casasCompradas;
-	}
+	public HashSet<Integer> getCasasCompradas(){ return this.casasCompradas; }
 
-	public void setCasasCompraveis(HashSet<Integer> ht){
-		this.casasCompraveis = ht;
-	}
+	public void setCasasCompraveis(HashSet<Integer> ht){ this.casasCompraveis = ht; }
 
-	public void setCasasCompradas(HashSet<Integer> ht){
-		this.casasCompradas = ht;
-	}
+	public void setCasasCompradas(HashSet<Integer> ht){	this.casasCompradas = ht; }
 }
