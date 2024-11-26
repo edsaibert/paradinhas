@@ -15,6 +15,10 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler;
+import javafx.scene.layout.Region;
+
+import menu.*;
+
 import jogador.*;
 
 
@@ -28,49 +32,16 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        //INICIA OS DADOS E SUAS IMAGENS
-        dadoGraphic dado1 = new dadoGraphic();
-        dado1.rolaDado();
-        dado1.setaImagem();
-        dadoGraphic dado2 = new dadoGraphic();
-        dado2.rolaDado();
-        dado2.setaImagem();
-        ImageView imgd1 = new ImageView(dado1.getImg());
-        imgd1.setX(1000);
-        imgd1.setY(800);
-        ImageView imgd2 = new ImageView(dado2.getImg());
-        imgd2.setX(1200);
-        imgd2.setY(800);
-        Group root = new Group(imgd1, imgd2);
-        Scene scene = new Scene(root, new Color(0.6, 0.6, 0.6, 1.0));
-        //RelativeSizing rs = new RelativeSizing();
-        
-        Image icon = new Image("file:src/application/assets/icone.png");
-        stage.getIcons().add(icon);
+        VisibilityLayoutBuilder layoutBuilder = new VisibilityLayoutBuilder();
+        Region root = layoutBuilder.build();
+
+        // Create the scene
+        Scene scene = new Scene(root, 1280, 720);
+        scene.setFill(new Color(0.6, 0.6, 0.6, 1.0));
         
         stage.setFullScreen(true);
         setStageSize(stage, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
-        //rs.setSize(50, 50);
-
-
-        /*BOTAO E EVENTOS DE BOTAO, IMPLEMENTADO COMO SE FOSSE UM MÉTODO*/
-        Button botaoDado = new Button("Rerole o dado");
-
-        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
-            public void handle(ActionEvent e) 
-            {
-                dado1.rolaDado();
-                dado2.rolaDado();
-                dado1.setaImagem();
-                dado2.setaImagem(); 
-                imgd1.setImage(dado1.getImg());
-                imgd2.setImage(dado2.getImg());
-            } 
-        }; 
-        botaoDado.setOnAction(event);
-        botaoDado.setTranslateX(1100);
-        botaoDado.setTranslateY(760);
-        root.getChildren().add(botaoDado);
+       
         stage.setTitle("MonoPolitecnico");
         stage.setScene(scene);
         stage.show();
