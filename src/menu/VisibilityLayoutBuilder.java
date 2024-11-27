@@ -20,7 +20,7 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
         BorderPane results = new BorderPane();
         // results.setTop(new Label("This is The Wrapper"));
         BooleanProperty vBox1Visible = new SimpleBooleanProperty(true);
-        Region component1 = new Layout1Builder(() -> vBox1Visible.set(false)).build(
+        Region component1 = new Menu(() -> vBox1Visible.set(false)).build(
             button -> {
                 if (button.getText().equals("Iniciar Novo Jogo")) {
                     button.setOnAction(e -> vBox1Visible.set(false));

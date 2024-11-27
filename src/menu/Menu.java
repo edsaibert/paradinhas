@@ -17,10 +17,10 @@ import javafx.util.*;
 
 
 
-public class Layout1Builder implements Builder<Region> {
+public class Menu implements Builder<Region> {
     private final Runnable onAction;
 
-    public Layout1Builder(Runnable onAction) {
+    public Menu(Runnable onAction) {
         this.onAction = onAction;
     }
 
