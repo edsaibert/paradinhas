@@ -287,28 +287,12 @@ public class Tabuleiro {
             }
 
             if (t >=1 && t <= 9) {
-                if((i > 10 && i < 20) || i > 30) {
-                    todasCasas.add(new CasaCompravel(i,"application/assets/casas/casa11.png",t,"JONAS",pA,pC,0));
-                    compraveis.add(new CasaCompravel(i,"application/assets/casas/casa11.png",t,"JONAS",pA,pC,0));
-                }
-                else {
-                    todasCasas.add(new CasaCompravel(i,"application/assets/casas/casa1.png",t,"JONAS",pA,pC,0));
-                    compraveis.add(new CasaCompravel(i,"application/assets/casas/casa1.png",t,"JONAS",pA,pC,0));
-                }
+                todasCasas.add(new CasaCompravel(i,"application/assets/casas/casa"+i+".png",t,"JONAS",pA,pC,0));
+                compraveis.add(new CasaCompravel(i,"application/assets/casas/casa"+i+".png",t,"JONAS",pA,pC,0));
             }
             else {
-                if((i > 10 && i < 20) || i > 30) {
-                    todasCasas.add(new CasaCompravel(i,"application/assets/casas/casa11.png",t,"JONAS",pA,pC,0));
-                    compraveis.add(new CasaCompravel(i,"application/assets/casas/casa11.png",t,"JONAS",pA,pC,0));
-                }
-                else if(i % 10 == 0) {
-                    todasCasas.add(new Casa(i,"application/assets/casas/casa"+i+".png",t,"JONAS"));
-                    naoCompraveis.add(new Casa(i,"application/assets/casas/casa"+i+".png",t,"JONAS"));
-                }
-                else {
-                    todasCasas.add(new Casa(i,"application/assets/casas/casa1.png",t,"JONAS"));
-                    naoCompraveis.add(new Casa(i,"application/assets/casas/casa1.png",t,"JONAS"));
-                }
+                todasCasas.add(new Casa(i,"application/assets/casas/casa"+i+".png",t,"JONAS"));
+                naoCompraveis.add(new Casa(i,"application/assets/casas/casa"+i+".png",t,"JONAS"));
             }
         }
     }
