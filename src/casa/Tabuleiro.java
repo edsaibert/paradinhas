@@ -29,7 +29,7 @@ public class Tabuleiro {
 
     public void iniciaTabuleiro() {   
         iniciaCasas();
-        graficoCasas(900,900);
+        graficoCasas(1345,850);
     }
 
     public void setOrdem(ArrayList<Integer> numeros) {
