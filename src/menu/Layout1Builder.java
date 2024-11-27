@@ -24,7 +24,7 @@ public class Layout1Builder implements Builder<Region> {
         this.onAction = onAction;
     }
 
-    public Region build(Consumer<Button> buttonConfigurator) {
+    public Region build(Consumer<MenuButton> buttonConfigurator) {
         VBox layout1 = new VBox(10); // Vertical box with spacing of 10
         layout1.setAlignment(Pos.CENTER);
 
@@ -42,14 +42,17 @@ public class Layout1Builder implements Builder<Region> {
                         "-fx-background-position: center;" // Centraliza a imagem
         );
 
-        Button buttonNovoJogo = new MenuButton("Iniciar Novo Jogo").createButton();
-        Button buttonRetomarJogo = new MenuButton("Retomar Jogo").createButton();
-        Button buttonFechar = new MenuButton("Sair").createButton();
-
+        MenuButton buttonNovoJogo = new MenuButton("Iniciar Novo Jogo");
+        MenuButton buttonRetomarJogo = new MenuButton("Retomar Jogo");
+        MenuButton buttonFechar = new MenuButton("Sair");
 
         buttonConfigurator.accept(buttonNovoJogo);
         buttonConfigurator.accept(buttonRetomarJogo);
         buttonConfigurator.accept(buttonFechar);
+
+        buttonNovoJogo.observeButton();
+        buttonRetomarJogo.observeButton();
+        buttonFechar.observeButton();
 
         buttonNovoJogo.setStyle("-fx-background-color: #BDBDBD; -fx-border-color: #FFF; -fx-border-width: 5px;");
         buttonRetomarJogo.setStyle("-fx-background-color: #BDBDBD; -fx-border-color: #FFF; -fx-border-width: 5px;");

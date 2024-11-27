@@ -18,7 +18,7 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
     @Override
     public Region build() {
         BorderPane results = new BorderPane();
-        results.setTop(new Label("This is The Wrapper"));
+        // results.setTop(new Label("This is The Wrapper"));
         BooleanProperty vBox1Visible = new SimpleBooleanProperty(true);
         Region component1 = new Layout1Builder(() -> vBox1Visible.set(false)).build(
             button -> {

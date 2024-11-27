@@ -5,35 +5,38 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.geometry.Pos;
 
-public class MenuButton {
+public class MenuButton extends Button {
     String text;
     ImageView buildIcon;
 
     public MenuButton(String text) {
     this.text = text;
+
+    Image icon = new Image("menu/assets/coin.png", 50, 50, false, false);
+    ImageView buildIcon = new ImageView();
+
+    buildIcon.setImage(icon);
+    buildIcon.setVisible(false);
+
+    this.buildIcon = buildIcon;
+
+    buildIcon.setTranslateX(300);
+    this.setGraphicTextGap(-50);
+
+    this.setMinWidth(100);
+    this.setFont(Font.font("Ubuntu Mono", FontWeight.BOLD, 20));
+    this.setText(text);
+    this.setGraphic(buildIcon);
    }
 
-   public Button createButton (){
-        Image icon = new Image("menu/assets/coin.png", 100, 100, false, false);
-        ImageView buildIcon = new ImageView();
-        buildIcon.setImage(icon);
-        buildIcon.setVisible(false);
-        this.buildIcon = buildIcon;
-
-        Button button = new Button(text);
-        button.setFont(Font.font("Ubuntu Mono", FontWeight.BOLD, 20));
-        button.setGraphic(buildIcon);
-
-        return button;
-   }
-
-   public void observeButton (Button button){
-        button.setOnMouseEntered(event -> {
+   public void observeButton (){
+        this.setOnMouseEntered(event -> {
             buildIcon.setVisible(true);
         });
 
-        button.setOnMouseExited(event -> {
+        this.setOnMouseExited(event -> {
             buildIcon.setVisible(false);
         });
    }
