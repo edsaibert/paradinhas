@@ -11,6 +11,7 @@ public class Tabuleiro {
     protected ArrayList<CasaCompravel> compraveis = new ArrayList<CasaCompravel>();
     protected ArrayList<Casa> naoCompraveis = new ArrayList<Casa>();
     protected ArrayList<Integer> ordem = new ArrayList<Integer>();
+    protected ArrayList<Integer> numDados = new ArrayList<Integer>();
     
     public ArrayList<CasaCompravel> getCompraveis() { return compraveis; }
 
@@ -23,21 +24,40 @@ public class Tabuleiro {
     public ArrayList<ImageView> getTodasImg() { return casasImg; }
 
     public Casa getCasaIndex(int index) { return todasCasas.get(index); }  
+    
+    public CasaCompravel getCasaCIndex(int index) { 
+        int idx = -1, i = 0;
+        while(idx == -1) {
+            if(compraveis.get(i).getId() == index)
+                idx = i;
+        }    
+        i++;
+        return compraveis.get(idx);
+    }
 
     public Image getCasaImg(int index) { return new Image(todasCasas.get(index).getImg()); }
 
+    public void novoValor(int valor) { numDados.add(valor); }
 
-    public void iniciaTabuleiro() {   
+    public void limpaValores() { numDados.clear(); }
+
+    public ArrayList<Integer> getValores() { return numDados; }
+
+    public void iniciaTabuleiro(int jogadores) {   
         iniciaCasas();
         graficoCasas(1345,850);
+        ArrayList<Integer> players = new ArrayList<Integer>();
+        for(int i = 0;i < jogadores;i++) 
+            players.add(i);
+        setOrdem(players);
     }
 
     public void setOrdem(ArrayList<Integer> numeros) {
         int maior = 0;
 
-        for(int j = 0;j <= 5; j++) {
-            for(int i = 1; i < numeros.size();i++) {
-                if(!this.ordem.contains(numeros.get(i)) && numeros.get(i) > numeros.get(maior))
+        for(int j = 0;j < numeros.size(); j++) {
+            for(int i = 0; i < numeros.size();i++) {
+                if(!this.ordem.contains(i) && numeros.get(i) > numeros.get(maior))
                     maior = i;
             }
             this.ordem.add(maior);

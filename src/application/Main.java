@@ -43,7 +43,7 @@ public class Main extends Application {
         imgd2.setX(1200);
         imgd2.setY(800);
         Tabuleiro t = new Tabuleiro();
-        t.iniciaTabuleiro();
+        t.iniciaTabuleiro(6);
         Group root = new Group();
         root.getChildren().add(imgd1);
         root.getChildren().add(imgd2);

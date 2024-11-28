@@ -10,6 +10,8 @@ public class JogadorController {
 		this.jogadores = new ArrayList<>();
 	}	
 
+	public int getNumJogadores() { return numJogadores; }
+
 	public void criarJogadores(){
 		for (int i = 0; i < this.numJogadores; i++){
 			this.jogadores.add(new Jogador(i));
