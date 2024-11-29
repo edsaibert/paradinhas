@@ -167,6 +167,10 @@ public class Jogo {
                                 }
                             }
                         }
+                        //SE A CASA NAO É COMPRÁVEL (AINDA RESTA MUITA COISA PRA FAZER AQUI, FAREI DEPOIS)
+                        else {
+
+                        }
                     }
                     //SE O JOGADOR ATUAL ESTIVER PRESO
                     else {
@@ -176,6 +180,7 @@ public class Jogo {
                     }
                     //SE O JOGADOR TEVE UMA ROLAGEM DE 2 DADOS IGUAIS (REPETE A RODADA)
                     if(dadoIgual) {
+                        //SOLTA ELE DA PRISAO
                         jogadores.getJogadorById(quemJogando).setPreso(false);
                         roleDados.setDisable(false);
                         passeTurno.setDisable(true);
