@@ -1,6 +1,8 @@
 package casa;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
@@ -30,8 +32,8 @@ public class Tabuleiro {
         while(idx == -1) {
             if(compraveis.get(i).getId() == index)
                 idx = i;
-        }    
-        i++;
+                i++;
+        } 
         return compraveis.get(idx);
     }
 
@@ -41,21 +43,32 @@ public class Tabuleiro {
 
     public void limpaValores() { numDados.clear(); }
 
+    public void limpaOrdem() { ordem.clear(); }
+
     public ArrayList<Integer> getValores() { return numDados; }
 
-    public void iniciaTabuleiro(int jogadores) {   
+    public void iniciaTabuleiro(int jogadores) { 
         iniciaCasas();
         graficoCasas(1345,850);
-        ArrayList<Integer> players = new ArrayList<Integer>();
         for(int i = 0;i < jogadores;i++) 
-            players.add(i);
-        setOrdem(players);
+            numDados.add(i);
+        setOrdem(numDados);
+        Collections.reverse(ordem);
     }
+
+    public int getFirstOrdem() { return this.ordem.get(0); }
+
+    public ArrayList<Integer> getOrdem() { return this.ordem; }
 
     public void setOrdem(ArrayList<Integer> numeros) {
         int maior = 0;
 
         for(int j = 0;j < numeros.size(); j++) {
+            int k = 0;
+            while(this.ordem.contains(k)) {
+                k++;
+            }
+            maior = k;
             for(int i = 0; i < numeros.size();i++) {
                 if(!this.ordem.contains(i) && numeros.get(i) > numeros.get(maior))
                     maior = i;

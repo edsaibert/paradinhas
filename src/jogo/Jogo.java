@@ -13,16 +13,16 @@ import javafx.event.EventHandler;
 public class Jogo {
     protected JogadorController jogadores;
     protected CasaController casas;
-    protected dadoGraphic dado1;
-    protected dadoGraphic dado2;
+    protected dadoGraphic dado1 = new dadoGraphic();
+    protected dadoGraphic dado2 = new dadoGraphic();
     protected int contadorTurno = 0;
-    protected int quemJogando = -1;
+    protected int quemJogando = 0;
     protected boolean dadoIgual = false;
     protected boolean comecou = false;
     protected boolean decidiu = false;
     protected Tabuleiro tabuleiro = new Tabuleiro();
-    protected Button roleDados = new Button("Rolar Dados");
-    protected Button passeTurno = new Button("Passar Turno");
+    public Button roleDados = new Button("Rolar Dados");
+    public Button passeTurno = new Button("Passar Turno");
     protected Button comprar = new Button("Comprar Propriedade");
     protected Button melhorar = new Button("Melhorar Propriedade");
     protected Button hipotecar = new Button("Hipotecar");
@@ -33,21 +33,35 @@ public class Jogo {
         tabuleiro.iniciaTabuleiro(quantos);
         tabuleiro.limpaValores();
         casas = new CasaController(tabuleiro);
+        passeTurno.setDisable(true);
+        hipotecar.setDisable(true);
+        comprar.setDisable(true);
+        roleDados.setDisable(false);
+        melhorar.setDisable(true);
+
+        EventHandler<ActionEvent> eventoComprar = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
+                
+            }
+        };
 
         //EVENTO DO BOTAO DE PASSAR O TURNO
         EventHandler<ActionEvent> eventoPassar = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 //SE PRECISA ATUALIZAR A ORDEM JA DECIDIDA
                 if(decidiu) {
+                    tabuleiro.limpaOrdem();
                     tabuleiro.setOrdem(tabuleiro.getValores());
                     decidiu = false;
                     //ATUALIZA A ORDEM N-1 VEZES, POIS ELE ATUALIZA A ORDEM FORA DO IF E A PRIMEIRA RODADA PODERIA SER PULADA 
-                    for(int i = 0; i < jogadores.getNumJogadores();i++) 
+                    for(int i = 0; i < jogadores.getNumJogadores()-1;i++) {
                         tabuleiro.atualizaOrdem();
-                    
+                    }
                 }
-                
+
                 tabuleiro.atualizaOrdem();
+                quemJogando = tabuleiro.getFirstOrdem();
                 passeTurno.setDisable(true);
                 hipotecar.setDisable(true);
                 comprar.setDisable(true);
@@ -71,11 +85,15 @@ public class Jogo {
 
                 //NAO ESTA NA FASE DE DECISAO DE ORDEM DE JOGO
                 if(comecou) {
+                    System.out.println(tabuleiro.getOrdem());
                     //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
+                        
+                        System.out.println(quemJogando + ": " +jogadores.getJogadorById(quemJogando).getCasaAtual());
+                        System.out.println("VALOR DOS DADOS: "+ dado1.valorDado() + " " + dado2.valorDado());
                         jogadores.atualizarCasaAtual(quemJogando, dado1.valorDado()+dado2.valorDado());
+                        System.out.println(quemJogando + ": " +jogadores.getJogadorById(quemJogando).getCasaAtual());
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
-
                         //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
                         if(casas.checaCompravel(atual)) {
                             //SE A CASA NAO TEM DONO
@@ -145,10 +163,16 @@ public class Jogo {
                     melhorar.setDisable(true);
                     roleDados.setDisable(true);
                     passeTurno.setDisable(false);
-                    if(quemJogando == jogadores.getNumJogadores()-1)
+                    if(quemJogando == jogadores.getNumJogadores()-1) {
+                        comecou = true;
                         decidiu = true;
+                    }
                 }
             }
         };
+
+        roleDados.setOnAction(eventoDado);
+        passeTurno.setOnAction(eventoPassar);
+        passeTurno.setTranslateY(70);
     }
 }

@@ -18,6 +18,7 @@ import javafx.event.EventHandler;
 import jogador.*;
 import casa.*;
 import design.*;
+import jogo.*;
 
 public class Main extends Application {
     public static void main(String[] args) {
@@ -42,15 +43,15 @@ public class Main extends Application {
         ImageView imgd2 = new ImageView(dado2.getImg());
         imgd2.setX(1200);
         imgd2.setY(800);
-        Tabuleiro t = new Tabuleiro();
-        t.iniciaTabuleiro(6);
+        //Tabuleiro t = new Tabuleiro();
+        //t.iniciaTabuleiro(6);
         Group root = new Group();
         root.getChildren().add(imgd1);
         root.getChildren().add(imgd2);
 
-        for(int i = 0;i < 40;i++) {
-            root.getChildren().add(t.getImg(i));
-        }
+        //for(int i = 0;i < 40;i++) {
+        //    root.getChildren().add(t.getImg(i));
+        //}
         Scene scene = new Scene(root, new Color(0.6, 0.6, 0.6, 1.0));
         RelativeSizing rs = new RelativeSizing();
         
@@ -77,6 +78,9 @@ public class Main extends Application {
             } 
         }; 
         botaoDado.setOnAction(event);
+        Jogo game = new Jogo(4);
+        root.getChildren().add(game.roleDados);
+        root.getChildren().add(game.passeTurno);
         botaoDado.setTranslateX(1100);
         botaoDado.setTranslateY(760);
         root.getChildren().add(botaoDado);
