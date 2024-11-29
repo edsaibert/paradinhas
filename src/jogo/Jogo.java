@@ -71,57 +71,70 @@ public class Jogo {
 
                 //NAO ESTA NA FASE DE DECISAO DE ORDEM DE JOGO
                 if(comecou) {
-                    jogadores.atualizarCasaAtual(quemJogando, dado1.valorDado()+dado2.valorDado());
-                    int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
+                    //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
+                    if(!jogadores.getJogadorById(quemJogando).getPreso()){
+                        jogadores.atualizarCasaAtual(quemJogando, dado1.valorDado()+dado2.valorDado());
+                        int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
 
-                    //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
-                    if(casas.checaCompravel(atual)) {
-                        //SE A CASA NAO TEM DONO
-                        if(tabuleiro.getCasaCIndex(atual).getDono() == -1) {
-                            comprar.setDisable(false);
-                            hipotecar.setDisable(true);
-                            melhorar.setDisable(true);
-                            
-                        }
-                        //SE A CASA TEM DONO
-                        else {
-                            comprar.setDisable(true);
-                            //SE O DONO É O JOGADOR DA RODADA
-                            if(tabuleiro.getCasaCIndex(atual).getDono() == quemJogando) {
+                        //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
+                        if(casas.checaCompravel(atual)) {
+                            //SE A CASA NAO TEM DONO
+                            if(tabuleiro.getCasaCIndex(atual).getDono() == -1) {
+                                if(jogadores.getJogadorById(quemJogando).getCarteira() >= tabuleiro.getCasaCIndex(atual).getValorCompra())
+                                    comprar.setDisable(false);
+                                else
+                                    comprar.setDisable(true);
                                 hipotecar.setDisable(true);
-                                //SE A CASA PODE SER MELHORADA
-                                if((tabuleiro.getCasaCIndex(atual).getCategoria() > 0 || tabuleiro.getCasaCIndex(atual).getCategoria() < 6)) {
-                                    //SE O JOGADOR POSSUI DINHEIRO PARA MELHORAR
-                                    if(jogadores.getJogadorById(quemJogando).getCarteira() >= 2*tabuleiro.getCasaCIndex(atual).getValorAluguel()) 
-                                        melhorar.setDisable(false);
-                                    else
-                                        melhorar.setDisable(true);
-                                }
-                            }
-                            //SE O DONO É OUTRO JOGADOR
-                            else {
                                 melhorar.setDisable(true);
-                                //SE O JGOADOR NAO POSSUE DINHEIRO PARA PAGAR O ALUGUEL (AINDA INCOMPLETO, PRECISO PENSAR NA LÓGICA)
-                                if(jogadores.getJogadorById(quemJogando).getCarteira() < tabuleiro.getCasaCIndex(atual).getValorAluguel()) {
-                                    hipotecar.setDisable(false);
-                                }
-                                //SE O JOGADOR PODE PAGAR O ALUGUEL
-                                else {
+                            
+                            }
+                            //SE A CASA TEM DONO
+                            else {
+                                comprar.setDisable(true);
+                                //SE O DONO É O JOGADOR DA RODADA
+                                if(tabuleiro.getCasaCIndex(atual).getDono() == quemJogando) {
                                     hipotecar.setDisable(true);
-                                    jogadores.atualizarCarteira(quemJogando, -tabuleiro.getCasaCIndex(atual).getValorAluguel());
-                                    jogadores.atualizarCarteira(tabuleiro.getCasaCIndex(atual).getDono(), tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                                    //SE A CASA PODE SER MELHORADA
+                                    if((tabuleiro.getCasaCIndex(atual).getCategoria() > 0 || tabuleiro.getCasaCIndex(atual).getCategoria() < 6)) {
+                                        //SE O JOGADOR POSSUI DINHEIRO PARA MELHORAR
+                                        if(jogadores.getJogadorById(quemJogando).getCarteira() >= 2*tabuleiro.getCasaCIndex(atual).getValorAluguel()) 
+                                            melhorar.setDisable(false);
+                                        else
+                                            melhorar.setDisable(true);
+                                    }
+                                }
+                                //SE O DONO É OUTRO JOGADOR
+                                else {
+                                    melhorar.setDisable(true);
+                                    //SE O JGOADOR NAO POSSUE DINHEIRO PARA PAGAR O ALUGUEL (AINDA INCOMPLETO, PRECISO PENSAR NA LÓGICA)
+                                    if(jogadores.getJogadorById(quemJogando).getCarteira() < tabuleiro.getCasaCIndex(atual).getValorAluguel()) {
+                                        hipotecar.setDisable(false);
+                                    }
+                                    //SE O JOGADOR PODE PAGAR O ALUGUEL
+                                    else {
+                                        hipotecar.setDisable(true);
+                                        jogadores.atualizarCarteira(quemJogando, -tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                                        jogadores.atualizarCarteira(tabuleiro.getCasaCIndex(atual).getDono(), tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                                    }
                                 }
                             }
                         }
-                        //SE ROLOU 2 DADOS IGUAIS
-                        if(dadoIgual) {
-                            roleDados.setDisable(false);
-                            passeTurno.setDisable(true);
-                        }
-                        else {
-                            roleDados.setDisable(true);
-                            passeTurno.setDisable(false);
-                        }
+                    }
+                    //SE O JOGADOR ATUAL ESTIVER PRESO
+                    else {
+                        comprar.setDisable(true);
+                        hipotecar.setDisable(true);
+                        melhorar.setDisable(true);
+                    }
+                    //SE O JOGADOR TEVE UMA ROLAGEM DE 2 DADOS IGUAIS (REPETE A RODADA)
+                    if(dadoIgual) {
+                        jogadores.getJogadorById(quemJogando).setPreso(false);
+                        roleDados.setDisable(false);
+                        passeTurno.setDisable(true);
+                    }
+                    else {
+                        roleDados.setDisable(true);
+                        passeTurno.setDisable(false);
                     }
                 }
                 //SE O JOGO AINDA ESTA DECIDINDO A ORDEM DE JOGADORES
@@ -132,10 +145,10 @@ public class Jogo {
                     melhorar.setDisable(true);
                     roleDados.setDisable(true);
                     passeTurno.setDisable(false);
-                    if(quemJogando == jogadores.getNumJogadores())
+                    if(quemJogando == jogadores.getNumJogadores()-1)
                         decidiu = true;
                 }
-            } 
+            }
         };
     }
 }

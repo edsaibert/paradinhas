@@ -6,6 +6,7 @@ public class Jogador {
 	protected int casaAtual;
 	protected int carteira;
 	protected boolean ativo;
+	protected boolean preso;
 
 	protected HashSet<Integer> casasCompraveis;
 	protected HashSet<Integer> casasCompradas;
@@ -22,6 +23,10 @@ public class Jogador {
 	public int getCasaAtual(){ return this.casaAtual; }
 
 	public int getCarteira(){ return this.carteira;	}
+	
+	public boolean getPreso() { return this.preso; }
+
+	public void setPreso(boolean prisao) { this.preso = prisao; }
 
 	public void setCasaAtual(int casa){ this.casaAtual = casa; }
 
