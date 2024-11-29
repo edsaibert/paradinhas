@@ -31,23 +31,9 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
 
         //INICIA OS DADOS E SUAS IMAGENS
-        dadoGraphic dado1 = new dadoGraphic();
-        dado1.rolaDado();
-        dado1.setaImagem();
-        dadoGraphic dado2 = new dadoGraphic();
-        dado2.rolaDado();
-        dado2.setaImagem();
-        ImageView imgd1 = new ImageView(dado1.getImg());
-        imgd1.setX(1000);
-        imgd1.setY(800);
-        ImageView imgd2 = new ImageView(dado2.getImg());
-        imgd2.setX(1200);
-        imgd2.setY(800);
         Tabuleiro t = new Tabuleiro();
         t.iniciaTabuleiro(6);
         Group root = new Group();
-        root.getChildren().add(imgd1);
-        root.getChildren().add(imgd2);
 
         for(int i = 0;i < 40;i++) {
             root.getChildren().add(t.getImg(i));
@@ -63,30 +49,14 @@ public class Main extends Application {
         rs.setSize(50, 50);
 
 
-        /*BOTAO E EVENTOS DE BOTAO, IMPLEMENTADO COMO SE FOSSE UM MÉTODO*/
-        Button botaoDado = new Button("Rerole o dado");
-
-        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
-            public void handle(ActionEvent e) 
-            {
-                dado1.rolaDado();
-                dado2.rolaDado();
-                dado1.setaImagem();
-                dado2.setaImagem(); 
-                imgd1.setImage(dado1.getImg());
-                imgd2.setImage(dado2.getImg());
-            } 
-        }; 
-        botaoDado.setOnAction(event);
         Jogo game = new Jogo(4);
         root.getChildren().add(game.roleDados);
         root.getChildren().add(game.passeTurno);
         root.getChildren().add(game.hipotecar);
         root.getChildren().add(game.melhorar);
         root.getChildren().add(game.comprar);
-        botaoDado.setTranslateX(1100);
-        botaoDado.setTranslateY(760);
-        root.getChildren().add(botaoDado);
+        root.getChildren().add(game.dadosImg.get(0));
+        root.getChildren().add(game.dadosImg.get(1));
         stage.setTitle("MonoPolitecnico");
         stage.setScene(scene);
         stage.show();

@@ -9,12 +9,14 @@ import jogador.JogadorController;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler;
+import javafx.scene.image.ImageView;
 
 public class Jogo {
     protected JogadorController jogadores;
     protected CasaController casas;
     protected dadoGraphic dado1 = new dadoGraphic();
     protected dadoGraphic dado2 = new dadoGraphic();
+    public ArrayList<ImageView> dadosImg = new ArrayList<ImageView>();
     protected int contadorTurno = 0;
     protected int quemJogando = 0;
     protected boolean dadoIgual = false;
@@ -28,6 +30,12 @@ public class Jogo {
     public Button hipotecar = new Button("Hipotecar");
 
     public Jogo(int quantos) {
+        dadosImg.add(new ImageView(dado1.getImg()));
+        dadosImg.add(new ImageView(dado2.getImg()));
+        dadosImg.get(0).setX(1000);
+        dadosImg.get(0).setY(800);
+        dadosImg.get(1).setX(1200);
+        dadosImg.get(1).setY(800);
         jogadores = new JogadorController(quantos);
         jogadores.criarJogadores();
         tabuleiro.iniciaTabuleiro(quantos);
@@ -45,6 +53,9 @@ public class Jogo {
                 int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                 casas.Melhoria(jogadores.getJogadorById(quemJogando));
                 jogadores.getJogadorById(quemJogando).setCarteira(jogadores.getJogadorById(quemJogando).getCarteira()-50*(1+(int)Math.floor(atual/10)));
+                hipotecar.setDisable(true);
+                comprar.setDisable(true);
+                melhorar.setDisable(true);
             }
         };
 
@@ -66,10 +77,8 @@ public class Jogo {
                     melhorar.setDisable(false);
 
                 tabuleiro.getCasaCIndex(atual).setDono(quemJogando);
-                passeTurno.setDisable(false);
                 hipotecar.setDisable(true);
                 comprar.setDisable(true);
-                roleDados.setDisable(true);
             }
         };
 
@@ -105,6 +114,8 @@ public class Jogo {
                 dado2.rolaDado();
                 dado1.setaImagem();
                 dado2.setaImagem();
+                dadosImg.get(0).setImage(dado1.getImg());
+                dadosImg.get(1).setImage(dado2.getImg());
                 if(dado1.valorDado() == dado2.valorDado())
                     dadoIgual = true;
                 else
