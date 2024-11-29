@@ -23,9 +23,9 @@ public class Jogo {
     protected Tabuleiro tabuleiro = new Tabuleiro();
     public Button roleDados = new Button("Rolar Dados");
     public Button passeTurno = new Button("Passar Turno");
-    protected Button comprar = new Button("Comprar Propriedade");
-    protected Button melhorar = new Button("Melhorar Propriedade");
-    protected Button hipotecar = new Button("Hipotecar");
+    public Button comprar = new Button("Comprar Propriedade");
+    public Button melhorar = new Button("Melhorar Propriedade");
+    public Button hipotecar = new Button("Hipotecar");
 
     public Jogo(int quantos) {
         jogadores = new JogadorController(quantos);
@@ -39,10 +39,35 @@ public class Jogo {
         roleDados.setDisable(false);
         melhorar.setDisable(true);
 
+
+        EventHandler<ActionEvent> eventoMelhorar = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                System.out.println("EVENTO DE MELHORA DE CASA");
+            }
+        };
+
+        EventHandler<ActionEvent> eventoHipotecar = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                System.out.println("EVENTO DE HIPOTECAR CASA");
+            }
+        };
+
         EventHandler<ActionEvent> eventoComprar = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
-                
+                jogadores.comprarCasa(quemJogando, atual);
+                jogadores.getJogadorById(quemJogando).setCarteira(jogadores.getJogadorById(quemJogando).getCarteira()-tabuleiro.getCasaCIndex(atual).getValorCompra());
+                System.out.println(quemJogando + ": " +jogadores.getJogadorById(quemJogando).getCasaAtual() + " " +jogadores.getJogadorById(quemJogando).getCarteira());
+                if(true /* CODIGO PRA CHECAR MONOPOLIO*/) 
+                    melhorar.setDisable(true);
+                else
+                    melhorar.setDisable(false);
+
+                tabuleiro.getCasaCIndex(atual).setDono(quemJogando);
+                passeTurno.setDisable(false);
+                hipotecar.setDisable(true);
+                comprar.setDisable(true);
+                roleDados.setDisable(true);
             }
         };
 
@@ -89,10 +114,11 @@ public class Jogo {
                     //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
                         
-                        System.out.println(quemJogando + ": " +jogadores.getJogadorById(quemJogando).getCasaAtual());
+                        System.out.println(quemJogando + ": " +jogadores.getJogadorById(quemJogando).getCasaAtual() + " " +jogadores.getJogadorById(quemJogando).getCarteira());
+                        System.out.println("PROPRIEDADES: " + jogadores.getJogadorById(quemJogando).getCasasCompradas());
                         System.out.println("VALOR DOS DADOS: "+ dado1.valorDado() + " " + dado2.valorDado());
                         jogadores.atualizarCasaAtual(quemJogando, dado1.valorDado()+dado2.valorDado());
-                        System.out.println(quemJogando + ": " +jogadores.getJogadorById(quemJogando).getCasaAtual());
+                        System.out.println(quemJogando + ": " +jogadores.getJogadorById(quemJogando).getCasaAtual() + " " +jogadores.getJogadorById(quemJogando).getCarteira());
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                         //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
                         if(casas.checaCompravel(atual)) {
@@ -130,9 +156,13 @@ public class Jogo {
                                     }
                                     //SE O JOGADOR PODE PAGAR O ALUGUEL
                                     else {
+                                        System.out.println(quemJogando + ": " +jogadores.getJogadorById(quemJogando).getCasaAtual() + " " +jogadores.getJogadorById(quemJogando).getCarteira());
                                         hipotecar.setDisable(true);
                                         jogadores.atualizarCarteira(quemJogando, -tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                                        System.out.println(tabuleiro.getCasaCIndex(atual).getDono() + ": " +jogadores.getJogadorById(tabuleiro.getCasaCIndex(atual).getDono()).getCarteira());
                                         jogadores.atualizarCarteira(tabuleiro.getCasaCIndex(atual).getDono(), tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                                        System.out.println(quemJogando + ": " +jogadores.getJogadorById(quemJogando).getCasaAtual() + " " +jogadores.getJogadorById(quemJogando).getCarteira());
+                                        System.out.println(tabuleiro.getCasaCIndex(atual).getDono() + ": " +jogadores.getJogadorById(tabuleiro.getCasaCIndex(atual).getDono()).getCarteira());
                                     }
                                 }
                             }
@@ -173,6 +203,12 @@ public class Jogo {
 
         roleDados.setOnAction(eventoDado);
         passeTurno.setOnAction(eventoPassar);
-        passeTurno.setTranslateY(70);
+        comprar.setOnAction(eventoComprar);
+        melhorar.setOnAction(eventoMelhorar);
+        hipotecar.setOnAction(eventoHipotecar);
+        passeTurno.setTranslateY(60);
+        comprar.setTranslateY(120);
+        melhorar.setTranslateY(180);
+        hipotecar.setTranslateY(240);
     }
 }
