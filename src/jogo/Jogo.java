@@ -42,7 +42,9 @@ public class Jogo {
 
         EventHandler<ActionEvent> eventoMelhorar = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                System.out.println("EVENTO DE MELHORA DE CASA");
+                int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
+                casas.Melhoria(jogadores.getJogadorById(quemJogando));
+                jogadores.getJogadorById(quemJogando).setCarteira(jogadores.getJogadorById(quemJogando).getCarteira()-50*(1+(int)Math.floor(atual/10)));
             }
         };
 
@@ -58,7 +60,7 @@ public class Jogo {
                 jogadores.comprarCasa(quemJogando, atual);
                 jogadores.getJogadorById(quemJogando).setCarteira(jogadores.getJogadorById(quemJogando).getCarteira()-tabuleiro.getCasaCIndex(atual).getValorCompra());
                 System.out.println(quemJogando + ": " +jogadores.getJogadorById(quemJogando).getCasaAtual() + " " +jogadores.getJogadorById(quemJogando).getCarteira());
-                if(true /* CODIGO PRA CHECAR MONOPOLIO*/) 
+                if(true /* CODIGO PRA CHECAR MONOPOLIO*/ && jogadores.getJogadorById(quemJogando).getCarteira() >= 50*(1+Math.floor(atual/10)))
                     melhorar.setDisable(true);
                 else
                     melhorar.setDisable(false);

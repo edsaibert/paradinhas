@@ -47,6 +47,7 @@ public class CasaController {
         }
     }
 
+    //QUERO MELHORAR A CASA EM 1 NIVEL
     public void Melhoria(Jogador p) {
         int idx = -1,i = 0;
         while(idx == -1) {
@@ -60,6 +61,7 @@ public class CasaController {
         compraveis.get(idx).setValorAluguel(compraveis.get(idx).getValorAluguel()*2);
     }
 
+    //SE, AO INVES DE MELHORAR EM 1 NIVEL, EU QUERO SETAR UMA CATEGORIA ESPECIFICA
     public void Melhoria(Jogador p, int categoria) {
         int idx = -1,i = 0;
         while(idx == -1) {
