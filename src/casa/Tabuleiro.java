@@ -145,7 +145,7 @@ public class Tabuleiro {
                 case 5:
                     t = 9;
                     pC = 200;
-                    pA = 4;
+                    pA = 10;
                     break;
                 case 6:
                     t = 2;
@@ -180,7 +180,7 @@ public class Tabuleiro {
                 case 12:
                     t = 9;
                     pC = 200;
-                    pA = 4;
+                    pA = 10;
                     break;
                 case 13:
                     t = 3;
@@ -195,7 +195,7 @@ public class Tabuleiro {
                 case 15:
                     t = 9;
                     pC = 200;
-                    pA = 4;
+                    pA = 10;
                     break;
                 case 16:
                     t = 4;
@@ -245,7 +245,7 @@ public class Tabuleiro {
                 case 25:
                     t = 9;
                     pC = 200;
-                    pA = 4;
+                    pA = 10;
                     break;
                 case 26:
                     t = 6;
@@ -260,7 +260,7 @@ public class Tabuleiro {
                 case 28:
                     t = 9;
                     pC = 200;
-                    pA = 4;
+                    pA = 10;
                     break;
                 case 29:
                     t = 6;
@@ -295,7 +295,7 @@ public class Tabuleiro {
                 case 35:
                     t = 9;
                     pC = 200;
-                    pA = 4;
+                    pA = 10;
                     break;
                 case 36:
                     t = 0;

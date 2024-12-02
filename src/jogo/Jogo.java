@@ -120,12 +120,35 @@ public class Jogo {
                 int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                 jogadores.comprarCasa(quemJogando, atual);
                 jogadores.getJogadorById(quemJogando).setCarteira(jogadores.getJogadorById(quemJogando).getCarteira()-tabuleiro.getCasaCIndex(atual).getValorCompra());
-                System.out.println(quemJogando + ": " +jogadores.getJogadorById(quemJogando).getCasaAtual() + " " +jogadores.getJogadorById(quemJogando).getCarteira());
                 if(true /* CODIGO PRA CHECAR MONOPOLIO*/ && jogadores.getJogadorById(quemJogando).getCarteira() >= 50*(1+Math.floor(atual/10)))
-                    melhorar.setDisable(true);
-                else
                     melhorar.setDisable(false);
-
+                else
+                    melhorar.setDisable(true);
+                    
+                //SE CASA NAO FOR TERRENO E SIM EMPRESA
+                if(casas.getCasaCompravelbyId(atual).getTipo() == 9) {
+                    melhorar.setDisable(true);
+                    int i = 0, cat = 0;
+                    boolean tem = false;
+                    while(i < 40 && !tem) {
+                        if(jogadores.getJogadorById(quemJogando).getCasasCompradas().contains(i)) {
+                            if(casas.getCasaCompravelbyId(i).getTipo() == 9) {
+                                tem = true;
+                                cat = casas.getCasaCompravelbyId(i).getCategoria()+1;
+                            }
+                        }
+                        i++;
+                    }
+                    i = 0;
+                    while(i < 40) {
+                        if(jogadores.getJogadorById(quemJogando).getCasasCompradas().contains(i)) {
+                            if(casas.getCasaCompravelbyId(i).getTipo() == 9) {
+                                casas.Melhoria(jogadores.getJogadorById(quemJogando), cat);
+                            }
+                        }
+                        i++;
+                    }
+                }
                 tabuleiro.getCasaCIndex(atual).setDono(quemJogando);
                 hipotecar.setDisable(true);
                 comprar.setDisable(true);

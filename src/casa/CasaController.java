@@ -14,6 +14,18 @@ public class CasaController {
         this.compraveis = t.getCompraveis();
     }
 
+    public CasaCompravel getCasaCompravelbyId(int index) {
+        int idx = -1,i = 0;
+        while(idx == -1) {
+            if(compraveis.get(i).getId() == todasCasas.get(index).getId()) {
+                idx = i;
+            }
+            i++;
+        }
+
+        return compraveis.get(idx);
+     }
+
     public boolean checaCompravel(int index) {
         boolean compravel = false;
         int i = 0;
