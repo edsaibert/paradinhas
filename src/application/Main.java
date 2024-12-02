@@ -16,6 +16,9 @@ import javafx.scene.control.Button;
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler;
 import jogador.*;
+import casa.*;
+import design.*;
+import jogo.*;
 
 public class Main extends Application {
     public static void main(String[] args) {
@@ -28,53 +31,36 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
 
         //INICIA OS DADOS E SUAS IMAGENS
-        dadoGraphic dado1 = new dadoGraphic();
-        dado1.rolaDado();
-        dado1.setaImagem();
-        dadoGraphic dado2 = new dadoGraphic();
-        dado2.rolaDado();
-        dado2.setaImagem();
-        ImageView imgd1 = new ImageView(dado1.valor());
-        imgd1.setX(1000);
-        imgd1.setY(800);
-        ImageView imgd2 = new ImageView(dado2.valor());
-        imgd2.setX(1200);
-        imgd2.setY(800);
+        Tabuleiro t = new Tabuleiro();
+        t.iniciaTabuleiro(6);
+        Group root = new Group();
 
-        casa c = new casa(3, 1, 500, 100);
-        ImageView casas = new ImageView(c.haus());
-        casas.setX(800);
-        casas.setY(800);
-        Group root = new Group(imgd1, imgd2, casas);
+        for(int i = 0;i < 40;i++) {
+            root.getChildren().add(t.getImg(i));
+        }
         Scene scene = new Scene(root, new Color(0.6, 0.6, 0.6, 1.0));
-        //RelativeSizing rs = new RelativeSizing();
+        RelativeSizing rs = new RelativeSizing();
         
         Image icon = new Image("file:src/application/assets/icone.png");
         stage.getIcons().add(icon);
         
         stage.setFullScreen(true);
         setStageSize(stage, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
-        //rs.setSize(50, 50);
+        rs.setSize(50, 50);
 
 
-        /*BOTAO E EVENTOS DE BOTAO, IMPLEMENTADO COMO SE FOSSE UM MÉTODO*/
-        Button botaoDado = new Button("Rerole o dado");
-
-        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
-            public void handle(ActionEvent e) 
-            {
-                dado1.rolaDado();
-                dado2.rolaDado();
-                dado1.setaImagem();
-                dado2.setaImagem(); 
-                imgd1.setImage(dado1.valor());
-                   imgd2.setImage(dado2.valor());
-            } 
-        }; 
-        botaoDado.setOnAction(event);
-        botaoDado.setTranslateX(1100);
-        botaoDado.setTranslateY(760);
-        root.getChildren().add(botaoDado);
+        Jogo game = new Jogo(6);
+        root.getChildren().add(game.roleDados);
+        root.getChildren().add(game.passeTurno);
+        root.getChildren().add(game.hipotecar);
+        root.getChildren().add(game.melhorar);
+        root.getChildren().add(game.comprar);
+        root.getChildren().add(game.dadosImg.get(0));
+        root.getChildren().add(game.dadosImg.get(1));
+        for(int i = 0; i < 6; i++) {
+            root.getChildren().add(game.playersFundo.get(i));
+            root.getChildren().add(game.jogadores.getJogadorById(i).dinheiro);
+        }
         stage.setTitle("MonoPolitecnico");
         stage.setScene(scene);
         stage.show();

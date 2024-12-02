@@ -1,6 +1,5 @@
 package jogador;
 import java.util. *;
-import jogador.Jogador;
 
 public class JogadorController {
 	protected ArrayList<Jogador> jogadores;
@@ -10,6 +9,8 @@ public class JogadorController {
 		this.numJogadores = numJogadores;
 		this.jogadores = new ArrayList<>();
 	}	
+
+	public int getNumJogadores() { return numJogadores; }
 
 	public void criarJogadores(){
 		for (int i = 0; i < this.numJogadores; i++){
@@ -29,7 +30,9 @@ public class JogadorController {
 	public void atualizarCasaAtual(int id, int numCasas){
 		Jogador jogador = this.jogadores.get(id);
 		int casaAtual = jogador.getCasaAtual();
-		jogador.setCasaAtual(casaAtual+numCasas);
+		if((casaAtual+numCasas) >= 40)
+			this.atualizarCarteira(id, 200);
+		jogador.setCasaAtual((casaAtual+numCasas) % 40);
 	}
 
 	public void atualizarCarteira(int id, int dinheiro){
@@ -43,16 +46,30 @@ public class JogadorController {
 		jogador.atualizarEstado();
 	}
 
+	public void comprarCasa(int idJogador, int idCasa){
+		Jogador jogador = this.jogadores.get(idJogador);
+
+		HashSet<Integer> casasCompraveis = jogador.getCasasCompraveis();
+		casasCompraveis.remove(idCasa);
+
+		HashSet<Integer> casasCompradas = jogador.getCasasCompradas();
+		casasCompradas.add(idCasa);
+	}
+
+	public void venderCasa(int idJogador, int idCasa){
+		Jogador jogador = this.jogadores.get(idJogador);
+
+		HashSet<Integer> casasCompraveis = jogador.getCasasCompraveis();
+		casasCompraveis.add(idCasa);
+
+		HashSet<Integer> casasCompradas = jogador.getCasasCompradas();
+		casasCompradas.remove(idCasa);
+	}
+
 	public void adicionarCasaCompravel(int idJogador, int idCasa){
 		Jogador jogador = this.jogadores.get(idJogador);
 		HashSet<Integer> casasCompraveis = jogador.getCasasCompraveis();
 		casasCompraveis.add(idCasa);
-	}
-	
-	public void adicionarCasaComprada(int idJogador, int idCasa){
-		Jogador jogador = this.jogadores.get(idJogador);
-		HashSet<Integer> casasCompradas = jogador.getCasasCompradas();
-		casasCompradas.add(idCasa);
 	}
 
 	public void removerCasaCompravel(int idJogador, int idCasa){
@@ -60,11 +77,4 @@ public class JogadorController {
 		HashSet<Integer> casasCompraveis = jogador.getCasasCompraveis();
 		casasCompraveis.remove(idCasa);
 	}
-
-	public void removerCasaComprada(int idJogador, int idCasa){
-		Jogador jogador = this.jogadores.get(idJogador);
-		HashSet<Integer> casasCompradas = jogador.getCasasCompradas();
-		casasCompradas.remove(idCasa);
-	}
-
 }
