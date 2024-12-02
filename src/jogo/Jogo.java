@@ -10,13 +10,15 @@ import javafx.scene.control.Button;
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 public class Jogo {
-    protected JogadorController jogadores;
+    public JogadorController jogadores;
     protected CasaController casas;
     protected dadoGraphic dado1 = new dadoGraphic();
     protected dadoGraphic dado2 = new dadoGraphic();
     public ArrayList<ImageView> dadosImg = new ArrayList<ImageView>();
+    public ArrayList<ImageView> playersFundo = new ArrayList<ImageView>();
     protected int contadorTurno = 0;
     protected int quemJogando = 0;
     protected boolean dadoIgual = false;
@@ -38,6 +40,8 @@ public class Jogo {
         dadosImg.get(1).setY(800);
         jogadores = new JogadorController(quantos);
         jogadores.criarJogadores();
+        for(int i = 0; i < quantos;i++) 
+            playersFundo.add(new ImageView(new Image(jogadores.getJogadorById(i).getImg())));
         tabuleiro.iniciaTabuleiro(quantos);
         tabuleiro.limpaValores();
         casas = new CasaController(tabuleiro);
@@ -56,12 +60,18 @@ public class Jogo {
                 hipotecar.setDisable(true);
                 comprar.setDisable(true);
                 melhorar.setDisable(true);
+
+                for(int i = 0; i < jogadores.getNumJogadores();i++) 
+                    jogadores.getJogadorById(i).setTexto();
             }
         };
 
         EventHandler<ActionEvent> eventoHipotecar = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 System.out.println("EVENTO DE HIPOTECAR CASA");
+
+                for(int i = 0; i < jogadores.getNumJogadores();i++) 
+                    jogadores.getJogadorById(i).setTexto();
             }
         };
 
@@ -79,6 +89,8 @@ public class Jogo {
                 tabuleiro.getCasaCIndex(atual).setDono(quemJogando);
                 hipotecar.setDisable(true);
                 comprar.setDisable(true);
+                for(int i = 0; i < jogadores.getNumJogadores();i++) 
+                    jogadores.getJogadorById(i).setTexto();
             }
         };
 
@@ -103,6 +115,8 @@ public class Jogo {
                 comprar.setDisable(true);
                 roleDados.setDisable(false);
                 melhorar.setDisable(true);
+                for(int i = 0; i < jogadores.getNumJogadores();i++) 
+                    jogadores.getJogadorById(i).setTexto();
             }
         };
 
@@ -216,6 +230,8 @@ public class Jogo {
                         decidiu = true;
                     }
                 }
+                for(int i = 0; i < jogadores.getNumJogadores();i++) 
+                    jogadores.getJogadorById(i).setTexto();
             }
         };
 
