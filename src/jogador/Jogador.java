@@ -24,20 +24,20 @@ public class Jogador {
 		this.ativo = true;
 		this.casasCompraveis = new HashSet<>(); 
 		this.casasCompradas = new HashSet<>();
-		this.dinheiro = new Text(100*(id+1),100,"I$ " + carteira);
-		this.img = "application/assets/casas/casa"+id+".png";
-		dinheiro.setFont(new Font(20));
+		this.img = "application/assets/players/player"+id+".png";
 	}
 
 	public int getCasaAtual(){ return this.casaAtual; }
 
 	public String getImg() { return this.img; }
 
+	public void setDinheiro(int x, int y) { this.dinheiro = new Text(x,y,"I$ " + carteira + "   " + this.getCasaAtual()); }
+
 	public int getCarteira(){ return this.carteira;	}
 	
 	public boolean getPreso() { return this.preso; }
 
-	public void setTexto() { this.dinheiro.setText("I$ " + this.getCarteira()); }
+	public void setTexto() { this.dinheiro.setText("I$ " + this.getCarteira() + "   " + this.getCasaAtual()); this.dinheiro.setFont(new Font(28)); }
 
 	public void setPreso(boolean prisao) { this.preso = prisao; }
 

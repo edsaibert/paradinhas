@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Font;
 import javafx.scene.image.Image;
 
 public class Jogo {
@@ -40,8 +41,47 @@ public class Jogo {
         dadosImg.get(1).setY(800);
         jogadores = new JogadorController(quantos);
         jogadores.criarJogadores();
-        for(int i = 0; i < quantos;i++) 
+        for(int i = 0; i < quantos;i++) {
             playersFundo.add(new ImageView(new Image(jogadores.getJogadorById(i).getImg())));
+            switch(i) {
+                case 0:
+                    playersFundo.get(i).setX(0);
+                    playersFundo.get(i).setY(100);
+                    jogadores.getJogadorById(i).setDinheiro(10,180);
+                    jogadores.getJogadorById(i).setTexto();
+                    break;
+                case 1:
+                    playersFundo.get(i).setX(0);
+                    playersFundo.get(i).setY(250);
+                    jogadores.getJogadorById(i).setDinheiro(10,330);
+                    jogadores.getJogadorById(i).setTexto();
+                    break;
+                case 2:
+                    playersFundo.get(i).setX(0);
+                    playersFundo.get(i).setY(400);
+                    jogadores.getJogadorById(i).setDinheiro(10,480);
+                    jogadores.getJogadorById(i).setTexto();
+                    break;
+                case 3:
+                    playersFundo.get(i).setX(0);
+                    playersFundo.get(i).setY(550);
+                    jogadores.getJogadorById(i).setDinheiro(10,630);
+                    jogadores.getJogadorById(i).setTexto();
+                    break;
+                case 4:
+                    playersFundo.get(i).setX(0);
+                    playersFundo.get(i).setY(700);
+                    jogadores.getJogadorById(i).setDinheiro(10,780);
+                    jogadores.getJogadorById(i).setTexto();
+                    break;
+                case 5:
+                    playersFundo.get(i).setX(0);
+                    playersFundo.get(i).setY(850);
+                    jogadores.getJogadorById(i).setDinheiro(10,930);
+                    jogadores.getJogadorById(i).setTexto();
+                    break;
+            }
+        }
         tabuleiro.iniciaTabuleiro(quantos);
         tabuleiro.limpaValores();
         casas = new CasaController(tabuleiro);
@@ -140,12 +180,7 @@ public class Jogo {
                     System.out.println(tabuleiro.getOrdem());
                     //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
-                        
-                        System.out.println(quemJogando + ": " +jogadores.getJogadorById(quemJogando).getCasaAtual() + " " +jogadores.getJogadorById(quemJogando).getCarteira());
-                        System.out.println("PROPRIEDADES: " + jogadores.getJogadorById(quemJogando).getCasasCompradas());
-                        System.out.println("VALOR DOS DADOS: "+ dado1.valorDado() + " " + dado2.valorDado());
                         jogadores.atualizarCasaAtual(quemJogando, dado1.valorDado()+dado2.valorDado());
-                        System.out.println(quemJogando + ": " +jogadores.getJogadorById(quemJogando).getCasaAtual() + " " +jogadores.getJogadorById(quemJogando).getCarteira());
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                         //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
                         if(casas.checaCompravel(atual)) {
@@ -183,13 +218,9 @@ public class Jogo {
                                     }
                                     //SE O JOGADOR PODE PAGAR O ALUGUEL
                                     else {
-                                        System.out.println(quemJogando + ": " +jogadores.getJogadorById(quemJogando).getCasaAtual() + " " +jogadores.getJogadorById(quemJogando).getCarteira());
                                         hipotecar.setDisable(true);
                                         jogadores.atualizarCarteira(quemJogando, -tabuleiro.getCasaCIndex(atual).getValorAluguel());
-                                        System.out.println(tabuleiro.getCasaCIndex(atual).getDono() + ": " +jogadores.getJogadorById(tabuleiro.getCasaCIndex(atual).getDono()).getCarteira());
                                         jogadores.atualizarCarteira(tabuleiro.getCasaCIndex(atual).getDono(), tabuleiro.getCasaCIndex(atual).getValorAluguel());
-                                        System.out.println(quemJogando + ": " +jogadores.getJogadorById(quemJogando).getCasaAtual() + " " +jogadores.getJogadorById(quemJogando).getCarteira());
-                                        System.out.println(tabuleiro.getCasaCIndex(atual).getDono() + ": " +jogadores.getJogadorById(tabuleiro.getCasaCIndex(atual).getDono()).getCarteira());
                                     }
                                 }
                             }
@@ -240,9 +271,15 @@ public class Jogo {
         comprar.setOnAction(eventoComprar);
         melhorar.setOnAction(eventoMelhorar);
         hipotecar.setOnAction(eventoHipotecar);
+        roleDados.setTranslateY(0);
         passeTurno.setTranslateY(60);
         comprar.setTranslateY(120);
         melhorar.setTranslateY(180);
         hipotecar.setTranslateY(240);
+        roleDados.setTranslateX(1000);
+        passeTurno.setTranslateX(1000);
+        comprar.setTranslateX(1000);
+        melhorar.setTranslateX(1000);
+        hipotecar.setTranslateX(1000);
     }
 }
