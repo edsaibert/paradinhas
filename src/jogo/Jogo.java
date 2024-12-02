@@ -128,13 +128,11 @@ public class Jogo {
                 //SE CASA NAO FOR TERRENO E SIM EMPRESA
                 if(casas.getCasaCompravelbyId(atual).getTipo() == 9) {
                     melhorar.setDisable(true);
-                    int i = 0, cat = 0;
-                    boolean tem = false;
-                    while(i < 40 && !tem) {
+                    int i = 0, cont = 0;
+                    while(i < 40) {
                         if(jogadores.getJogadorById(quemJogando).getCasasCompradas().contains(i)) {
                             if(casas.getCasaCompravelbyId(i).getTipo() == 9) {
-                                tem = true;
-                                cat = casas.getCasaCompravelbyId(i).getCategoria()+1;
+                                cont++;
                             }
                         }
                         i++;
@@ -143,12 +141,13 @@ public class Jogo {
                     while(i < 40) {
                         if(jogadores.getJogadorById(quemJogando).getCasasCompradas().contains(i)) {
                             if(casas.getCasaCompravelbyId(i).getTipo() == 9) {
-                                casas.Melhoria(jogadores.getJogadorById(quemJogando), cat);
+                                casas.Melhoria(jogadores.getJogadorById(quemJogando), cont);
                             }
                         }
                         i++;
                     }
                 }
+                System.out.println(casas.getCasaCompravelbyId(atual).getCategoria());
                 tabuleiro.getCasaCIndex(atual).setDono(quemJogando);
                 hipotecar.setDisable(true);
                 comprar.setDisable(true);
@@ -200,10 +199,9 @@ public class Jogo {
 
                 //NAO ESTA NA FASE DE DECISAO DE ORDEM DE JOGO
                 if(comecou) {
-                    System.out.println(tabuleiro.getOrdem());
                     //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
-                        jogadores.atualizarCasaAtual(quemJogando, dado1.valorDado()+dado2.valorDado());
+                        jogadores.atualizarCasaAtual(quemJogando,dado1.valorDado()+dado2.valorDado());
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                         //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
                         if(casas.checaCompravel(atual)) {
@@ -224,7 +222,7 @@ public class Jogo {
                                 if(tabuleiro.getCasaCIndex(atual).getDono() == quemJogando) {
                                     hipotecar.setDisable(true);
                                     //SE A CASA PODE SER MELHORADA
-                                    if((tabuleiro.getCasaCIndex(atual).getCategoria() > 0 || tabuleiro.getCasaCIndex(atual).getCategoria() < 6)) {
+                                    if(tabuleiro.getCasaCIndex(atual).getTipo() != 9 && (tabuleiro.getCasaCIndex(atual).getCategoria() > 0 || tabuleiro.getCasaCIndex(atual).getCategoria() < 6)) {
                                         //SE O JOGADOR POSSUI DINHEIRO PARA MELHORAR
                                         if(jogadores.getJogadorById(quemJogando).getCarteira() >= 2*tabuleiro.getCasaCIndex(atual).getValorAluguel()) 
                                             melhorar.setDisable(false);
@@ -246,6 +244,17 @@ public class Jogo {
                                         jogadores.atualizarCarteira(tabuleiro.getCasaCIndex(atual).getDono(), tabuleiro.getCasaCIndex(atual).getValorAluguel());
                                     }
                                 }
+                            }
+                        }
+                        //SE A CASA APENAS TIRA DINHEIRO DO JOGADOR
+                        else if(tabuleiro.getCasaIndex(atual).getTipo() == 10) {
+                            comprar.setDisable(true);
+                            hipotecar.setDisable(true);
+                            melhorar.setDisable(true);
+                            if(jogadores.getJogadorById(quemJogando).getCarteira() >= 200)
+                                jogadores.atualizarCarteira(quemJogando, -200);
+                            else {
+                                /*CÓDIGO PARA HIPOTECA PARA PAGAR A DÍVIDA*/
                             }
                         }
                         //SE A CASA NAO É COMPRÁVEL (AINDA RESTA MUITA COISA PRA FAZER AQUI, FAREI DEPOIS)

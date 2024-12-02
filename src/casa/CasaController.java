@@ -82,7 +82,8 @@ public class CasaController {
             }
             i++;
         }
-        int diff = compraveis.get(idx).getCategoria() - categoria;
+        int diff = categoria - compraveis.get(idx).getCategoria();
+        System.out.println(diff);
         compraveis.get(idx).setCategoria(categoria);
         if(diff >= 0) 
             for(i = 0;i < diff;i++) 
