@@ -49,7 +49,7 @@ public class Main extends Application {
         rs.setSize(50, 50);
 
 
-        Jogo game = new Jogo(6);
+        Jogo game = new Jogo(2);
         root.getChildren().add(game.roleDados);
         root.getChildren().add(game.passeTurno);
         root.getChildren().add(game.hipotecar);
@@ -57,7 +57,7 @@ public class Main extends Application {
         root.getChildren().add(game.comprar);
         root.getChildren().add(game.dadosImg.get(0));
         root.getChildren().add(game.dadosImg.get(1));
-        for(int i = 0; i < 6; i++) {
+        for(int i = 0; i < 2; i++) {
             root.getChildren().add(game.playersFundo.get(i));
             root.getChildren().add(game.jogadores.getJogadorById(i).dinheiro);
         }

@@ -1,7 +1,5 @@
 package jogador;
 import java.util.*;
-import design.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -20,7 +18,7 @@ public class Jogador {
 	public Jogador(int id){
 		this.id = id;
 		this.casaAtual = 0;
-		this.carteira = 25000;
+		this.carteira = 1500;
 		this.ativo = true;
 		this.casasCompraveis = new HashSet<>(); 
 		this.casasCompradas = new HashSet<>();
@@ -31,13 +29,13 @@ public class Jogador {
 
 	public String getImg() { return this.img; }
 
-	public void setDinheiro(int x, int y) { this.dinheiro = new Text(x,y,"I$ " + carteira + "   " + this.getCasaAtual()); }
+	public void setDinheiro(int x, int y) { this.dinheiro = new Text(x,y,"I$ " + carteira + " C:" + this.getCasaAtual()); }
 
 	public int getCarteira(){ return this.carteira;	}
 	
 	public boolean getPreso() { return this.preso; }
 
-	public void setTexto() { this.dinheiro.setText("I$ " + this.getCarteira() + "   " + this.getCasaAtual()); this.dinheiro.setFont(new Font(28)); }
+	public void setTexto() { this.dinheiro.setText("I$ " + this.getCarteira() + " C:" + this.getCasaAtual()); this.dinheiro.setFont(new Font(28)); }
 
 	public void setPreso(boolean prisao) { this.preso = prisao; }
 

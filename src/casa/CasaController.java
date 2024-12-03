@@ -14,6 +14,18 @@ public class CasaController {
         this.compraveis = t.getCompraveis();
     }
 
+    public CasaCompravel getCasaCompravelbyId(int index) {
+        int idx = -1,i = 0;
+        while(idx == -1) {
+            if(compraveis.get(i).getId() == todasCasas.get(index).getId()) {
+                idx = i;
+            }
+            i++;
+        }
+
+        return compraveis.get(idx);
+     }
+
     public boolean checaCompravel(int index) {
         boolean compravel = false;
         int i = 0;
@@ -62,15 +74,16 @@ public class CasaController {
     }
 
     //SE, AO INVES DE MELHORAR EM 1 NIVEL, EU QUERO SETAR UMA CATEGORIA ESPECIFICA
-    public void Melhoria(Jogador p, int categoria) {
+    public void Melhoria(int casaId, int categoria) {
         int idx = -1,i = 0;
         while(idx == -1) {
-            if(compraveis.get(i).getId() == p.getCasaAtual()) {
+            if(compraveis.get(i).getId() == casaId) {
                 idx = i;
             }
             i++;
         }
-        int diff = compraveis.get(idx).getCategoria() - categoria;
+        int diff = categoria - compraveis.get(idx).getCategoria();
+        System.out.println(diff);
         compraveis.get(idx).setCategoria(categoria);
         if(diff >= 0) 
             for(i = 0;i < diff;i++) 

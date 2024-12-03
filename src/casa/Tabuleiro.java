@@ -138,14 +138,14 @@ public class Tabuleiro {
                     pA = 4;
                     break;
                 case 4:
-                    t = 0;
+                    t = 10;
                     pC = 0;
                     pA = 200;
                     break;
                 case 5:
                     t = 9;
                     pC = 200;
-                    pA = 4;
+                    pA = 5;
                     break;
                 case 6:
                     t = 2;
@@ -180,7 +180,7 @@ public class Tabuleiro {
                 case 12:
                     t = 9;
                     pC = 200;
-                    pA = 4;
+                    pA = 5;
                     break;
                 case 13:
                     t = 3;
@@ -195,7 +195,7 @@ public class Tabuleiro {
                 case 15:
                     t = 9;
                     pC = 200;
-                    pA = 4;
+                    pA = 5;
                     break;
                 case 16:
                     t = 4;
@@ -245,7 +245,7 @@ public class Tabuleiro {
                 case 25:
                     t = 9;
                     pC = 200;
-                    pA = 4;
+                    pA = 5;
                     break;
                 case 26:
                     t = 6;
@@ -260,7 +260,7 @@ public class Tabuleiro {
                 case 28:
                     t = 9;
                     pC = 200;
-                    pA = 4;
+                    pA = 5;
                     break;
                 case 29:
                     t = 6;
@@ -295,7 +295,7 @@ public class Tabuleiro {
                 case 35:
                     t = 9;
                     pC = 200;
-                    pA = 4;
+                    pA = 5;
                     break;
                 case 36:
                     t = 0;
@@ -308,9 +308,9 @@ public class Tabuleiro {
                     pA = 35;
                     break;
                 case 38:
-                    t = 0;
+                    t = 10;
                     pC = 0;
-                    pA = 100;
+                    pA = 200;
                     break;
                 default:
                     t = 8;
@@ -318,7 +318,6 @@ public class Tabuleiro {
                     pA = 50;
                     break;
             }
-
             if (t >=1 && t <= 9) {
                 todasCasas.add(new CasaCompravel(i,"application/assets/casas/casa"+i+".png",t,"JONAS",pA,pC,0));
                 compraveis.add(new CasaCompravel(i,"application/assets/casas/casa"+i+".png",t,"JONAS",pA,pC,0));
