@@ -1,4 +1,4 @@
-package application;
+package design;
 
 import javafx.stage.Stage;
 

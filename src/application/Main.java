@@ -20,6 +20,9 @@ import javafx.scene.layout.Region;
 import menu.*;
 
 import jogador.*;
+import casa.*;
+import design.*;
+import jogo.*;
 
 
 public class Main extends Application {
@@ -42,6 +45,7 @@ public class Main extends Application {
         stage.setFullScreen(true);
         setStageSize(stage, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
        
+
         stage.setTitle("MonoPolitecnico");
         stage.setScene(scene);
         stage.show();

@@ -10,6 +10,8 @@ public class JogadorController {
 		this.jogadores = new ArrayList<>();
 	}	
 
+	public int getNumJogadores() { return numJogadores; }
+
 	public void criarJogadores(){
 		for (int i = 0; i < this.numJogadores; i++){
 			this.jogadores.add(new Jogador(i));
@@ -28,8 +30,8 @@ public class JogadorController {
 	public void atualizarCasaAtual(int id, int numCasas){
 		Jogador jogador = this.jogadores.get(id);
 		int casaAtual = jogador.getCasaAtual();
-		if((casaAtual+numCasas) >= 40)
-			this.atualizarCarteira(id, 200);
+		//if((casaAtual+numCasas) >= 40)
+		//	this.atualizarCarteira(id, 200);
 		jogador.setCasaAtual((casaAtual+numCasas) % 40);
 	}
 

@@ -1,6 +1,8 @@
 package casa;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
@@ -8,31 +10,67 @@ public class Tabuleiro {
 
     protected ArrayList<ImageView> casasImg = new ArrayList<ImageView>();
     protected ArrayList<Casa> todasCasas = new ArrayList<Casa>();
+    protected ArrayList<CasaCompravel> compraveis = new ArrayList<CasaCompravel>();
     protected ArrayList<Casa> naoCompraveis = new ArrayList<Casa>();
     protected ArrayList<Integer> ordem = new ArrayList<Integer>();
+    protected ArrayList<Integer> numDados = new ArrayList<Integer>();
+    
+    public ArrayList<CasaCompravel> getCompraveis() { return compraveis; }
 
     public ArrayList<Casa> getNaoCompraveis() { return naoCompraveis; }
 
     public ArrayList<Casa> getTodasCasas() { return todasCasas; }
 
+    public ImageView getImg(int index) { return casasImg.get(index); }
+
     public ArrayList<ImageView> getTodasImg() { return casasImg; }
 
     public Casa getCasaIndex(int index) { return todasCasas.get(index); }  
+    
+    public CasaCompravel getCasaCIndex(int index) { 
+        int idx = -1, i = 0;
+        while(idx == -1) {
+            if(compraveis.get(i).getId() == index)
+                idx = i;
+                i++;
+        } 
+        return compraveis.get(idx);
+    }
 
     public Image getCasaImg(int index) { return new Image(todasCasas.get(index).getImg()); }
 
+    public void novoValor(int valor) { numDados.add(valor); }
 
-    public void iniciaTabuleiro() {   
+    public void limpaValores() { numDados.clear(); }
+
+    public void limpaOrdem() { ordem.clear(); }
+
+    public ArrayList<Integer> getValores() { return numDados; }
+
+    public void iniciaTabuleiro(int jogadores) { 
         iniciaCasas();
-        graficoCasas(900,900);
+        graficoCasas(1345,850);
+        for(int i = 0;i < jogadores;i++) 
+            numDados.add(i);
+        setOrdem(numDados);
+        Collections.reverse(ordem);
     }
+
+    public int getFirstOrdem() { return this.ordem.get(0); }
+
+    public ArrayList<Integer> getOrdem() { return this.ordem; }
 
     public void setOrdem(ArrayList<Integer> numeros) {
         int maior = 0;
 
-        for(int j = 0;j <= 5; j++) {
-            for(int i = 1; i < numeros.size();i++) {
-                if(!this.ordem.contains(numeros.get(i)) && numeros.get(i) > numeros.get(maior))
+        for(int j = 0;j < numeros.size(); j++) {
+            int k = 0;
+            while(this.ordem.contains(k)) {
+                k++;
+            }
+            maior = k;
+            for(int i = 0; i < numeros.size();i++) {
+                if(!this.ordem.contains(i) && numeros.get(i) > numeros.get(maior))
                     maior = i;
             }
             this.ordem.add(maior);
@@ -50,14 +88,22 @@ public class Tabuleiro {
     */
     public void graficoCasas(int xIni, int yIni) {    
         for(int i = 0;i < 40;i++) {
-            if(i <= 10) 
+            if(i < 10) 
                 xIni -= 70;
-            else if (i > 10 && i <= 20) 
+            else if(i == 10)
+                xIni -= 100;
+            else if (i > 10 && i < 20) 
+                yIni -= 70;
+            else if(i == 20)
                 yIni -= 100;
-            else if (i > 20 && i <= 30) 
+            else if(i == 21)
+                xIni += 100;
+            else if (i > 21 && i < 31) 
                 xIni += 70;
-            else 
+            else if(i == 31)
                 yIni += 100;
+            else
+                yIni += 70;
 
 
             casasImg.add(new ImageView(getCasaImg(i)));
@@ -92,14 +138,14 @@ public class Tabuleiro {
                     pA = 4;
                     break;
                 case 4:
-                    t = 0;
+                    t = 10;
                     pC = 0;
                     pA = 200;
                     break;
                 case 5:
-                    t = 0;
-                    pC = 10;
-                    pA = 10;
+                    t = 9;
+                    pC = 200;
+                    pA = 5;
                     break;
                 case 6:
                     t = 2;
@@ -132,9 +178,9 @@ public class Tabuleiro {
                     pA = 10;
                     break;
                 case 12:
-                    t = 0;
-                    pC = 0;
-                    pA = 0;
+                    t = 9;
+                    pC = 200;
+                    pA = 5;
                     break;
                 case 13:
                     t = 3;
@@ -147,9 +193,9 @@ public class Tabuleiro {
                     pA = 12;
                     break;
                 case 15:
-                    t = 0;
-                    pC = 0;
-                    pA = 0;
+                    t = 9;
+                    pC = 200;
+                    pA = 5;
                     break;
                 case 16:
                     t = 4;
@@ -197,9 +243,9 @@ public class Tabuleiro {
                     pA = 20;
                     break;
                 case 25:
-                    t = 0;
-                    pC = 0;
-                    pA = 0;
+                    t = 9;
+                    pC = 200;
+                    pA = 5;
                     break;
                 case 26:
                     t = 6;
@@ -212,9 +258,9 @@ public class Tabuleiro {
                     pA = 22;
                     break;
                 case 28:
-                    t = 0;
-                    pC = 10;
-                    pA = 10;
+                    t = 9;
+                    pC = 200;
+                    pA = 5;
                     break;
                 case 29:
                     t = 6;
@@ -247,9 +293,9 @@ public class Tabuleiro {
                     pA = 28;
                     break;
                 case 35:
-                    t = 0;
-                    pC = 0;
-                    pA = 0;
+                    t = 9;
+                    pC = 200;
+                    pA = 5;
                     break;
                 case 36:
                     t = 0;
@@ -262,9 +308,9 @@ public class Tabuleiro {
                     pA = 35;
                     break;
                 case 38:
-                    t = 0;
+                    t = 10;
                     pC = 0;
-                    pA = 100;
+                    pA = 200;
                     break;
                 default:
                     t = 8;
@@ -272,13 +318,13 @@ public class Tabuleiro {
                     pA = 50;
                     break;
             }
-
-            if (t >=1 && t <= 8) {
-                todasCasas.add(new CasaCompravel(i,"STRING PRA IMAGEM",t,"JONAS",pA,pC,0));
+            if (t >=1 && t <= 9) {
+                todasCasas.add(new CasaCompravel(i,"application/assets/casas/casa"+i+".png",t,"JONAS",pA,pC,0));
+                compraveis.add(new CasaCompravel(i,"application/assets/casas/casa"+i+".png",t,"JONAS",pA,pC,0));
             }
             else {
-                todasCasas.add(new Casa(i,"STRING PRA IMAGEM",t,"JONAS"));
-                naoCompraveis.add(new Casa(i,"STRING PRA IMAGEM",t,"JONAS"));
+                todasCasas.add(new Casa(i,"application/assets/casas/casa"+i+".png",t,"JONAS"));
+                naoCompraveis.add(new Casa(i,"application/assets/casas/casa"+i+".png",t,"JONAS"));
             }
         }
     }
