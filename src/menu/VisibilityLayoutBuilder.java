@@ -11,7 +11,6 @@ import java.stage.Stage;
 
 import javafx.util.*;
 
-
 public class VisibilityLayoutBuilder implements Builder<Region> {
     Region customComponent2;
 
@@ -20,21 +19,56 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
         BorderPane results = new BorderPane();
         // results.setTop(new Label("This is The Wrapper"));
         BooleanProperty vBox1Visible = new SimpleBooleanProperty(true);
-        Region component1 = new Menu(() -> vBox1Visible.set(false)).build(
+        BooleanProperty vBox2Visible = new SimpleBooleanProperty(false);
+
+        Region component1 = new MenuLayout(() -> {
+            vBox1Visible.set(false);
+            vBox2Visible.set(true);
+        }).build(button -> {
+            if (button.getText().equals("Iniciar Novo Jogo")) {
+                button.setOnAction(e -> vBox1Visible.set(false));
+            } else if (button.getText().equals("Retomar Jogo")) {
+                button.setOnAction(e -> vBox1Visible.set(false));
+            } else if (button.getText().equals("Sair")) {
+                button.setOnAction(e -> System.exit(0));
+            }
+        });
+
+        Region component2 = new GameLayout(() -> {
+            vBox1Visible.set(true);
+            vBox2Visible.set(false);
+        }).build(button -> {
+            if (button.getText().equals("Menu")) {
+                button.setOnAction(e -> vBox2Visible.set(true));
+            }
+        });
+
+        Region component3 = new PauseLayout(() -> {
+            vBox1Visible.set(false);
+            vBox2Visible.set(false);
+        }).build(
             button -> {
-                if (button.getText().equals("Iniciar Novo Jogo")) {
-                    button.setOnAction(e -> vBox1Visible.set(false));
-                } else if (button.getText().equals("Retomar Jogo")) {
-                    button.setOnAction(e -> vBox1Visible.set(false));
-                } else if (button.getText().equals("Sair")) {
-                    button.setOnAction(e -> System.exit(0));
+                if (button.getText().equals("Retomar Jogo")){
+                    vBox1Visible.set(true);
+                    vBox2Visible.set(true);
+                }
+                else if (button.getText().equals("Salvar e Sair")){
+                    vBox1Visible.set(true);
+                    vBox2Visible.set(false);
+                }
+                else if (button.getText().equals("Sair")){
+                    vBox1Visible.set(true);
+                    vBox2Visible.set(false);
                 }
             }
         );
-        Region component2 = new Layout2Builder(() -> vBox1Visible.set(true)).build();
+
         component1.visibleProperty().bind(vBox1Visible);
-        component2.visibleProperty().bind(vBox1Visible.not());
-        results.setCenter(new StackPane(component1, component2));
+        component2.visibleProperty().bind(vBox1Visible.not().and(vBox2Visible.not()));
+        component3.visibleProperty().bind(vBox2Visible);
+
+        results.setCenter(new StackPane(component1, component2, component3));
+
         return results;
     }
 

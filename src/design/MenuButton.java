@@ -1,4 +1,4 @@
-package menu;
+package design;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -26,6 +26,7 @@ public class MenuButton extends Button {
     this.setGraphicTextGap(-50);
 
     this.setMinWidth(100);
+    this.setPrefWidth(300);
     this.setFont(Font.font("Ubuntu Mono", FontWeight.BOLD, 20));
     this.setText(text);
     this.setGraphic(buildIcon);

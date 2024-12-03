@@ -8,22 +8,11 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.Group;
-import javafx.scene.control.Button;
-import javafx.event.ActionEvent; 
-import javafx.event.EventHandler;
 import javafx.scene.layout.Region;
+import javafx.scene.input.KeyCode;
 
 import menu.*;
-
-import jogador.*;
-import casa.*;
-import design.*;
-import jogo.*;
-
 
 public class Main extends Application {
     public static void main(String[] args) {
@@ -42,10 +31,14 @@ public class Main extends Application {
         Scene scene = new Scene(root, 1280, 720);
         scene.setFill(new Color(0.6, 0.6, 0.6, 1.0));
         
-        stage.setFullScreen(true);
+        scene.setOnKeyPressed(event -> {
+            // fullscreen quando 'F' é apertado
+            if (event.getCode() == KeyCode.F) {
+                stage.setFullScreen(!stage.isFullScreen());
+            }
+        });
         setStageSize(stage, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
        
-
         stage.setTitle("MonoPolitecnico");
         stage.setScene(scene);
         stage.show();

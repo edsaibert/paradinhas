@@ -11,7 +11,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import javafx.scene.image.Image;
+
+import design.GameButton;
 
 public class Jogo {
     public JogadorController jogadores;
@@ -26,11 +29,13 @@ public class Jogo {
     protected boolean comecou = false;
     protected boolean decidiu = false;
     protected Tabuleiro tabuleiro = new Tabuleiro();
-    public Button roleDados = new Button("Rolar Dados");
-    public Button passeTurno = new Button("Passar Turno");
-    public Button comprar = new Button("Comprar Propriedade");
-    public Button melhorar = new Button("Melhorar Propriedade");
-    public Button hipotecar = new Button("Hipotecar");
+
+    int screenWidth = (int) Screen.getPrimary().getVisualBounds().getWidth();
+    public GameButton roleDados = new GameButton("Rolar Dados", screenWidth - 500, 100);
+    public GameButton passeTurno = new GameButton("Passar Turno", screenWidth - 500, 150);
+    public GameButton comprar = new GameButton("Comprar Propriedade", screenWidth - 500, 200);
+    public GameButton melhorar = new GameButton("Melhorar Propriedade", screenWidth - 500, 250);
+    public GameButton hipotecar = new GameButton("Hipotecar", screenWidth - 500, 300);
 
     public Jogo(int quantos) {
         dadosImg.add(new ImageView(dado1.getImg()));
@@ -357,15 +362,15 @@ public class Jogo {
         comprar.setOnAction(eventoComprar);
         melhorar.setOnAction(eventoMelhorar);
         hipotecar.setOnAction(eventoHipotecar);
-        roleDados.setTranslateY(0);
-        passeTurno.setTranslateY(60);
-        comprar.setTranslateY(120);
-        melhorar.setTranslateY(180);
-        hipotecar.setTranslateY(240);
-        roleDados.setTranslateX(1000);
-        passeTurno.setTranslateX(1000);
-        comprar.setTranslateX(1000);
-        melhorar.setTranslateX(1000);
-        hipotecar.setTranslateX(1000);
+        // roleDados.setTranslateY(0);
+        // passeTurno.setTranslateY(60);
+        // comprar.setTranslateY(120);
+        // melhorar.setTranslateY(180);
+        // hipotecar.setTranslateY(240);
+        // roleDados.setTranslateX(1000);
+        // passeTurno.setTranslateX(1000);
+        // comprar.setTranslateX(1000);
+        // melhorar.setTranslateX(1000);
+        // hipotecar.setTranslateX(1000);
     }
 }

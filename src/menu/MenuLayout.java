@@ -13,14 +13,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import java.util.function.Consumer;
 
+import design.MenuButton;
 import javafx.util.*;
 
 
 
-public class Menu implements Builder<Region> {
+public class MenuLayout implements Builder<Region> {
     private final Runnable onAction;
 
-    public Menu(Runnable onAction) {
+    public MenuLayout(Runnable onAction) {
         this.onAction = onAction;
     }
 
