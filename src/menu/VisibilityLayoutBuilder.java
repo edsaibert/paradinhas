@@ -47,21 +47,20 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
             vBox1Visible.set(false);
             vBox2Visible.set(false);
         }).build(
-            button -> {
-                if (button.getText().equals("Retomar Jogo")){
-                    vBox1Visible.set(true);
-                    vBox2Visible.set(true);
-                }
-                else if (button.getText().equals("Salvar e Sair")){
-                    vBox1Visible.set(true);
-                    vBox2Visible.set(false);
-                }
-                else if (button.getText().equals("Sair")){
-                    vBox1Visible.set(true);
-                    vBox2Visible.set(false);
-                }
-            }
-        );
+                button -> {
+                    if (button.getText().equals("Retomar Jogo")) {
+                        button.setOnAction(e -> {
+                            vBox1Visible.set(false); // Ensure MenuLayout stays hidden
+                            vBox2Visible.set(false); // Allow GameLayout to show (binding condition)
+                        });
+                    } else if (button.getText().equals("Salvar e Sair") || button.getText().equals("Sair")) {
+                        button.setOnAction(e -> {
+                            vBox1Visible.set(true); // Show MenuLayout
+                            vBox2Visible.set(false); // Hide GameLayout
+                        });
+                    }
+        
+                });
 
         component1.visibleProperty().bind(vBox1Visible);
         component2.visibleProperty().bind(vBox1Visible.not().and(vBox2Visible.not()));

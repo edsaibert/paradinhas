@@ -31,6 +31,7 @@ public class Jogo {
     protected Tabuleiro tabuleiro = new Tabuleiro();
 
     int screenWidth = (int) Screen.getPrimary().getVisualBounds().getWidth();
+    int screenHeight = (int) Screen.getPrimary().getVisualBounds().getHeight();
     public GameButton roleDados = new GameButton("Rolar Dados", screenWidth - 500, 100);
     public GameButton passeTurno = new GameButton("Passar Turno", screenWidth - 500, 150);
     public GameButton comprar = new GameButton("Comprar Propriedade", screenWidth - 500, 200);
@@ -40,10 +41,10 @@ public class Jogo {
     public Jogo(int quantos) {
         dadosImg.add(new ImageView(dado1.getImg()));
         dadosImg.add(new ImageView(dado2.getImg()));
-        dadosImg.get(0).setX(1000);
-        dadosImg.get(0).setY(800);
-        dadosImg.get(1).setX(1200);
-        dadosImg.get(1).setY(800);
+        dadosImg.get(0).setX(screenWidth/2);
+        dadosImg.get(0).setY(screenHeight/2 + 200);
+        dadosImg.get(1).setX(screenWidth/2 + 150);
+        dadosImg.get(1).setY(screenHeight/2 + 200);
         jogadores = new JogadorController(quantos);
         jogadores.criarJogadores();
         for(int i = 0; i < quantos;i++) {
@@ -250,7 +251,7 @@ public class Jogo {
                 if(comecou) {
                     //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
-                        jogadores.atualizarCasaAtual(quemJogando,5/*dado1.valorDado()+dado2.valorDado()*/);
+                        jogadores.atualizarCasaAtual(quemJogando,dado1.valorDado()+dado2.valorDado());
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                         //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
                         if(casas.checaCompravel(atual)) {

@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import java.util.function.Consumer;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.*;
 import design.*;
 
@@ -19,6 +21,13 @@ public class PauseLayout implements Builder<Region> {
     public Region build(Consumer<MenuButton> buttonConfigurator) {
         VBox layout2 = new VBox(10); // Vertical box with spacing of 10
         layout2.setAlignment(Pos.CENTER);
+        layout2.setStyle(
+                "-fx-background-image: url('menu/assets/background.png');" +
+                        "-fx-background-size: cover;" + // Ajusta a imagem para cobrir toda a região
+                        "-fx-background-position: center;" // Centraliza a imagem
+        );
+
+
 
         MenuButton buttonRetomarJogo = new MenuButton("Retomar Jogo");
         MenuButton buttonSalvarSair = new MenuButton("Salvar e Sair");

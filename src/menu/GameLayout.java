@@ -36,7 +36,9 @@ public class GameLayout implements Builder<Region> {
 
     public Region build(Consumer<GameButton> buttonConfigurator) {
         Pane layout2 = new Pane();
-
+        layout2.setStyle(
+                "-fx-background-color:#386682"
+        );
         Tabuleiro t = new Tabuleiro();
         t.iniciaTabuleiro(6);
 
