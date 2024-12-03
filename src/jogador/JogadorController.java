@@ -66,6 +66,24 @@ public class JogadorController {
 		casasCompradas.remove(idCasa);
 	}
 
+	public void desenharPlayerNaCasas(int idJogador, int rolagemDado){
+		Jogador jogador = this.jogadores.get(idJogador);
+		int idAtual = jogador.casaAtual;
+
+		while (idAtual <= jogador.casaAtual + rolagemDado){
+			if (idAtual >= 0 && idAtual <= 9) {
+				// IR PARA ESQUERDA
+			} else if (idAtual >= 10 && idAtual <= 19) {
+				// IR PARA CIMA
+			} else if (idAtual >= 20 && idAtual <= 29) {
+				// IR PARA DIREITA
+			} else if (idAtual >= 30 && idAtual <= 39) {
+				// IR PARA BAIXO
+			}
+			idAtual+=1;
+	}
+	}
+
 	public void adicionarCasaCompravel(int idJogador, int idCasa){
 		Jogador jogador = this.jogadores.get(idJogador);
 		HashSet<Integer> casasCompraveis = jogador.getCasasCompraveis();
