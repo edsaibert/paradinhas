@@ -1,7 +1,5 @@
 package jogador;
 import java.util.*;
-import design.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 

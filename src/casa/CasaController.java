@@ -74,10 +74,10 @@ public class CasaController {
     }
 
     //SE, AO INVES DE MELHORAR EM 1 NIVEL, EU QUERO SETAR UMA CATEGORIA ESPECIFICA
-    public void Melhoria(Jogador p, int categoria) {
+    public void Melhoria(int casaId, int categoria) {
         int idx = -1,i = 0;
         while(idx == -1) {
-            if(compraveis.get(i).getId() == p.getCasaAtual()) {
+            if(compraveis.get(i).getId() == casaId) {
                 idx = i;
             }
             i++;
