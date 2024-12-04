@@ -305,12 +305,12 @@ public class Jogo {
                             if(jogadores.getJogadorById(quemJogando).getCarteira() >= 200)
                                 jogadores.atualizarCarteira(quemJogando, -200);
                             else {
-                                /*CÓDIGO PARA HIPOTECA PARA PAGAR A DÍVIDA*/
+                                hipotecar.setDisable(false);
                             }
                         }
                         //SE A CASA NAO É COMPRÁVEL (AINDA RESTA MUITA COISA PRA FAZER AQUI, FAREI DEPOIS)
                         else {
-
+                            /*CODIGO PARA CARTAS*/
                         }
                     }
                     //SE O JOGADOR ATUAL ESTIVER PRESO
