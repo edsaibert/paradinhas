@@ -102,7 +102,7 @@ public class Jogo {
             public void handle(ActionEvent e) {
                 int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                 casas.Melhoria(jogadores.getJogadorById(quemJogando));
-                jogadores.getJogadorById(quemJogando).setCarteira(jogadores.getJogadorById(quemJogando).getCarteira()-50*(1+(int)Math.floor(atual/10)));
+                jogadores.getJogadorById(quemJogando).setCarteira(jogadores.getJogadorById(quemJogando).getCarteira()-50*(1+(int)Math.floor(casas.getCasaCompravelbyId(atual).getCategoria()/10)));
                 hipotecar.setDisable(true);
                 comprar.setDisable(true);
                 melhorar.setDisable(true);
@@ -193,7 +193,6 @@ public class Jogo {
                         i++;
                     }
                 }
-                System.out.println(casas.getCasaCompravelbyId(atual).getCategoria());
                 tabuleiro.getCasaCIndex(atual).setDono(quemJogando);
                 hipotecar.setDisable(true);
                 comprar.setDisable(true);
@@ -304,13 +303,15 @@ public class Jogo {
                             melhorar.setDisable(true);
                             if(jogadores.getJogadorById(quemJogando).getCarteira() >= 200)
                                 jogadores.atualizarCarteira(quemJogando, -200);
-                            else {
+                            else 
                                 hipotecar.setDisable(false);
-                            }
                         }
                         //SE A CASA NAO É COMPRÁVEL (AINDA RESTA MUITA COISA PRA FAZER AQUI, FAREI DEPOIS)
                         else {
                             /*CODIGO PARA CARTAS*/
+                            comprar.setDisable(true);
+                            hipotecar.setDisable(true);
+                            melhorar.setDisable(true);
                         }
                     }
                     //SE O JOGADOR ATUAL ESTIVER PRESO
