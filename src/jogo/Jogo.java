@@ -166,7 +166,7 @@ public class Jogo {
                 int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                 jogadores.comprarCasa(quemJogando, atual);
                 jogadores.getJogadorById(quemJogando).setCarteira(jogadores.getJogadorById(quemJogando).getCarteira()-tabuleiro.getCasaCIndex(atual).getValorCompra());
-                if(true /* CODIGO PRA CHECAR MONOPOLIO*/ && jogadores.getJogadorById(quemJogando).getCarteira() >= 50*(1+Math.floor(atual/10)))
+                if(casas.temMonopolio(casas.getCasaCompravelbyId(atual).getTipo(), jogadores.getJogadorById(quemJogando)) && jogadores.getJogadorById(quemJogando).getCarteira() >= 50*(1+Math.floor(atual/10)))
                     melhorar.setDisable(false);
                 else
                     melhorar.setDisable(true);
@@ -274,7 +274,7 @@ public class Jogo {
                                     //SE A CASA PODE SER MELHORADA
                                     if(tabuleiro.getCasaCIndex(atual).getTipo() != 9 && (tabuleiro.getCasaCIndex(atual).getCategoria() > 0 || tabuleiro.getCasaCIndex(atual).getCategoria() < 6)) {
                                         //SE O JOGADOR POSSUI DINHEIRO PARA MELHORAR
-                                        if(/*monopolio daquele tipo de casa && */jogadores.getJogadorById(quemJogando).getCarteira() >= 2*tabuleiro.getCasaCIndex(atual).getValorAluguel()) 
+                                        if(casas.temMonopolio(casas.getCasaCompravelbyId(atual).getTipo(), jogadores.getJogadorById(quemJogando)) && jogadores.getJogadorById(quemJogando).getCarteira() >= 2*tabuleiro.getCasaCIndex(atual).getValorAluguel()) 
                                             melhorar.setDisable(false);
                                         else
                                             melhorar.setDisable(true);

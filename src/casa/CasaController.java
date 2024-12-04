@@ -1,6 +1,6 @@
 package casa;
 
-import java.util.ArrayList;
+import java.util. *;
 
 import jogador.Jogador;
 
@@ -13,6 +13,23 @@ public class CasaController {
         this.todasCasas = t.getTodasCasas();
         this.compraveis = t.getCompraveis();
     }
+
+	public boolean temMonopolio(int tipo, Jogador player) {
+		boolean tem = false;
+		int cont = 0;
+		for(int i = 0;i < 40;i++) {
+			if(player.getCasasCompradas().contains(i) && todasCasas.get(i).getTipo() == tipo)
+                cont++;
+		}
+        if(tipo == 1 || tipo == 8) 
+            if(cont == 2)
+                tem = true;
+        else 
+            if(cont == 3)
+                tem = true;
+
+		return tem;
+	}
 
     public CasaCompravel getCasaCompravelbyId(int index) {
         int idx = -1,i = 0;
