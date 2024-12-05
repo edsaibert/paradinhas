@@ -6,11 +6,9 @@ import application.dadoGraphic;
 import casa.CasaController;
 import casa.Tabuleiro;
 import jogador.JogadorController;
-import javafx.scene.control.Button;
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.scene.image.Image;
 
@@ -139,9 +137,7 @@ public class Jogo {
                         i++;
                     }
                     if(atuAluguel > jogadores.getJogadorById(quemJogando).getCarteira()) {
-                        /*FALENCIA */
                         jogadores.eliminarJogador(quemJogando);
-                        System.out.println("TA FALINDOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
                     }
                     
                     else {
@@ -236,12 +232,16 @@ public class Jogo {
                     }
                 }
 
-                System.out.println("A-A " + casas.getCasaCompravelbyId(1).getHipotecado());
                 tabuleiro.atualizaOrdem();
+                int remove = -1;
                 quemJogando = tabuleiro.getFirstOrdem();
                 while(!jogadores.getJogadorById(quemJogando).getEstado()) {
+                    remove = tabuleiro.getFirstOrdem();
                     tabuleiro.atualizaOrdem();
-                    quemJogando = tabuleiro.getFirstOrdem();
+                    tabuleiro.removeDaOrdem(remove);
+                }
+                if(tabuleiro.getOrdem().size() == 1) {
+                    /*CÓDIGO PARA TERMINAR O JOGO*/
                 }
                 passeTurno.setDisable(true);
                 hipotecar.setDisable(true);
@@ -272,7 +272,6 @@ public class Jogo {
                 if(comecou) {
                     //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
-                        System.out.println("A-A " + casas.getCasaCompravelbyId(1).getHipotecado());
                         jogadores.atualizarCasaAtual(quemJogando,1/*dado1.valorDado()+dado2.valorDado() */);
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                         //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
@@ -293,8 +292,6 @@ public class Jogo {
                                 //SE O DONO É O JOGADOR DA RODADA
                                 if(tabuleiro.getCasaCIndex(atual).getDono() == quemJogando) {
                                     //SE A CASA PODE SER DESHIPOTECADA
-                                    System.out.println(jogadores.getJogadorById(quemJogando).getCarteira() + " " + 6*(tabuleiro.getCasaCIndex(atual).getValorCompra())/10 );
-                                    System.out.println(atual+"/"+tabuleiro.getCasaCIndex(atual).getId()+ " " +tabuleiro.getCasaCIndex(atual).getHipotecado());
                                     if(tabuleiro.getCasaCIndex(atual).getHipotecado() && jogadores.getJogadorById(quemJogando).getCarteira() > 6*(tabuleiro.getCasaCIndex(atual).getValorCompra())/10) 
                                         hipotecar.setDisable(false);
                                     
