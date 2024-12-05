@@ -6,12 +6,13 @@ import application.dadoGraphic;
 import casa.CasaController;
 import casa.Tabuleiro;
 import jogador.JogadorController;
-import javafx.scene.control.Button;
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import javafx.scene.image.Image;
+
+import design.GameButton;
 
 public class Jogo {
     public JogadorController jogadores;
@@ -26,19 +27,22 @@ public class Jogo {
     protected boolean comecou = false;
     protected boolean decidiu = false;
     protected Tabuleiro tabuleiro = new Tabuleiro();
-    public Button roleDados = new Button("Rolar Dados");
-    public Button passeTurno = new Button("Passar Turno");
-    public Button comprar = new Button("Comprar Propriedade");
-    public Button melhorar = new Button("Melhorar Propriedade");
-    public Button hipotecar = new Button("Hipotecar");
+
+    int screenWidth = (int) Screen.getPrimary().getVisualBounds().getWidth();
+    int screenHeight = (int) Screen.getPrimary().getVisualBounds().getHeight();
+    public GameButton roleDados = new GameButton("Rolar Dados", screenWidth - 500, 100);
+    public GameButton passeTurno = new GameButton("Passar Turno", screenWidth - 500, 150);
+    public GameButton comprar = new GameButton("Comprar Propriedade", screenWidth - 500, 200);
+    public GameButton melhorar = new GameButton("Melhorar Propriedade", screenWidth - 500, 250);
+    public GameButton hipotecar = new GameButton("Hipotecar", screenWidth - 500, 300);
 
     public Jogo(int quantos) {
         dadosImg.add(new ImageView(dado1.getImg()));
         dadosImg.add(new ImageView(dado2.getImg()));
-        dadosImg.get(0).setX(1000);
-        dadosImg.get(0).setY(800);
-        dadosImg.get(1).setX(1200);
-        dadosImg.get(1).setY(800);
+        dadosImg.get(0).setX(screenWidth/2);
+        dadosImg.get(0).setY(screenHeight/2 + 200);
+        dadosImg.get(1).setX(screenWidth/2 + 150);
+        dadosImg.get(1).setY(screenHeight/2 + 200);
         jogadores = new JogadorController(quantos);
         jogadores.criarJogadores();
         for(int i = 0; i < quantos;i++) {
@@ -96,7 +100,7 @@ public class Jogo {
             public void handle(ActionEvent e) {
                 int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                 casas.Melhoria(jogadores.getJogadorById(quemJogando));
-                jogadores.getJogadorById(quemJogando).setCarteira(jogadores.getJogadorById(quemJogando).getCarteira()-50*(1+(int)Math.floor(atual/10)));
+                jogadores.getJogadorById(quemJogando).setCarteira(jogadores.getJogadorById(quemJogando).getCarteira()-50*(1+(int)Math.floor(casas.getCasaCompravelbyId(atual).getCategoria()/10)));
                 hipotecar.setDisable(true);
                 comprar.setDisable(true);
                 melhorar.setDisable(true);
@@ -109,32 +113,51 @@ public class Jogo {
         EventHandler<ActionEvent> eventoHipotecar = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
-                int atuAluguel = casas.getCasaCompravelbyId(atual).getValorAluguel();
+                int atuAluguel = 0;
+                if(casas.getCasabyId(jogadores.getJogadorById(quemJogando).getCasaAtual()).getTipo() == 10)
+                    atuAluguel = 200;
+                else 
+                    atuAluguel = casas.getCasaCompravelbyId(atual).getValorAluguel();
+                
+
                 hipotecar.setDisable(true);
                 comprar.setDisable(true);
                 melhorar.setDisable(true);
 
-                while(atuAluguel > jogadores.getJogadorById(quemJogando).getCarteira() && jogadores.getJogadorById(quemJogando).getCasasCompradas().size() != 0) {
-                    int i = 0;
-                    while(!jogadores.getJogadorById(quemJogando).getCasasCompradas().contains(i) && casas.getCasaCompravelbyId(i).getHipotecado())
-                        i++;
-                    if(!casas.getCasaCompravelbyId(i).getHipotecado()) {
-                        casas.Hipoteca(jogadores.getJogadorById(quemJogando));
-                        jogadores.removerCasaCompravel(quemJogando, i);
-                    }
-                }
+                int i = 0;
 
-                if(atuAluguel > jogadores.getJogadorById(quemJogando).getCarteira()) {
-                    /*FALENCIA */
-                    jogadores.eliminarJogador(quemJogando);
-                    System.out.println("TA FALINDOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                //SE EU ESTOU DEVENDO E QUERO HIPOTECAR
+                if(casas.getCasabyId(atual).getTipo() == 10 || casas.getCasaCompravelbyId(atual).getDono() != quemJogando){
+                    while(atuAluguel > jogadores.getJogadorById(quemJogando).getCarteira() && jogadores.getJogadorById(quemJogando).getCasasCompradas().size() != 0) {
+                        if(jogadores.getJogadorById(quemJogando).getCasasCompradas().contains(i)){
+                            casas.Hipoteca(jogadores.getJogadorById(quemJogando),i);
+                            casas.getCasaCompravelbyId(i).atualizarHipotecado();
+                            jogadores.hipotecarCasa(quemJogando, i);
+                        }
+                        i++;
+                    }
+                    if(atuAluguel > jogadores.getJogadorById(quemJogando).getCarteira()) {
+                        jogadores.eliminarJogador(quemJogando);
+                    }
+                    
+                    else {
+                        if(casas.getCasabyId(atual).getTipo() == 10) 
+                            jogadores.atualizarCarteira(quemJogando, -200);
+                    
+                        else {
+                            jogadores.atualizarCarteira(quemJogando, -tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                            jogadores.atualizarCarteira(tabuleiro.getCasaCIndex(atual).getDono(), tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                        }
+                    }
+
                 }
 
                 else {
-                    jogadores.atualizarCarteira(quemJogando, -tabuleiro.getCasaCIndex(atual).getValorAluguel());
-                    jogadores.atualizarCarteira(tabuleiro.getCasaCIndex(atual).getDono(), tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                    casas.HipotecaRemove(jogadores.getJogadorById(quemJogando),atual);
+                    casas.getCasaCompravelbyId(atual).atualizarHipotecado();
+                    jogadores.DeshipotecarCasa(quemJogando, atual);
                 }
-
+                
                 if(dadoIgual) {
                     if(jogadores.getJogadorById(quemJogando).getEstado()) {
                         roleDados.setDisable(false);
@@ -150,7 +173,7 @@ public class Jogo {
                     passeTurno.setDisable(false);
                 }
 
-                for(int i = 0; i < jogadores.getNumJogadores();i++) 
+                for(i = 0; i < jogadores.getNumJogadores();i++) 
                     jogadores.getJogadorById(i).setTexto();
             }
         };
@@ -160,7 +183,7 @@ public class Jogo {
                 int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                 jogadores.comprarCasa(quemJogando, atual);
                 jogadores.getJogadorById(quemJogando).setCarteira(jogadores.getJogadorById(quemJogando).getCarteira()-tabuleiro.getCasaCIndex(atual).getValorCompra());
-                if(true /* CODIGO PRA CHECAR MONOPOLIO*/ && jogadores.getJogadorById(quemJogando).getCarteira() >= 50*(1+Math.floor(atual/10)))
+                if(casas.temMonopolio(casas.getCasaCompravelbyId(atual).getTipo(), jogadores.getJogadorById(quemJogando)) && jogadores.getJogadorById(quemJogando).getCarteira() >= 50*(1+Math.floor(atual/10)))
                     melhorar.setDisable(false);
                 else
                     melhorar.setDisable(true);
@@ -187,7 +210,6 @@ public class Jogo {
                         i++;
                     }
                 }
-                System.out.println(casas.getCasaCompravelbyId(atual).getCategoria());
                 tabuleiro.getCasaCIndex(atual).setDono(quemJogando);
                 hipotecar.setDisable(true);
                 comprar.setDisable(true);
@@ -211,10 +233,15 @@ public class Jogo {
                 }
 
                 tabuleiro.atualizaOrdem();
+                int remove = -1;
                 quemJogando = tabuleiro.getFirstOrdem();
                 while(!jogadores.getJogadorById(quemJogando).getEstado()) {
+                    remove = tabuleiro.getFirstOrdem();
                     tabuleiro.atualizaOrdem();
-                    quemJogando = tabuleiro.getFirstOrdem();
+                    tabuleiro.removeDaOrdem(remove);
+                }
+                if(tabuleiro.getOrdem().size() == 1) {
+                    /*CÓDIGO PARA TERMINAR O JOGO*/
                 }
                 passeTurno.setDisable(true);
                 hipotecar.setDisable(true);
@@ -245,7 +272,7 @@ public class Jogo {
                 if(comecou) {
                     //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
-                        jogadores.atualizarCasaAtual(quemJogando,5/*dado1.valorDado()+dado2.valorDado()*/);
+                        jogadores.atualizarCasaAtual(quemJogando,1/*dado1.valorDado()+dado2.valorDado() */);
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                         //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
                         if(casas.checaCompravel(atual)) {
@@ -264,29 +291,38 @@ public class Jogo {
                                 comprar.setDisable(true);
                                 //SE O DONO É O JOGADOR DA RODADA
                                 if(tabuleiro.getCasaCIndex(atual).getDono() == quemJogando) {
-                                    hipotecar.setDisable(true);
-                                    //SE A CASA PODE SER MELHORADA
-                                    if(tabuleiro.getCasaCIndex(atual).getTipo() != 9 && (tabuleiro.getCasaCIndex(atual).getCategoria() > 0 || tabuleiro.getCasaCIndex(atual).getCategoria() < 6)) {
-                                        //SE O JOGADOR POSSUI DINHEIRO PARA MELHORAR
-                                        if(/*monopolio daquele tipo de casa && */jogadores.getJogadorById(quemJogando).getCarteira() >= 2*tabuleiro.getCasaCIndex(atual).getValorAluguel()) 
-                                            melhorar.setDisable(false);
-                                        else
-                                            melhorar.setDisable(true);
+                                    //SE A CASA PODE SER DESHIPOTECADA
+                                    if(tabuleiro.getCasaCIndex(atual).getHipotecado() && jogadores.getJogadorById(quemJogando).getCarteira() > 6*(tabuleiro.getCasaCIndex(atual).getValorCompra())/10) 
+                                        hipotecar.setDisable(false);
+                                    
+                                    else{
+                                        hipotecar.setDisable(true);
+                                        //SE A CASA PODE SER MELHORADA
+                                        if(tabuleiro.getCasaCIndex(atual).getTipo() != 9 && (tabuleiro.getCasaCIndex(atual).getCategoria() > 0 || tabuleiro.getCasaCIndex(atual).getCategoria() < 6)) {
+                                            //SE O JOGADOR POSSUI DINHEIRO PARA MELHORAR
+                                            if(casas.temMonopolio(casas.getCasaCompravelbyId(atual).getTipo(), jogadores.getJogadorById(quemJogando)) && jogadores.getJogadorById(quemJogando).getCarteira() >= 2*tabuleiro.getCasaCIndex(atual).getValorAluguel()) 
+                                                melhorar.setDisable(false);
+                                            else
+                                                melhorar.setDisable(true);
+                                        }
                                     }
                                 }
                                 //SE O DONO É OUTRO JOGADOR
                                 else {
                                     melhorar.setDisable(true);
-                                    //SE O JGOADOR NAO POSSUE DINHEIRO PARA PAGAR O ALUGUEL (AINDA INCOMPLETO, PRECISO PENSAR NA LÓGICA)
-                                    if(jogadores.getJogadorById(quemJogando).getCarteira() < tabuleiro.getCasaCIndex(atual).getValorAluguel()) {
-                                        hipotecar.setDisable(false);
-                                        comprar.setDisable(true);
-                                    }
-                                    //SE O JOGADOR PODE PAGAR O ALUGUEL
-                                    else {
-                                        hipotecar.setDisable(true);
-                                        jogadores.atualizarCarteira(quemJogando, -tabuleiro.getCasaCIndex(atual).getValorAluguel());
-                                        jogadores.atualizarCarteira(tabuleiro.getCasaCIndex(atual).getDono(), tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                                    //SE A CASA NAO ESTA HIPOTECADA
+                                    if(!casas.getCasaCompravelbyId(atual).getHipotecado()) {
+                                        //SE O JGOADOR NAO POSSUE DINHEIRO PARA PAGAR O ALUGUEL (AINDA INCOMPLETO, PRECISO PENSAR NA LÓGICA)
+                                        if(jogadores.getJogadorById(quemJogando).getCarteira() < tabuleiro.getCasaCIndex(atual).getValorAluguel()) {
+                                            hipotecar.setDisable(false);
+                                            comprar.setDisable(true);
+                                        }
+                                        //SE O JOGADOR PODE PAGAR O ALUGUEL
+                                        else {
+                                            hipotecar.setDisable(true);
+                                            jogadores.atualizarCarteira(quemJogando, -tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                                            jogadores.atualizarCarteira(tabuleiro.getCasaCIndex(atual).getDono(), tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                                        }
                                     }
                                 }
                             }
@@ -298,13 +334,15 @@ public class Jogo {
                             melhorar.setDisable(true);
                             if(jogadores.getJogadorById(quemJogando).getCarteira() >= 200)
                                 jogadores.atualizarCarteira(quemJogando, -200);
-                            else {
-                                /*CÓDIGO PARA HIPOTECA PARA PAGAR A DÍVIDA*/
-                            }
+                            else 
+                                hipotecar.setDisable(false);
                         }
                         //SE A CASA NAO É COMPRÁVEL (AINDA RESTA MUITA COISA PRA FAZER AQUI, FAREI DEPOIS)
                         else {
-
+                            /*CODIGO PARA CARTAS*/
+                            comprar.setDisable(true);
+                            hipotecar.setDisable(true);
+                            melhorar.setDisable(true);
                         }
                     }
                     //SE O JOGADOR ATUAL ESTIVER PRESO
@@ -357,15 +395,15 @@ public class Jogo {
         comprar.setOnAction(eventoComprar);
         melhorar.setOnAction(eventoMelhorar);
         hipotecar.setOnAction(eventoHipotecar);
-        roleDados.setTranslateY(0);
-        passeTurno.setTranslateY(60);
-        comprar.setTranslateY(120);
-        melhorar.setTranslateY(180);
-        hipotecar.setTranslateY(240);
-        roleDados.setTranslateX(1000);
-        passeTurno.setTranslateX(1000);
-        comprar.setTranslateX(1000);
-        melhorar.setTranslateX(1000);
-        hipotecar.setTranslateX(1000);
+        // roleDados.setTranslateY(0);
+        // passeTurno.setTranslateY(60);
+        // comprar.setTranslateY(120);
+        // melhorar.setTranslateY(180);
+        // hipotecar.setTranslateY(240);
+        // roleDados.setTranslateX(1000);
+        // passeTurno.setTranslateX(1000);
+        // comprar.setTranslateX(1000);
+        // melhorar.setTranslateX(1000);
+        // hipotecar.setTranslateX(1000);
     }
 }

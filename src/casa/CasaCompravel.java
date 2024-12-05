@@ -38,6 +38,8 @@ public class CasaCompravel extends Casa {
 
 	public void atualizarHipotecado() { this.hipotecado = !this.hipotecado; }
 
+	public void setHipotecado(boolean hip) { this.hipotecado = hip; }
+
 	public int getCategoria() { return categoria; }
 
 	public void setCategoria(int novaCat) { this.categoria = novaCat; }

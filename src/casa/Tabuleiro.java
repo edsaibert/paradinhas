@@ -60,6 +60,10 @@ public class Tabuleiro {
 
     public ArrayList<Integer> getOrdem() { return this.ordem; }
 
+    public void removeDaOrdem(int idPlayer) {
+        ordem.remove(Integer.valueOf(idPlayer));
+    }
+
     public void setOrdem(ArrayList<Integer> numeros) {
         int maior = 0;
 

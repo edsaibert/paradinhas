@@ -14,6 +14,7 @@ public class Jogador {
 
 	protected HashSet<Integer> casasCompraveis;
 	protected HashSet<Integer> casasCompradas;
+	protected HashSet<Integer> casasHipotecadas;
 	
 	public Jogador(int id){
 		this.id = id;
@@ -22,6 +23,7 @@ public class Jogador {
 		this.ativo = true;
 		this.casasCompraveis = new HashSet<>(); 
 		this.casasCompradas = new HashSet<>();
+		this.casasHipotecadas = new HashSet<>();
 		this.img = "application/assets/players/player"+id+".png";
 	}
 
@@ -50,6 +52,8 @@ public class Jogador {
 	public HashSet<Integer> getCasasCompraveis(){ return this.casasCompraveis; }
 
 	public HashSet<Integer> getCasasCompradas(){ return this.casasCompradas; }
+
+	public HashSet<Integer> getCasasHipotecadas(){ return this.casasHipotecadas; }
 
 	public void setCasasCompraveis(HashSet<Integer> ht){ this.casasCompraveis = ht; }
 
