@@ -18,18 +18,23 @@ public class CasaController {
 		boolean tem = false;
 		int cont = 0;
 		for(int i = 0;i < 40;i++) {
-			if(player.getCasasCompradas().contains(i) && todasCasas.get(i).getTipo() == tipo)
+			if(player.getCasasCompradas().contains(i) && todasCasas.get(i).getTipo() == tipo) {
                 cont++;
+            }
 		}
-        if(tipo == 1 || tipo == 8) 
+        if(tipo == 1 || tipo == 8) {
             if(cont == 2)
                 tem = true;
-        else 
+        }
+        else  {
             if(cont == 3)
                 tem = true;
+        }
 
 		return tem;
 	}
+
+    public Casa getCasabyId(int index) { return todasCasas.get(index); }
 
     public CasaCompravel getCasaCompravelbyId(int index) {
         int idx = -1,i = 0;
@@ -55,25 +60,12 @@ public class CasaController {
         return compravel;
     }
 
-    public void Hipoteca (Jogador p) {
-        int idx = -1,i = 0;
-        while(idx == -1) {
-            if(compraveis.get(i).getId() == p.getCasaAtual()) {
-                idx = i;
-            }
-            i++;
-        }
+    public void Hipoteca (Jogador p, int idCasa) {
+        p.setCarteira(p.getCarteira()+(compraveis.get(idCasa).getValorCompra())/2);
+    }
 
-        if(compraveis.get(idx).getHipotecado()) 
-            if(p.getCarteira() >= (6*(compraveis.get(idx).getValorCompra())/10)) {
-                p.setCarteira(p.getCarteira()-(6*(compraveis.get(idx).getValorCompra())/10));
-                compraveis.get(idx).atualizarHipotecado();
-            }
-        
-        else {
-            p.setCarteira(p.getCarteira()+(compraveis.get(idx).getValorCompra())/2);
-            compraveis.get(idx).atualizarHipotecado();
-        }
+    public void HipotecaRemove (Jogador p, int idCasa) {
+        p.setCarteira(p.getCarteira()-(6*(compraveis.get(idCasa).getValorCompra())/10));
     }
 
     //QUERO MELHORAR A CASA EM 1 NIVEL

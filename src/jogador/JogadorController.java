@@ -66,6 +66,26 @@ public class JogadorController {
 		casasCompradas.remove(idCasa);
 	}
 
+	public void hipotecarCasa(int idJogador, int idCasa){
+		Jogador jogador = this.jogadores.get(idJogador);
+
+		HashSet<Integer> casasHipotecadas = jogador.getCasasHipotecadas();
+		casasHipotecadas.add(idCasa);
+
+		HashSet<Integer> casasCompradas = jogador.getCasasCompradas();
+		casasCompradas.remove(idCasa);
+	}
+
+	public void DeshipotecarCasa(int idJogador, int idCasa){
+		Jogador jogador = this.jogadores.get(idJogador);
+
+		HashSet<Integer> casasHipotecadas = jogador.getCasasHipotecadas();
+		casasHipotecadas.remove(idCasa);
+
+		HashSet<Integer> casasCompradas = jogador.getCasasCompradas();
+		casasCompradas.add(idCasa);
+	}
+
 	public void desenharPlayerNaCasas(int idJogador, int rolagemDado){
 		Jogador jogador = this.jogadores.get(idJogador);
 		int idAtual = jogador.casaAtual;

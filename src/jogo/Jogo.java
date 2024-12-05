@@ -115,32 +115,53 @@ public class Jogo {
         EventHandler<ActionEvent> eventoHipotecar = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
-                int atuAluguel = casas.getCasaCompravelbyId(atual).getValorAluguel();
+                int atuAluguel = 0;
+                if(casas.getCasabyId(jogadores.getJogadorById(quemJogando).getCasaAtual()).getTipo() == 10)
+                    atuAluguel = 200;
+                else 
+                    atuAluguel = casas.getCasaCompravelbyId(atual).getValorAluguel();
+                
+
                 hipotecar.setDisable(true);
                 comprar.setDisable(true);
                 melhorar.setDisable(true);
 
-                while(atuAluguel > jogadores.getJogadorById(quemJogando).getCarteira() && jogadores.getJogadorById(quemJogando).getCasasCompradas().size() != 0) {
-                    int i = 0;
-                    while(!jogadores.getJogadorById(quemJogando).getCasasCompradas().contains(i) && casas.getCasaCompravelbyId(i).getHipotecado())
-                        i++;
-                    if(!casas.getCasaCompravelbyId(i).getHipotecado()) {
-                        casas.Hipoteca(jogadores.getJogadorById(quemJogando));
-                        jogadores.removerCasaCompravel(quemJogando, i);
-                    }
-                }
+                int i = 0;
 
-                if(atuAluguel > jogadores.getJogadorById(quemJogando).getCarteira()) {
-                    /*FALENCIA */
-                    jogadores.eliminarJogador(quemJogando);
-                    System.out.println("TA FALINDOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                //SE EU ESTOU DEVENDO E QUERO HIPOTECAR
+                if(casas.getCasabyId(atual).getTipo() == 10 || casas.getCasaCompravelbyId(atual).getDono() != quemJogando){
+                    while(atuAluguel > jogadores.getJogadorById(quemJogando).getCarteira() && jogadores.getJogadorById(quemJogando).getCasasCompradas().size() != 0) {
+                        if(jogadores.getJogadorById(quemJogando).getCasasCompradas().contains(i)){
+                            casas.Hipoteca(jogadores.getJogadorById(quemJogando),i);
+                            casas.getCasaCompravelbyId(i).atualizarHipotecado();
+                            jogadores.hipotecarCasa(quemJogando, i);
+                        }
+                        i++;
+                    }
+                    if(atuAluguel > jogadores.getJogadorById(quemJogando).getCarteira()) {
+                        /*FALENCIA */
+                        jogadores.eliminarJogador(quemJogando);
+                        System.out.println("TA FALINDOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                    }
+                    
+                    else {
+                        if(casas.getCasabyId(atual).getTipo() == 10) 
+                            jogadores.atualizarCarteira(quemJogando, -200);
+                    
+                        else {
+                            jogadores.atualizarCarteira(quemJogando, -tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                            jogadores.atualizarCarteira(tabuleiro.getCasaCIndex(atual).getDono(), tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                        }
+                    }
+
                 }
 
                 else {
-                    jogadores.atualizarCarteira(quemJogando, -tabuleiro.getCasaCIndex(atual).getValorAluguel());
-                    jogadores.atualizarCarteira(tabuleiro.getCasaCIndex(atual).getDono(), tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                    casas.HipotecaRemove(jogadores.getJogadorById(quemJogando),atual);
+                    casas.getCasaCompravelbyId(atual).atualizarHipotecado();
+                    jogadores.DeshipotecarCasa(quemJogando, atual);
                 }
-
+                
                 if(dadoIgual) {
                     if(jogadores.getJogadorById(quemJogando).getEstado()) {
                         roleDados.setDisable(false);
@@ -156,7 +177,7 @@ public class Jogo {
                     passeTurno.setDisable(false);
                 }
 
-                for(int i = 0; i < jogadores.getNumJogadores();i++) 
+                for(i = 0; i < jogadores.getNumJogadores();i++) 
                     jogadores.getJogadorById(i).setTexto();
             }
         };
@@ -215,6 +236,7 @@ public class Jogo {
                     }
                 }
 
+                System.out.println("A-A " + casas.getCasaCompravelbyId(1).getHipotecado());
                 tabuleiro.atualizaOrdem();
                 quemJogando = tabuleiro.getFirstOrdem();
                 while(!jogadores.getJogadorById(quemJogando).getEstado()) {
@@ -250,7 +272,8 @@ public class Jogo {
                 if(comecou) {
                     //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
-                        jogadores.atualizarCasaAtual(quemJogando,dado1.valorDado()+dado2.valorDado());
+                        System.out.println("A-A " + casas.getCasaCompravelbyId(1).getHipotecado());
+                        jogadores.atualizarCasaAtual(quemJogando,1/*dado1.valorDado()+dado2.valorDado() */);
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                         //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
                         if(casas.checaCompravel(atual)) {
@@ -269,29 +292,40 @@ public class Jogo {
                                 comprar.setDisable(true);
                                 //SE O DONO É O JOGADOR DA RODADA
                                 if(tabuleiro.getCasaCIndex(atual).getDono() == quemJogando) {
-                                    hipotecar.setDisable(true);
-                                    //SE A CASA PODE SER MELHORADA
-                                    if(tabuleiro.getCasaCIndex(atual).getTipo() != 9 && (tabuleiro.getCasaCIndex(atual).getCategoria() > 0 || tabuleiro.getCasaCIndex(atual).getCategoria() < 6)) {
-                                        //SE O JOGADOR POSSUI DINHEIRO PARA MELHORAR
-                                        if(casas.temMonopolio(casas.getCasaCompravelbyId(atual).getTipo(), jogadores.getJogadorById(quemJogando)) && jogadores.getJogadorById(quemJogando).getCarteira() >= 2*tabuleiro.getCasaCIndex(atual).getValorAluguel()) 
-                                            melhorar.setDisable(false);
-                                        else
-                                            melhorar.setDisable(true);
+                                    //SE A CASA PODE SER DESHIPOTECADA
+                                    System.out.println(jogadores.getJogadorById(quemJogando).getCarteira() + " " + 6*(tabuleiro.getCasaCIndex(atual).getValorCompra())/10 );
+                                    System.out.println(atual+"/"+tabuleiro.getCasaCIndex(atual).getId()+ " " +tabuleiro.getCasaCIndex(atual).getHipotecado());
+                                    if(tabuleiro.getCasaCIndex(atual).getHipotecado() && jogadores.getJogadorById(quemJogando).getCarteira() > 6*(tabuleiro.getCasaCIndex(atual).getValorCompra())/10) 
+                                        hipotecar.setDisable(false);
+                                    
+                                    else{
+                                        hipotecar.setDisable(true);
+                                        //SE A CASA PODE SER MELHORADA
+                                        if(tabuleiro.getCasaCIndex(atual).getTipo() != 9 && (tabuleiro.getCasaCIndex(atual).getCategoria() > 0 || tabuleiro.getCasaCIndex(atual).getCategoria() < 6)) {
+                                            //SE O JOGADOR POSSUI DINHEIRO PARA MELHORAR
+                                            if(casas.temMonopolio(casas.getCasaCompravelbyId(atual).getTipo(), jogadores.getJogadorById(quemJogando)) && jogadores.getJogadorById(quemJogando).getCarteira() >= 2*tabuleiro.getCasaCIndex(atual).getValorAluguel()) 
+                                                melhorar.setDisable(false);
+                                            else
+                                                melhorar.setDisable(true);
+                                        }
                                     }
                                 }
                                 //SE O DONO É OUTRO JOGADOR
                                 else {
                                     melhorar.setDisable(true);
-                                    //SE O JGOADOR NAO POSSUE DINHEIRO PARA PAGAR O ALUGUEL (AINDA INCOMPLETO, PRECISO PENSAR NA LÓGICA)
-                                    if(jogadores.getJogadorById(quemJogando).getCarteira() < tabuleiro.getCasaCIndex(atual).getValorAluguel()) {
-                                        hipotecar.setDisable(false);
-                                        comprar.setDisable(true);
-                                    }
-                                    //SE O JOGADOR PODE PAGAR O ALUGUEL
-                                    else {
-                                        hipotecar.setDisable(true);
-                                        jogadores.atualizarCarteira(quemJogando, -tabuleiro.getCasaCIndex(atual).getValorAluguel());
-                                        jogadores.atualizarCarteira(tabuleiro.getCasaCIndex(atual).getDono(), tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                                    //SE A CASA NAO ESTA HIPOTECADA
+                                    if(!casas.getCasaCompravelbyId(atual).getHipotecado()) {
+                                        //SE O JGOADOR NAO POSSUE DINHEIRO PARA PAGAR O ALUGUEL (AINDA INCOMPLETO, PRECISO PENSAR NA LÓGICA)
+                                        if(jogadores.getJogadorById(quemJogando).getCarteira() < tabuleiro.getCasaCIndex(atual).getValorAluguel()) {
+                                            hipotecar.setDisable(false);
+                                            comprar.setDisable(true);
+                                        }
+                                        //SE O JOGADOR PODE PAGAR O ALUGUEL
+                                        else {
+                                            hipotecar.setDisable(true);
+                                            jogadores.atualizarCarteira(quemJogando, -tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                                            jogadores.atualizarCarteira(tabuleiro.getCasaCIndex(atual).getDono(), tabuleiro.getCasaCIndex(atual).getValorAluguel());
+                                        }
                                     }
                                 }
                             }
