@@ -11,6 +11,9 @@ import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
 import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
+
+
 
 import design.GameButton;
 
@@ -27,6 +30,7 @@ public class Jogo {
     protected boolean comecou = false;
     protected boolean decidiu = false;
     protected Tabuleiro tabuleiro = new Tabuleiro();
+    public ArrayList<Rectangle> imagensPlayer = new ArrayList<Rectangle>();
 
     int screenWidth = (int) Screen.getPrimary().getVisualBounds().getWidth();
     int screenHeight = (int) Screen.getPrimary().getVisualBounds().getHeight();
@@ -88,6 +92,9 @@ public class Jogo {
         }
         tabuleiro.iniciaTabuleiro(quantos);
         tabuleiro.limpaValores();
+        for(int i = 0; i < quantos; i++) {
+            
+        }
         casas = new CasaController(tabuleiro);
         passeTurno.setDisable(true);
         hipotecar.setDisable(true);

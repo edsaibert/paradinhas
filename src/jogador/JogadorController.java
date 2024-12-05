@@ -1,8 +1,14 @@
 package jogador;
 import java.util. *;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 public class JogadorController {
 	protected ArrayList<Jogador> jogadores;
+	public ArrayList<ImageView> setas = new ArrayList<ImageView>();
+	public ArrayList<Integer> posiSetasX = new ArrayList<Integer>();
+	public ArrayList<Integer> posiSetasY = new ArrayList<Integer>();
 	protected int numJogadores;
 
 	public JogadorController(int numJogadores){
@@ -10,11 +16,31 @@ public class JogadorController {
 		this.jogadores = new ArrayList<>();
 	}	
 
+	public ArrayList<ImageView> getSetas() { return setas; }
+
+	public ArrayList<Integer> getX() { return posiSetasX; }
+
+	public ArrayList<Integer> getY() { return posiSetasY; }
+
 	public int getNumJogadores() { return numJogadores; }
 
 	public void criarJogadores(){
 		for (int i = 0; i < this.numJogadores; i++){
+			int xIniMin = 1960, yIniMin = 880, xIniMax = 1820, yIniMax = 1000;
 			this.jogadores.add(new Jogador(i));
+			System.out.println(i);
+			if(i <= 2) {
+				this.setas.add(new ImageView(new Image("application/assets/players/setaE"+i+".png")));
+				this.setas.get(i).setX(xIniMin);
+				this.setas.get(i).setY(yIniMin);
+				yIniMin += 30;
+			}
+			else {
+				this.setas.add(new ImageView(new Image("application/assets/players/setaB"+i+".png")));
+				this.setas.get(i).setX(xIniMax);
+				this.setas.get(i).setY(yIniMax);
+				xIniMax += 30;
+			}
 		}
 	}
 
