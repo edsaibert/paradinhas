@@ -89,6 +89,7 @@ public class Tabuleiro {
     /* VALORES DE SHIFT DO INI COM TODA CERTEZA VÃO MUDAR QUANDO
      * TIVERMOS TODAS AS IMAGENS DE TODAS AS CASAS, POR ENQUANTO É PLACEHOLDER
      * (TESTEI NA BRANCH "DADO" E FUNCIONOU, ENTAO A LÓGICA TA CERTA)
+     * 70x100
     */
     public void graficoCasas(int xIni, int yIni) {    
         for(int i = 0;i < 40;i++) {

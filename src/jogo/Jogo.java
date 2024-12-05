@@ -272,8 +272,10 @@ public class Jogo {
                 if(comecou) {
                     //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
-                        jogadores.atualizarCasaAtual(quemJogando,1/*dado1.valorDado()+dado2.valorDado() */);
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
+
+                        jogadores.desenharJogador(quemJogando, dado1.valorDado()+dado2.valorDado(), casas);
+                        jogadores.atualizarCasaAtual(quemJogando,dado1.valorDado()+dado2.valorDado());
                         //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
                         if(casas.checaCompravel(atual)) {
                             //SE A CASA NAO TEM DONO
@@ -395,15 +397,6 @@ public class Jogo {
         comprar.setOnAction(eventoComprar);
         melhorar.setOnAction(eventoMelhorar);
         hipotecar.setOnAction(eventoHipotecar);
-        // roleDados.setTranslateY(0);
-        // passeTurno.setTranslateY(60);
-        // comprar.setTranslateY(120);
-        // melhorar.setTranslateY(180);
-        // hipotecar.setTranslateY(240);
-        // roleDados.setTranslateX(1000);
-        // passeTurno.setTranslateX(1000);
-        // comprar.setTranslateX(1000);
-        // melhorar.setTranslateX(1000);
-        // hipotecar.setTranslateX(1000);
+
     }
 }

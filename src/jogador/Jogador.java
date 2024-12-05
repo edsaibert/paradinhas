@@ -2,6 +2,7 @@ package jogador;
 import java.util.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.shape.Rectangle;
 
 public class Jogador {
 	public int id;
@@ -11,6 +12,7 @@ public class Jogador {
 	protected boolean preso;
 	public String img;
 	public Text dinheiro;
+	public Rectangle posicaoJogador;
 
 	protected HashSet<Integer> casasCompraveis;
 	protected HashSet<Integer> casasCompradas;
@@ -25,11 +27,28 @@ public class Jogador {
 		this.casasCompradas = new HashSet<>();
 		this.casasHipotecadas = new HashSet<>();
 		this.img = "application/assets/players/player"+id+".png";
+		
+		this.posicaoJogador = new Rectangle();
+		this.posicaoJogador.setWidth(10);
+		this.posicaoJogador.setHeight(20);
+		this.posicaoJogador.setX(1365);
+		this.posicaoJogador.setY(950-20);
 	}
 
 	public int getCasaAtual(){ return this.casaAtual; }
 
 	public String getImg() { return this.img; }
+
+	public void alterarPosicaoJogador(int x, int y, int width, int height){
+		this.posicaoJogador.setX(x);
+		this.posicaoJogador.setY(y);
+		this.posicaoJogador.setWidth(width);
+		this.posicaoJogador.setHeight(height);
+	}
+
+	public Rectangle obterPosicaoJogador(){
+		return this.posicaoJogador;
+	}
 
 	public void setDinheiro(int x, int y) { this.dinheiro = new Text(x,y,"I$ " + carteira + " C:" + this.getCasaAtual()); }
 

@@ -1,5 +1,7 @@
 package jogador;
 import java.util. *;
+import casa.*;
+import javafx.scene.shape.Rectangle;
 
 public class JogadorController {
 	protected ArrayList<Jogador> jogadores;
@@ -86,35 +88,6 @@ public class JogadorController {
 		casasCompradas.add(idCasa);
 	}
 
-	public void desenharPlayerNaCasas(int idJogador, int rolagemDado){
-		Jogador jogador = this.jogadores.get(idJogador);
-		int idAtual = jogador.casaAtual;
-
-		while (idAtual <= jogador.casaAtual + rolagemDado){
-			if (idAtual >= 0 && idAtual <= 8) {
-				// IR PARA ESQUERDA
-			}
-
-			if(idAtual == 9)  {
-				//QUADRADO DO CANTO, TEM QUE IR UM POUCO MAIS PRA ESQUERDA
-			} else if (idAtual >= 10 && idAtual <= 18) {
-				// IR PARA CIMA
-			} else if (idAtual == 19) {
-				//QUADRADO DO CANTO, TEM QUE IR UM POUCO MAIS PRA CIMA
-			} else if (idAtual >= 20 && idAtual <= 28) {
-				// IR PARA DIREITA
-			} else if (idAtual == 29) {
-				//QUADRADO DO CANTO, TEM QUE IR UM POUCO MAIS PRA DIREITA
-			} else if (idAtual >= 30 && idAtual <= 38) {
-				// IR PARA BAIXO
-			} else {
-				//QUADRADO DO CANTO, TEM QUE IR UM POUCO MAIS PRA BAIXO
-			}
-			idAtual = idAtual+1 % 40;
-			rolagemDado--;
-		}		
-	}
-
 	public void adicionarCasaCompravel(int idJogador, int idCasa){
 		Jogador jogador = this.jogadores.get(idJogador);
 		HashSet<Integer> casasCompraveis = jogador.getCasasCompraveis();
@@ -126,4 +99,54 @@ public class JogadorController {
 		HashSet<Integer> casasCompraveis = jogador.getCasasCompraveis();
 		casasCompraveis.remove(idCasa);
 	}
+
+	public void desenharJogador(int idJogador, int numDados, CasaController casas){
+		Jogador jogador = this.jogadores.get(idJogador);
+		Casa casa;
+		int xAtual; int yAtual;
+
+		System.out.println("idCasa: " + (jogador.casaAtual+numDados) + " idCasaAtual: " + jogador.casaAtual);
+
+		for (int i = jogador.casaAtual; i <= jogador.casaAtual + numDados; i++){
+			xAtual = (int) jogador.posicaoJogador.getX();
+			yAtual = (int) jogador.posicaoJogador.getY();	
+
+			casa = casas.getCasabyId(i > 39 ? i % 40 : i);	
+
+			if (casa.position == 0){
+				if (casa.id == 0)
+					jogador.alterarPosicaoJogador(xAtual - 100+10, yAtual, 10, 20);
+				else jogador.alterarPosicaoJogador(xAtual - 70+10, yAtual, 10, 20);
+			}
+			else if (casa.position == 1){
+				if (casa.id == 10)
+					jogador.alterarPosicaoJogador(xAtual, yAtual - 100+20, 10, 20);
+				else jogador.alterarPosicaoJogador(xAtual, yAtual - 70+20, 10, 20);
+			}
+			else if (casa.position == 2){
+				if (casa.id == 20)
+					jogador.alterarPosicaoJogador(xAtual + 100, yAtual, 10, 20);
+				else jogador.alterarPosicaoJogador(xAtual + 70, yAtual, 10, 20);
+			}
+			else if (casa.position == 3){
+				if (casa.id == 30)
+					jogador.alterarPosicaoJogador(xAtual, yAtual + 100, 10, 20);
+				else jogador.alterarPosicaoJogador(xAtual, yAtual + 70, 10, 20);
+			}
+		}
+	
+	}
+
+	public ArrayList<Rectangle> desenharJogadores(){
+		ArrayList<Rectangle> posicoes = new ArrayList<>();
+		Jogador jogador;
+
+		for (int i = 0; i < this.numJogadores; i++){
+			jogador = this.getJogadorById(i);		
+			posicoes.add(jogador.obterPosicaoJogador());
+		}
+
+		return posicoes;
+	}
+
 }

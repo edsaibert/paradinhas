@@ -1,5 +1,6 @@
 package menu;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Pos;
@@ -54,6 +55,7 @@ public class GameLayout implements Builder<Region> {
             layout2.getChildren().add(game.jogadores.getJogadorById(i).dinheiro);
         }
 
+        layout2.getChildren().addAll(game.jogadores.desenharJogadores());
 
         GameButton teste = new GameButton("Menu", (int) Screen.getPrimary().getVisualBounds().getWidth() - 110, 10);
         buttonConfigurator.accept(teste);
