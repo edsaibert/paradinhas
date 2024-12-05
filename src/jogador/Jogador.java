@@ -3,6 +3,7 @@ import java.util.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
 
 public class Jogador {
 	public int id;
@@ -33,6 +34,27 @@ public class Jogador {
 		this.posicaoJogador.setHeight(20);
 		this.posicaoJogador.setX(1365 - (id*10));
 		this.posicaoJogador.setY(920-20);
+
+		switch (id){
+			case 0:
+				this.posicaoJogador.setFill(Color.web("#4caf50", 0.75));
+				break;
+			case 1:
+				this.posicaoJogador.setFill(Color.web("#ffeb3b", 0.75));
+				break;
+			case 2:
+				this.posicaoJogador.setFill(Color.web("#f44336", 0.75));
+				break;
+			case 3:
+				this.posicaoJogador.setFill(Color.web("#673ab7", 0.75));
+				break;
+			case 4:
+				this.posicaoJogador.setFill(Color.web("#000000", 0.75));
+				break;
+			case 5:
+				this.posicaoJogador.setFill(Color.web("#9e9e9e", 0.75));
+				break;
+		}
 	}
 
 	public int getCasaAtual(){ return this.casaAtual; }
