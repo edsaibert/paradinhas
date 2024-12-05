@@ -107,35 +107,34 @@ public class JogadorController {
 
 		System.out.println("idCasa: " + (jogador.casaAtual+numDados) + " idCasaAtual: " + jogador.casaAtual);
 
-		for (int i = jogador.casaAtual; i <= jogador.casaAtual + numDados; i++){
+		for (int i = jogador.casaAtual; i < jogador.casaAtual + numDados; i++){
 			xAtual = (int) jogador.posicaoJogador.getX();
 			yAtual = (int) jogador.posicaoJogador.getY();	
 
 			casa = casas.getCasabyId(i > 39 ? i % 40 : i);	
 
-			if (casa.position == 0){
-				if (casa.id == 0)
-					jogador.alterarPosicaoJogador(xAtual - 100+10, yAtual, 10, 20);
-				else jogador.alterarPosicaoJogador(xAtual - 70+10, yAtual, 10, 20);
+			switch (casa.id){
+				case 0:
+					jogador.alterarPosicaoJogador(xAtual - 100, yAtual, 10, 20);
+					break;
+				case 10:
+					jogador.alterarPosicaoJogador(xAtual, yAtual - 100, 10, 20);
+					break;
+				case 29:
+					jogador.alterarPosicaoJogador(xAtual+100, yAtual, 10, 20);
+					break;
+				case 39:
+						jogador.alterarPosicaoJogador(xAtual, yAtual+100, 10, 20);
+					break;
+				default:
+					if (casa.position == 0) jogador.alterarPosicaoJogador(xAtual - 70, yAtual, 10, 20);
+					else if (casa.position == 1) jogador.alterarPosicaoJogador(xAtual, yAtual - 70, 10, 20);
+					else if (casa.position == 2) jogador.alterarPosicaoJogador(xAtual + 70, yAtual, 10, 20);
+					else if (casa.position == 3) jogador.alterarPosicaoJogador(xAtual, yAtual + 70, 10, 20);
+					break;
 			}
-			else if (casa.position == 1){
-				if (casa.id == 10)
-					jogador.alterarPosicaoJogador(xAtual, yAtual - 100+20, 10, 20);
-				else jogador.alterarPosicaoJogador(xAtual, yAtual - 70+20, 10, 20);
-			}
-			else if (casa.position == 2){
-				if (casa.id == 20)
-					jogador.alterarPosicaoJogador(xAtual + 100, yAtual, 10, 20);
-				else jogador.alterarPosicaoJogador(xAtual + 70, yAtual, 10, 20);
-			}
-			else if (casa.position == 3){
-				if (casa.id == 30)
-					jogador.alterarPosicaoJogador(xAtual, yAtual + 100, 10, 20);
-				else jogador.alterarPosicaoJogador(xAtual, yAtual + 70, 10, 20);
-			}
-		}
-	
 	}
+}
 
 	public ArrayList<Rectangle> desenharJogadores(){
 		ArrayList<Rectangle> posicoes = new ArrayList<>();

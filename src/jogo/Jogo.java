@@ -274,8 +274,9 @@ public class Jogo {
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
 
-                        jogadores.desenharJogador(quemJogando, dado1.valorDado()+dado2.valorDado(), casas);
+                        jogadores.desenharJogador(quemJogando, dado1.valorDado()+dado2.valorDado(),casas);
                         jogadores.atualizarCasaAtual(quemJogando,dado1.valorDado()+dado2.valorDado());
+                        // jogadores.atualizarCasaAtual(quemJogando, 1);
                         //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
                         if(casas.checaCompravel(atual)) {
                             //SE A CASA NAO TEM DONO

@@ -31,8 +31,8 @@ public class Jogador {
 		this.posicaoJogador = new Rectangle();
 		this.posicaoJogador.setWidth(10);
 		this.posicaoJogador.setHeight(20);
-		this.posicaoJogador.setX(1365);
-		this.posicaoJogador.setY(950-20);
+		this.posicaoJogador.setX(1365 - (id*10));
+		this.posicaoJogador.setY(920-20);
 	}
 
 	public int getCasaAtual(){ return this.casaAtual; }
