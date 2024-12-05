@@ -116,6 +116,8 @@ public class Jogo {
                 int atuAluguel = 0;
                 if(casas.getCasabyId(jogadores.getJogadorById(quemJogando).getCasaAtual()).getTipo() == 10)
                     atuAluguel = 200;
+                else if(casas.getCasabyId(jogadores.getJogadorById(quemJogando).getCasaAtual()).getTipo() == 11)
+                    atuAluguel = 100;
                 else 
                     atuAluguel = casas.getCasaCompravelbyId(atual).getValorAluguel();
                 
