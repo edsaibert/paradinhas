@@ -2,9 +2,12 @@ package jogador;
 import java.util. *;
 import casa.*;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 public class JogadorController {
 	protected ArrayList<Jogador> jogadores;
+	
 	protected int numJogadores;
 
 	public JogadorController(int numJogadores){
@@ -135,6 +138,30 @@ public class JogadorController {
 			}
 	}
 }
+
+	public void alterarVisibilidade(int idJogador){
+		Jogador jogador;
+		for (int i = 0; i < this.numJogadores; i++) {
+			jogador = this.getJogadorById(i);
+
+			if (i == idJogador)
+				jogador.mudarVisibilidadeIndicador(true);	
+
+			else jogador.mudarVisibilidadeIndicador(false);
+		}
+	}
+
+	public ArrayList<ImageView> desenharQuemJogando(){
+		Jogador jogador;
+		ArrayList<ImageView> imageView = new ArrayList<>();
+
+		for (int i = 0; i < this.numJogadores; i++){
+			jogador = this.getJogadorById(i);
+			imageView.add(jogador.indicador);
+		}	
+
+		return imageView;
+	}
 
 	public ArrayList<Rectangle> desenharJogadores(){
 		ArrayList<Rectangle> posicoes = new ArrayList<>();

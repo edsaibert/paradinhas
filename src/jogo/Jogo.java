@@ -22,7 +22,7 @@ public class Jogo {
     public ArrayList<ImageView> dadosImg = new ArrayList<ImageView>();
     public ArrayList<ImageView> playersFundo = new ArrayList<ImageView>();
     protected int contadorTurno = 0;
-    protected int quemJogando = 0;
+    public int quemJogando = 0;
     protected boolean dadoIgual = false;
     protected boolean comecou = false;
     protected boolean decidiu = false;
@@ -274,6 +274,7 @@ public class Jogo {
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
 
+                        jogadores.alterarVisibilidade(quemJogando);
                         jogadores.desenharJogador(quemJogando, dado1.valorDado()+dado2.valorDado(),casas);
                         jogadores.atualizarCasaAtual(quemJogando,dado1.valorDado()+dado2.valorDado());
                         // jogadores.atualizarCasaAtual(quemJogando, 1);

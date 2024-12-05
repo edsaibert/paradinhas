@@ -49,13 +49,16 @@ public class GameLayout implements Builder<Region> {
 
         Jogo game = new Jogo(5);
         layout2.getChildren().addAll(game.roleDados, game.passeTurno, game.hipotecar, game.melhorar, game.comprar, game.dadosImg.get(0), game.dadosImg.get(1));
-
+            
         for(int i = 0; i < 5; i++) {
             layout2.getChildren().add(game.playersFundo.get(i));
             layout2.getChildren().add(game.jogadores.getJogadorById(i).dinheiro);
         }
 
+        // Desenha os players
         layout2.getChildren().addAll(game.jogadores.desenharJogadores());
+        // Indica quem está jogando
+        layout2.getChildren().addAll(game.jogadores.desenharQuemJogando());
 
         GameButton teste = new GameButton("Menu", (int) Screen.getPrimary().getVisualBounds().getWidth() - 110, 10);
         buttonConfigurator.accept(teste);
