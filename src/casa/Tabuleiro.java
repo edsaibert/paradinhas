@@ -14,6 +14,7 @@ public class Tabuleiro {
     protected ArrayList<Casa> naoCompraveis = new ArrayList<Casa>();
     protected ArrayList<Integer> ordem = new ArrayList<Integer>();
     protected ArrayList<Integer> numDados = new ArrayList<Integer>();
+    public ArrayList<ImageView> setasCasas = new ArrayList<ImageView>();
     
     public ArrayList<CasaCompravel> getCompraveis() { return compraveis; }
 
@@ -23,7 +24,11 @@ public class Tabuleiro {
 
     public ImageView getImg(int index) { return casasImg.get(index); }
 
+    public ImageView getSeta(int index) { return setasCasas.get(index); }
+
     public ArrayList<ImageView> getTodasImg() { return casasImg; }
+
+    public ArrayList<ImageView> getTodasSetas() { return setasCasas; }
 
     public Casa getCasaIndex(int index) { return todasCasas.get(index); }  
     
@@ -38,6 +43,8 @@ public class Tabuleiro {
     }
 
     public Image getCasaImg(int index) { return new Image(todasCasas.get(index).getImg()); }
+
+    public Image getSetaImg(int index) { return new Image(todasCasas.get(index).getSeta());}
 
     public void novoValor(int valor) { numDados.add(valor); }
 
@@ -91,29 +98,68 @@ public class Tabuleiro {
      * (TESTEI NA BRANCH "DADO" E FUNCIONOU, ENTAO A LÓGICA TA CERTA)
      * 70x100
     */
-    public void graficoCasas(int xIni, int yIni) {    
+    public void graficoCasas(int xIni, int yIni) {
+        int xSeta = xIni+20, ySeta = yIni+110;    
         for(int i = 0;i < 40;i++) {
-            if(i < 10) 
+            if(i < 10) {
                 xIni -= 70;
-            else if(i == 10)
+                xSeta -=70;
+            }
+            else if(i == 10){
                 xIni -= 100;
-            else if (i > 10 && i < 20) 
+                xSeta -= 170;
+                ySeta -= 100;
+            }
+            else if (i > 10 && i < 20) {
                 yIni -= 70;
-            else if(i == 20)
+                ySeta -= 70;
+            }
+            else if(i == 20) {
                 yIni -= 100;
-            else if(i == 21)
+                ySeta -= 160;
+                xSeta += 100;
+            }
+            else if(i == 21) {
                 xIni += 100;
-            else if (i > 21 && i < 31) 
+                xSeta += 80;
+            }
+            else if (i > 21 && i < 30) {
                 xIni += 70;
-            else if(i == 31)
+                xSeta += 70;
+            }
+            else if(i == 30) {
+                xIni += 70;
+                xSeta += 150;
+                ySeta += 80;
+            }
+            else if(i == 31) {
                 yIni += 100;
-            else
+                ySeta += 100;
+            }
+            else {
                 yIni += 70;
-
+                ySeta += 70;
+            }
+            
 
             casasImg.add(new ImageView(getCasaImg(i)));
             casasImg.get(i).setX(xIni);
             casasImg.get(i).setY(yIni);
+            if(i <= 10) {
+                setasCasas.add(new ImageView(getSetaImg(i)));
+            }
+            else if(i > 10 && i <= 20) {
+                setasCasas.add(new ImageView(getSetaImg(i)));
+            }
+            else if(i > 20 && i <= 30) {
+                setasCasas.add(new ImageView(getSetaImg(i)));
+            }
+            else {
+                setasCasas.add(new ImageView(getSetaImg(i)));
+            }
+            setasCasas.get(i).setX(xSeta);
+            setasCasas.get(i).setY(ySeta);
+            setasCasas.get(i).setVisible(false);
         }
     }
 

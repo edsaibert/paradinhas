@@ -91,7 +91,18 @@ public class Carta {
             default:
                 System.out.println("FOI PROCESSADO");
                 jogadores.getJogadorById(jogadorId).setPreso(true);
-                jogadores.getJogadorById(jogadorId).setCasaAtual(10);
+                int preso = 0;
+                i = jogadores.getJogadorById(jogadorId).getCasaAtual();
+                if(i > 10)
+                    jogadores.atualizarCarteira(jogadorId, -200);
+                while(i != 20) {
+                    if(i == 40)
+                        i = 0;
+                    preso++;
+                    i++;
+                }
+                jogadores.desenharJogador(jogadorId, preso, casas);
+                jogadores.atualizarCasaAtual(jogadorId, preso);
                 break;
         }
 

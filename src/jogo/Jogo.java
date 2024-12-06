@@ -26,7 +26,7 @@ public class Jogo {
     protected boolean dadoIgual = false;
     protected boolean comecou = false;
     protected boolean decidiu = false;
-    protected Tabuleiro tabuleiro = new Tabuleiro();
+    public Tabuleiro tabuleiro = new Tabuleiro();
 
     int screenWidth = (int) Screen.getPrimary().getVisualBounds().getWidth();
     int screenHeight = (int) Screen.getPrimary().getVisualBounds().getHeight();
@@ -185,6 +185,25 @@ public class Jogo {
                 int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                 jogadores.comprarCasa(quemJogando, atual);
                 jogadores.getJogadorById(quemJogando).setCarteira(jogadores.getJogadorById(quemJogando).getCarteira()-tabuleiro.getCasaCIndex(atual).getValorCompra());
+                System.out.println("COMPRANDO");
+                if(atual <= 10){
+                    tabuleiro.getCasaCIndex(atual).setSeta("application/assets/players/setaC"+quemJogando+".png");
+                    tabuleiro.getTodasSetas().get(atual).setImage(new Image(tabuleiro.getCasaCIndex(atual).pathSeta));
+                }
+                else if(atual > 10 && atual <= 20) {
+                    tabuleiro.getCasaCIndex(atual).setSeta("application/assets/players/setaD"+quemJogando+".png");
+                    tabuleiro.getTodasSetas().get(atual).setImage(new Image(tabuleiro.getCasaCIndex(atual).pathSeta));
+                }
+                else if(atual > 20 && atual <= 30) {
+                    tabuleiro.getCasaCIndex(atual).setSeta("application/assets/players/setaB"+quemJogando+".png");
+                    tabuleiro.getTodasSetas().get(atual).setImage(new Image(tabuleiro.getCasaCIndex(atual).pathSeta));
+                }
+                else {
+                    tabuleiro.getCasaCIndex(atual).setSeta("application/assets/players/setaE"+quemJogando+".png");
+                    tabuleiro.getTodasSetas().get(atual).setImage(new Image(tabuleiro.getCasaCIndex(atual).pathSeta));
+                }
+                System.out.println("SAIDA: " + tabuleiro.getSeta(atual).getImage().getUrl());
+                tabuleiro.getSeta(atual).setVisible(true);
                 if(casas.temMonopolio(casas.getCasaCompravelbyId(atual).getTipo(), jogadores.getJogadorById(quemJogando)) && jogadores.getJogadorById(quemJogando).getCarteira() >= 50*(1+Math.floor(atual/10)))
                     melhorar.setDisable(false);
                 else
