@@ -41,10 +41,10 @@ public class GameLayout implements Builder<Region> {
                 "-fx-background-color:#386682"
         );
 
-        Jogo game = new Jogo(2);
+        Jogo game = new Jogo(6);
         layout2.getChildren().addAll(game.roleDados, game.passeTurno, game.hipotecar, game.melhorar, game.comprar, game.dadosImg.get(0), game.dadosImg.get(1));
             
-        for(int i = 0; i < 2; i++) {
+        for(int i = 0; i < 6; i++) {
             layout2.getChildren().add(game.playersFundo.get(i));
             layout2.getChildren().add(game.jogadores.getJogadorById(i).dinheiro);
         }
@@ -52,6 +52,7 @@ public class GameLayout implements Builder<Region> {
             layout2.getChildren().add(game.tabuleiro.getImg(i));
             layout2.getChildren().add(game.tabuleiro.getSeta(i));
         }
+        layout2.getChildren().add(game.ocorrendo);
 
         // Desenha os players
         layout2.getChildren().addAll(game.jogadores.desenharJogadores());

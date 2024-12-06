@@ -16,24 +16,20 @@ public class Carta {
         retorno.add(valor);
         switch(valor) {
             case 0:
-                System.out.println("VOLTE INICIO!");
                 int quantos = 40-jogadores.getJogadorById(jogadorId).getCasaAtual();
                 jogadores.desenharJogador(jogadorId, quantos, casas);
                 jogadores.atualizarCasaAtual(jogadorId, quantos);
                 break;
             case 1:
-                System.out.println("GANHE UMA TAXA!");
                 jogadores.atualizarCarteira(jogadorId, 100);
                 break;
             case 2:
-                System.out.println("PERCA UMA TAXA!");
                 if(jogadores.getJogadorById(jogadorId).getCarteira() >= 100)
                     jogadores.atualizarCarteira(jogadorId, -100);
                 else
                     retorno.add(100);
                 break;
             case 3:
-                System.out.println("VISITE OS PROCESSADOS");
                 int caminho = 0,i = jogadores.getJogadorById(jogadorId).getCasaAtual();
                 if(i > 10)
                     jogadores.atualizarCarteira(jogadorId, -200);
@@ -47,7 +43,6 @@ public class Carta {
                 jogadores.atualizarCasaAtual(jogadorId, caminho);
                 break;
             case 4:
-                System.out.println("PROXIMO 9");
                 int idx = 0;
                 i = jogadores.getJogadorById(jogadorId).getCasaAtual();
                 while(casas.getCasabyId(i).getTipo() != 9) {
@@ -60,7 +55,6 @@ public class Carta {
                 jogadores.atualizarCasaAtual(jogadorId, idx);
                 break;
             case 5:
-                System.out.println("TOME FALTA");
                 int falta = 0;
                 i = jogadores.getJogadorById(jogadorId).getCasaAtual();
                 while(i != 4) {
@@ -77,7 +71,6 @@ public class Carta {
                     retorno.add(100);
                 break;
             case 6:
-                System.out.println("AULA VAGA!");
                 int indic = 0;
                 i = jogadores.getJogadorById(jogadorId).getCasaAtual();
                 while(i != 20) {
@@ -90,19 +83,16 @@ public class Carta {
                 jogadores.atualizarCasaAtual(jogadorId, indic);
                 break;
             case 7:
-                System.out.println("VOLTE 3");
                 if(jogadores.getJogadorById(jogadorId).getCasaAtual() >= 3)
                     jogadores.atualizarCarteira(jogadorId, -200);
                 jogadores.desenharJogador(jogadorId, 37, casas);
                 jogadores.atualizarCasaAtual(jogadorId, 37);
                 break;
             case 8:
-                System.out.println("PULE 5");
                 jogadores.desenharJogador(jogadorId, 5, casas);
                 jogadores.atualizarCasaAtual(jogadorId, 5);
                 break;
             default:
-                System.out.println("FOI PROCESSADO");
                 jogadores.getJogadorById(jogadorId).setPreso(true);
                 int preso = 0;
                 i = jogadores.getJogadorById(jogadorId).getCasaAtual();
