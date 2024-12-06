@@ -281,8 +281,8 @@ public class Jogo {
                 }
                 jogadores.alterarVisibilidade(quemJogando);
                 if(tabuleiro.getOrdem().size() == 1) {
-                    /*CÓDIGO PARA TERMINAR O JOGO*/
-                    System.out.println("O JOGO FOI VENCIDO POR ALGUM JOGADOR AI!!!!!!!!!!");
+                    /*CÓDIGO PARA TERMINAR O JOGO (NAO ENTENDI BEM COMO FAZER A LOGICA DAS VISIBILIDADES, FAREI DEPOIS)*/
+                    System.out.println("O JOGO FOI VENCIDO PELO JOGADOR "+quemJogando+"!!!!!!!!!!");
                 }
                 passeTurno.setDisable(true);
                 hipotecar.setDisable(true);
