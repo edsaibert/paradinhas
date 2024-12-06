@@ -1,5 +1,7 @@
 package jogo;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import application.dadoGraphic;
@@ -13,6 +15,8 @@ import javafx.stage.Screen;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer; 
 
 import design.GameButton;
 
@@ -39,7 +43,7 @@ public class Jogo {
     public GameButton melhorar = new GameButton("Melhorar Propriedade", screenWidth - 500, 250);
     public GameButton hipotecar = new GameButton("Hipotecar", screenWidth - 500, 300);
 
-    public Jogo(int quantos) {
+    public Jogo(int quantos) { 
         dadosImg.add(new ImageView(dado1.getImg()));
         dadosImg.add(new ImageView(dado2.getImg()));
         ocorrendo.setFont(new Font(28));
