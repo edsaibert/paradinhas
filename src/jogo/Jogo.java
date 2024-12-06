@@ -22,7 +22,7 @@ public class Jogo {
     public ArrayList<ImageView> dadosImg = new ArrayList<ImageView>();
     public ArrayList<ImageView> playersFundo = new ArrayList<ImageView>();
     protected int contadorTurno = 0;
-    protected int quemJogando = 0;
+    public int quemJogando = 0;
     protected boolean dadoIgual = false;
     protected boolean comecou = false;
     protected boolean decidiu = false;
@@ -242,6 +242,7 @@ public class Jogo {
                     tabuleiro.atualizaOrdem();
                     tabuleiro.removeDaOrdem(remove);
                 }
+                jogadores.alterarVisibilidade(quemJogando);
                 if(tabuleiro.getOrdem().size() == 1) {
                     /*CÓDIGO PARA TERMINAR O JOGO*/
                 }
@@ -274,7 +275,8 @@ public class Jogo {
                 if(comecou) {
                     //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
-                        jogadores.atualizarCasaAtual(quemJogando, dado1.valorDado()+dado2.valorDado());
+                        jogadores.desenharJogador(quemJogando, dado1.valorDado()+dado2.valorDado(),casas);
+                        jogadores.atualizarCasaAtual(quemJogando,dado1.valorDado()+dado2.valorDado());
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                         //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
                         if(casas.checaCompravel(atual)) {
@@ -353,7 +355,8 @@ public class Jogo {
                             }
                             else if(atual == 30) {
                                 jogadores.getJogadorById(quemJogando).setPreso(true);
-                                jogadores.getJogadorById(quemJogando).setCasaAtual(10);
+                                jogadores.desenharJogador(quemJogando, 20,casas);
+                                jogadores.atualizarCasaAtual(quemJogando, 20);
                             }
                         }
                     }
@@ -407,15 +410,6 @@ public class Jogo {
         comprar.setOnAction(eventoComprar);
         melhorar.setOnAction(eventoMelhorar);
         hipotecar.setOnAction(eventoHipotecar);
-        // roleDados.setTranslateY(0);
-        // passeTurno.setTranslateY(60);
-        // comprar.setTranslateY(120);
-        // melhorar.setTranslateY(180);
-        // hipotecar.setTranslateY(240);
-        // roleDados.setTranslateX(1000);
-        // passeTurno.setTranslateX(1000);
-        // comprar.setTranslateX(1000);
-        // melhorar.setTranslateX(1000);
-        // hipotecar.setTranslateX(1000);
+
     }
 }

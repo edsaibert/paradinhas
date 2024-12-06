@@ -1,5 +1,6 @@
 package menu;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Pos;
@@ -46,14 +47,18 @@ public class GameLayout implements Builder<Region> {
             layout2.getChildren().add(t.getImg(i));
         }
 
-        Jogo game = new Jogo(2);
+        Jogo game = new Jogo(6);
         layout2.getChildren().addAll(game.roleDados, game.passeTurno, game.hipotecar, game.melhorar, game.comprar, game.dadosImg.get(0), game.dadosImg.get(1));
-
-        for(int i = 0; i < 2; i++) {
+            
+        for(int i = 0; i < 6; i++) {
             layout2.getChildren().add(game.playersFundo.get(i));
             layout2.getChildren().add(game.jogadores.getJogadorById(i).dinheiro);
         }
 
+        // Desenha os players
+        layout2.getChildren().addAll(game.jogadores.desenharJogadores());
+        // Indica quem está jogando
+        layout2.getChildren().addAll(game.jogadores.desenharQuemJogando());
 
         GameButton teste = new GameButton("Menu", (int) Screen.getPrimary().getVisualBounds().getWidth() - 110, 10);
         buttonConfigurator.accept(teste);
