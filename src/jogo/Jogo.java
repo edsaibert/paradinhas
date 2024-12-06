@@ -242,6 +242,7 @@ public class Jogo {
                     tabuleiro.atualizaOrdem();
                     tabuleiro.removeDaOrdem(remove);
                 }
+                jogadores.alterarVisibilidade(quemJogando);
                 if(tabuleiro.getOrdem().size() == 1) {
                     /*CÓDIGO PARA TERMINAR O JOGO*/
                 }
@@ -274,13 +275,9 @@ public class Jogo {
                 if(comecou) {
                     //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
-                        jogadores.atualizarCasaAtual(quemJogando, dado1.valorDado()+dado2.valorDado());
-                        int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
-
-                        jogadores.alterarVisibilidade(quemJogando);
                         jogadores.desenharJogador(quemJogando, dado1.valorDado()+dado2.valorDado(),casas);
                         jogadores.atualizarCasaAtual(quemJogando,dado1.valorDado()+dado2.valorDado());
-                        // jogadores.atualizarCasaAtual(quemJogando, 1);
+                        int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                         //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
                         if(casas.checaCompravel(atual)) {
                             //SE A CASA NAO TEM DONO
@@ -358,7 +355,8 @@ public class Jogo {
                             }
                             else if(atual == 30) {
                                 jogadores.getJogadorById(quemJogando).setPreso(true);
-                                jogadores.getJogadorById(quemJogando).setCasaAtual(10);
+                                jogadores.desenharJogador(quemJogando, 20,casas);
+                                jogadores.atualizarCasaAtual(quemJogando, 20);
                             }
                         }
                     }
