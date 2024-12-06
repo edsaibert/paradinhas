@@ -7,7 +7,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import java.util.function.Consumer;
-import java.stage.Stage;
+import javafx.stage.Stage;
 
 import javafx.util.*;
 

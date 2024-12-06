@@ -42,7 +42,7 @@ public class GameLayout implements Builder<Region> {
         );
 
         Jogo game = new Jogo(6);
-        layout2.getChildren().addAll(game.roleDados, game.passeTurno, game.hipotecar, game.melhorar, game.comprar, game.dadosImg.get(0), game.dadosImg.get(1));
+        layout2.getChildren().addAll(game.roleDados, game.passeTurno, game.hipotecar, game.melhorar, game.comprar, game.terminarJogo, game.dadosImg.get(0), game.dadosImg.get(1));
             
         for(int i = 0; i < 6; i++) {
             layout2.getChildren().add(game.playersFundo.get(i));

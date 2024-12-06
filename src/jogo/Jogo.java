@@ -21,7 +21,6 @@ public class Jogo {
     protected dadoGraphic dado2 = new dadoGraphic();
     public ArrayList<ImageView> dadosImg = new ArrayList<ImageView>();
     public ArrayList<ImageView> playersFundo = new ArrayList<ImageView>();
-    protected int contadorTurno = 0;
     public int quemJogando = 0;
     protected boolean dadoIgual = false;
     protected boolean comecou = false;
@@ -36,8 +35,10 @@ public class Jogo {
     public GameButton comprar = new GameButton("Comprar Propriedade", screenWidth - 500, 200);
     public GameButton melhorar = new GameButton("Melhorar Propriedade", screenWidth - 500, 250);
     public GameButton hipotecar = new GameButton("Hipotecar", screenWidth - 500, 300);
+    public GameButton terminarJogo = new GameButton("Terminar Jogo", screenWidth - 500, 350);
 
     public Jogo(int quantos) { 
+        terminarJogo.setVisible(false);
         dadosImg.add(new ImageView(dado1.getImg()));
         dadosImg.add(new ImageView(dado2.getImg()));
         ocorrendo.setFont(new Font(28));
@@ -99,6 +100,12 @@ public class Jogo {
         roleDados.setDisable(false);
         melhorar.setDisable(true);
 
+
+        EventHandler<ActionEvent> eventoFim = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                System.exit(0);
+            }
+        };
 
         EventHandler<ActionEvent> eventoMelhorar = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
@@ -268,8 +275,15 @@ public class Jogo {
                         tabuleiro.atualizaOrdem();
                     }
                 }
-                tabuleiro.atualizaOrdem();
                 int remove = -1;
+                if(!jogadores.getJogadorById(quemJogando).getEstado()) {
+                    remove = tabuleiro.getFirstOrdem();
+                    tabuleiro.atualizaOrdem();
+                    tabuleiro.removeDaOrdem(remove);
+                }
+                else {
+                    tabuleiro.atualizaOrdem();
+                }
                 quemJogando = tabuleiro.getFirstOrdem();
                 while(!jogadores.getJogadorById(quemJogando).getEstado()) {
                     remove = tabuleiro.getFirstOrdem();
@@ -280,14 +294,23 @@ public class Jogo {
                 jogadores.alterarVisibilidade(quemJogando);
                 if(tabuleiro.getOrdem().size() == 1) {
                     /*CÓDIGO PARA TERMINAR O JOGO (NAO ENTENDI BEM COMO FAZER A LOGICA DAS VISIBILIDADES, FAREI DEPOIS)*/
-                    System.out.println("O JOGO FOI VENCIDO PELO JOGADOR "+quemJogando+"!!!!!!!!!!");
+                    ocorrendo.setText("O JOGO ACABOU! PLAYER " +tabuleiro.getFirstOrdem()+ " WINS!");
+                    passeTurno.setDisable(true);
+                    hipotecar.setDisable(true);
+                    comprar.setDisable(true);
+                    roleDados.setDisable(true);
+                    melhorar.setDisable(true);
+                    terminarJogo.setVisible(true);
                 }
-                passeTurno.setDisable(true);
-                hipotecar.setDisable(true);
-                comprar.setDisable(true);
-                roleDados.setDisable(false);
-                melhorar.setDisable(true);
-                ocorrendo.setText("Rodada do jogador "+ (quemJogando+1));
+                else {
+                    passeTurno.setDisable(true);
+                    hipotecar.setDisable(true);
+                    comprar.setDisable(true);
+                    roleDados.setDisable(false);
+                    melhorar.setDisable(true);
+                }
+                if(tabuleiro.getOrdem().size() != 1)
+                    ocorrendo.setText("Rodada do jogador "+ (quemJogando+1));
                 for(int i = 0; i < jogadores.getNumJogadores();i++) 
                     jogadores.getJogadorById(i).setTexto();
             }
@@ -487,70 +510,6 @@ public class Jogo {
         comprar.setOnAction(eventoComprar);
         melhorar.setOnAction(eventoMelhorar);
         hipotecar.setOnAction(eventoHipotecar);
-
-    }
-
-    public void resetarJogo(int quantos) {
-        dadosImg.add(new ImageView(dado1.getImg()));
-        dadosImg.add(new ImageView(dado2.getImg()));
-        ocorrendo.setFont(new Font(28));
-        ocorrendo.setX(screenWidth-500);
-        ocorrendo.setY(screenHeight-600);
-        dadosImg.get(0).setX(screenWidth/2);
-        dadosImg.get(0).setY(screenHeight/2 + 200);
-        dadosImg.get(1).setX(screenWidth/2 + 150);
-        dadosImg.get(1).setY(screenHeight/2 + 200);
-        jogadores = new JogadorController(quantos);
-        jogadores.criarJogadores();
-        for(int i = 0; i < quantos;i++) {
-            playersFundo.add(new ImageView(new Image(jogadores.getJogadorById(i).getImg())));
-            switch(i) {
-                case 0:
-                    playersFundo.get(i).setX(0);
-                    playersFundo.get(i).setY(100);
-                    jogadores.getJogadorById(i).setDinheiro(10,180);
-                    jogadores.getJogadorById(i).setTexto();
-                    break;
-                case 1:
-                    playersFundo.get(i).setX(0);
-                    playersFundo.get(i).setY(250);
-                    jogadores.getJogadorById(i).setDinheiro(10,330);
-                    jogadores.getJogadorById(i).setTexto();
-                    break;
-                case 2:
-                    playersFundo.get(i).setX(0);
-                    playersFundo.get(i).setY(400);
-                    jogadores.getJogadorById(i).setDinheiro(10,480);
-                    jogadores.getJogadorById(i).setTexto();
-                    break;
-                case 3:
-                    playersFundo.get(i).setX(0);
-                    playersFundo.get(i).setY(550);
-                    jogadores.getJogadorById(i).setDinheiro(10,630);
-                    jogadores.getJogadorById(i).setTexto();
-                    break;
-                case 4:
-                    playersFundo.get(i).setX(0);
-                    playersFundo.get(i).setY(700);
-                    jogadores.getJogadorById(i).setDinheiro(10,780);
-                    jogadores.getJogadorById(i).setTexto();
-                    break;
-                case 5:
-                    playersFundo.get(i).setX(0);
-                    playersFundo.get(i).setY(850);
-                    jogadores.getJogadorById(i).setDinheiro(10,930);
-                    jogadores.getJogadorById(i).setTexto();
-                    break;
-            }
-        }
-        tabuleiro.iniciaTabuleiro(quantos);
-        tabuleiro.limpaValores();
-        casas = new CasaController(tabuleiro);
-        passeTurno.setDisable(true);
-        hipotecar.setDisable(true);
-        comprar.setDisable(true);
-        roleDados.setDisable(false);
-        melhorar.setDisable(true);
-
+        terminarJogo.setOnAction(eventoFim);
     }
 }
