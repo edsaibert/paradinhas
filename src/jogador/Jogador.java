@@ -26,7 +26,7 @@ public class Jogador {
 	public Jogador(int id){
 		this.id = id;
 		this.casaAtual = 0;
-		this.carteira = 1500;
+		this.carteira = 50;
 		this.ativo = true;
 		this.casasCompraveis = new HashSet<>(); 
 		this.casasCompradas = new HashSet<>();

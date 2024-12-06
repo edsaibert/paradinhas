@@ -129,7 +129,7 @@ public class Jogo {
                 int i = 0;
 
                 //SE EU ESTOU DEVENDO E QUERO HIPOTECAR
-                if(casas.getCasabyId(atual).getTipo() == 10 || casas.getCasaCompravelbyId(atual).getDono() != quemJogando){
+                if(casas.getCasabyId(atual).getTipo() == 11 || casas.getCasabyId(atual).getTipo() == 10 || casas.getCasaCompravelbyId(atual).getDono() != quemJogando){
                     while(atuAluguel > jogadores.getJogadorById(quemJogando).getCarteira() && jogadores.getJogadorById(quemJogando).getCasasCompradas().size() != 0) {
                         if(jogadores.getJogadorById(quemJogando).getCasasCompradas().contains(i)){
                             casas.Hipoteca(jogadores.getJogadorById(quemJogando),i);
@@ -145,7 +145,10 @@ public class Jogo {
                     else {
                         if(casas.getCasabyId(atual).getTipo() == 10) 
                             jogadores.atualizarCarteira(quemJogando, -200);
-                    
+                        
+                        else if(casas.getCasabyId(jogadores.getJogadorById(quemJogando).getCasaAtual()).getTipo() == 11)
+                            atuAluguel = 100;
+
                         else {
                             jogadores.atualizarCarteira(quemJogando, -tabuleiro.getCasaCIndex(atual).getValorAluguel());
                             jogadores.atualizarCarteira(tabuleiro.getCasaCIndex(atual).getDono(), tabuleiro.getCasaCIndex(atual).getValorAluguel());
@@ -185,7 +188,6 @@ public class Jogo {
                 int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                 jogadores.comprarCasa(quemJogando, atual);
                 jogadores.getJogadorById(quemJogando).setCarteira(jogadores.getJogadorById(quemJogando).getCarteira()-tabuleiro.getCasaCIndex(atual).getValorCompra());
-                System.out.println("COMPRANDO");
                 if(atual <= 10){
                     tabuleiro.getCasaCIndex(atual).setSeta("application/assets/players/setaC"+quemJogando+".png");
                     tabuleiro.getTodasSetas().get(atual).setImage(new Image(tabuleiro.getCasaCIndex(atual).pathSeta));
@@ -202,7 +204,6 @@ public class Jogo {
                     tabuleiro.getCasaCIndex(atual).setSeta("application/assets/players/setaE"+quemJogando+".png");
                     tabuleiro.getTodasSetas().get(atual).setImage(new Image(tabuleiro.getCasaCIndex(atual).pathSeta));
                 }
-                System.out.println("SAIDA: " + tabuleiro.getSeta(atual).getImage().getUrl());
                 tabuleiro.getSeta(atual).setVisible(true);
                 if(casas.temMonopolio(casas.getCasaCompravelbyId(atual).getTipo(), jogadores.getJogadorById(quemJogando)) && jogadores.getJogadorById(quemJogando).getCarteira() >= 50*(1+Math.floor(atual/10)))
                     melhorar.setDisable(false);
@@ -252,18 +253,21 @@ public class Jogo {
                         tabuleiro.atualizaOrdem();
                     }
                 }
-
                 tabuleiro.atualizaOrdem();
                 int remove = -1;
                 quemJogando = tabuleiro.getFirstOrdem();
+                System.out.println(jogadores.getJogadorById(quemJogando).getEstado());
                 while(!jogadores.getJogadorById(quemJogando).getEstado()) {
+                    System.out.println(tabuleiro.getOrdem());
                     remove = tabuleiro.getFirstOrdem();
                     tabuleiro.atualizaOrdem();
+                    quemJogando = tabuleiro.getFirstOrdem();
                     tabuleiro.removeDaOrdem(remove);
                 }
                 jogadores.alterarVisibilidade(quemJogando);
                 if(tabuleiro.getOrdem().size() == 1) {
                     /*CÓDIGO PARA TERMINAR O JOGO*/
+                    System.out.println("O JOGO FOI VENCIDO POR ALGUM JOGADOR AI!!!!!!!!!!");
                 }
                 passeTurno.setDisable(true);
                 hipotecar.setDisable(true);
@@ -294,8 +298,8 @@ public class Jogo {
                 if(comecou) {
                     //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
-                        jogadores.desenharJogador(quemJogando, dado1.valorDado()+dado2.valorDado(),casas);
-                        jogadores.atualizarCasaAtual(quemJogando,dado1.valorDado()+dado2.valorDado());
+                        jogadores.desenharJogador(quemJogando, 1/*dado1.valorDado()+dado2.valorDado()*/,casas);
+                        jogadores.atualizarCasaAtual(quemJogando,1/*dado1.valorDado()+dado2.valorDado() */);
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                         //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
                         if(casas.checaCompravel(atual)) {
