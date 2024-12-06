@@ -1,7 +1,6 @@
 package jogo;
 
 import java.util.ArrayList;
-
 import application.dadoGraphic;
 import casa.CasaController;
 import casa.Tabuleiro;
@@ -11,7 +10,8 @@ import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.stage.Screen;
 import javafx.scene.image.Image;
-
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import design.GameButton;
 
 public class Jogo {
@@ -21,12 +21,12 @@ public class Jogo {
     protected dadoGraphic dado2 = new dadoGraphic();
     public ArrayList<ImageView> dadosImg = new ArrayList<ImageView>();
     public ArrayList<ImageView> playersFundo = new ArrayList<ImageView>();
-    protected int contadorTurno = 0;
     public int quemJogando = 0;
     protected boolean dadoIgual = false;
     protected boolean comecou = false;
     protected boolean decidiu = false;
     public Tabuleiro tabuleiro = new Tabuleiro();
+    public Text ocorrendo = new Text("Decidindo início de jogo!");
 
     int screenWidth = (int) Screen.getPrimary().getVisualBounds().getWidth();
     int screenHeight = (int) Screen.getPrimary().getVisualBounds().getHeight();
@@ -35,10 +35,15 @@ public class Jogo {
     public GameButton comprar = new GameButton("Comprar Propriedade", screenWidth - 500, 200);
     public GameButton melhorar = new GameButton("Melhorar Propriedade", screenWidth - 500, 250);
     public GameButton hipotecar = new GameButton("Hipotecar", screenWidth - 500, 300);
+    public GameButton terminarJogo = new GameButton("Terminar Jogo", screenWidth - 500, 350);
 
-    public Jogo(int quantos) {
+    public Jogo(int quantos) { 
+        terminarJogo.setVisible(false);
         dadosImg.add(new ImageView(dado1.getImg()));
         dadosImg.add(new ImageView(dado2.getImg()));
+        ocorrendo.setFont(new Font(28));
+        ocorrendo.setX(screenWidth-500);
+        ocorrendo.setY(screenHeight-600);
         dadosImg.get(0).setX(screenWidth/2);
         dadosImg.get(0).setY(screenHeight/2 + 200);
         dadosImg.get(1).setX(screenWidth/2 + 150);
@@ -96,6 +101,12 @@ public class Jogo {
         melhorar.setDisable(true);
 
 
+        EventHandler<ActionEvent> eventoFim = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                System.exit(0);
+            }
+        };
+
         EventHandler<ActionEvent> eventoMelhorar = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
@@ -104,7 +115,7 @@ public class Jogo {
                 hipotecar.setDisable(true);
                 comprar.setDisable(true);
                 melhorar.setDisable(true);
-
+                ocorrendo.setText("Jogador " +(quemJogando+1)+ " melhorou a casa " + atual + "!");
                 for(int i = 0; i < jogadores.getNumJogadores();i++) 
                     jogadores.getJogadorById(i).setTexto();
             }
@@ -127,7 +138,6 @@ public class Jogo {
                 melhorar.setDisable(true);
 
                 int i = 0;
-
                 //SE EU ESTOU DEVENDO E QUERO HIPOTECAR
                 if(casas.getCasabyId(atual).getTipo() == 11 || casas.getCasabyId(atual).getTipo() == 10 || casas.getCasaCompravelbyId(atual).getDono() != quemJogando){
                     while(atuAluguel > jogadores.getJogadorById(quemJogando).getCarteira() && jogadores.getJogadorById(quemJogando).getCasasCompradas().size() != 0) {
@@ -139,7 +149,16 @@ public class Jogo {
                         i++;
                     }
                     if(atuAluguel > jogadores.getJogadorById(quemJogando).getCarteira()) {
+                        ocorrendo.setText("Jogador " +(quemJogando+1)+ " FALIU!");
                         jogadores.eliminarJogador(quemJogando);
+                        for(i = 0;i < 40;i++) {
+                            if(jogadores.getJogadorById(quemJogando).getCasasHipotecadas().contains(i)) {
+                                casas.getCasaCompravelbyId(i).setHipotecado(false);
+                                casas.getCasaCompravelbyId(i).setDono(-1);
+                                casas.Melhoria(i, 0);
+                                tabuleiro.getSeta(i).setVisible(false);
+                            }
+                        }
                     }
                     
                     else {
@@ -153,6 +172,7 @@ public class Jogo {
                             jogadores.atualizarCarteira(quemJogando, -tabuleiro.getCasaCIndex(atual).getValorAluguel());
                             jogadores.atualizarCarteira(tabuleiro.getCasaCIndex(atual).getDono(), tabuleiro.getCasaCIndex(atual).getValorAluguel());
                         }
+                        ocorrendo.setText("Jogador " +(quemJogando+1)+ " pagou o que devia!");
                     }
 
                 }
@@ -161,6 +181,7 @@ public class Jogo {
                     casas.HipotecaRemove(jogadores.getJogadorById(quemJogando),atual);
                     casas.getCasaCompravelbyId(atual).atualizarHipotecado();
                     jogadores.DeshipotecarCasa(quemJogando, atual);
+                    ocorrendo.setText("Jogador " +(quemJogando+1)+ " deshipotecou a casa "+ atual + "!");
                 }
                 
                 if(dadoIgual) {
@@ -188,6 +209,7 @@ public class Jogo {
                 int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                 jogadores.comprarCasa(quemJogando, atual);
                 jogadores.getJogadorById(quemJogando).setCarteira(jogadores.getJogadorById(quemJogando).getCarteira()-tabuleiro.getCasaCIndex(atual).getValorCompra());
+                ocorrendo.setText("Jogador "+(quemJogando+1)+ " comprou a casa " + atual + "!");
                 if(atual <= 10){
                     tabuleiro.getCasaCIndex(atual).setSeta("application/assets/players/setaC"+quemJogando+".png");
                     tabuleiro.getTodasSetas().get(atual).setImage(new Image(tabuleiro.getCasaCIndex(atual).pathSeta));
@@ -253,8 +275,15 @@ public class Jogo {
                         tabuleiro.atualizaOrdem();
                     }
                 }
-                tabuleiro.atualizaOrdem();
                 int remove = -1;
+                if(!jogadores.getJogadorById(quemJogando).getEstado()) {
+                    remove = tabuleiro.getFirstOrdem();
+                    tabuleiro.atualizaOrdem();
+                    tabuleiro.removeDaOrdem(remove);
+                }
+                else {
+                    tabuleiro.atualizaOrdem();
+                }
                 quemJogando = tabuleiro.getFirstOrdem();
                 while(!jogadores.getJogadorById(quemJogando).getEstado()) {
                     remove = tabuleiro.getFirstOrdem();
@@ -264,14 +293,24 @@ public class Jogo {
                 }
                 jogadores.alterarVisibilidade(quemJogando);
                 if(tabuleiro.getOrdem().size() == 1) {
-                    /*CÓDIGO PARA TERMINAR O JOGO*/
-                    System.out.println("O JOGO FOI VENCIDO POR ALGUM JOGADOR AI!!!!!!!!!!");
+                    /*CÓDIGO PARA TERMINAR O JOGO (NAO ENTENDI BEM COMO FAZER A LOGICA DAS VISIBILIDADES, FAREI DEPOIS)*/
+                    ocorrendo.setText("O JOGO ACABOU! PLAYER " +tabuleiro.getFirstOrdem()+ " WINS!");
+                    passeTurno.setDisable(true);
+                    hipotecar.setDisable(true);
+                    comprar.setDisable(true);
+                    roleDados.setDisable(true);
+                    melhorar.setDisable(true);
+                    terminarJogo.setVisible(true);
                 }
-                passeTurno.setDisable(true);
-                hipotecar.setDisable(true);
-                comprar.setDisable(true);
-                roleDados.setDisable(false);
-                melhorar.setDisable(true);
+                else {
+                    passeTurno.setDisable(true);
+                    hipotecar.setDisable(true);
+                    comprar.setDisable(true);
+                    roleDados.setDisable(false);
+                    melhorar.setDisable(true);
+                }
+                if(tabuleiro.getOrdem().size() != 1)
+                    ocorrendo.setText("Rodada do jogador "+ (quemJogando+1));
                 for(int i = 0; i < jogadores.getNumJogadores();i++) 
                     jogadores.getJogadorById(i).setTexto();
             }
@@ -299,6 +338,7 @@ public class Jogo {
                         jogadores.desenharJogador(quemJogando, dado1.valorDado()+dado2.valorDado(),casas);
                         jogadores.atualizarCasaAtual(quemJogando,dado1.valorDado()+dado2.valorDado());
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
+                        ocorrendo.setText("Jogador "+ (quemJogando+1) + " caiu na casa " + atual + "!");
                         //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
                         if(casas.checaCompravel(atual)) {
                             //SE A CASA NAO TEM DONO
@@ -341,6 +381,7 @@ public class Jogo {
                                         if(jogadores.getJogadorById(quemJogando).getCarteira() < tabuleiro.getCasaCIndex(atual).getValorAluguel()) {
                                             hipotecar.setDisable(false);
                                             comprar.setDisable(true);
+                                            ocorrendo.setText("Jogador "+ quemJogando + " está devendo para o dono da casa " + atual + "!");
                                         }
                                         //SE O JOGADOR PODE PAGAR O ALUGUEL
                                         else {
@@ -359,8 +400,10 @@ public class Jogo {
                             melhorar.setDisable(true);
                             if(jogadores.getJogadorById(quemJogando).getCarteira() >= 200)
                                 jogadores.atualizarCarteira(quemJogando, -200);
-                            else 
+                            else  {
                                 hipotecar.setDisable(false);
+                                ocorrendo.setText("Jogador " +(quemJogando+1)+ " não tem dinheiro para pagar a taxa!");
+                            }
                         }
                         //SE A CASA NAO É COMPRÁVEL 
                         else {
@@ -370,14 +413,49 @@ public class Jogo {
                             ArrayList<Integer> retorno;
                             if(casas.getCasabyId(atual).getTipo() == 11) {
                                 retorno = casas.getCasabyId(atual).getCarta().acaoCarta(jogadores, casas, quemJogando);
+                                switch(retorno.get(0)) {
+                                    case 0:
+                                        ocorrendo.setText("Jogador " +(quemJogando+1)+ " voltou ao início!");
+                                        break;
+                                    case 1:
+                                        ocorrendo.setText("Jogador " +(quemJogando+1)+ " ganhou I$ 100!");
+                                        break;
+                                    case 2:
+                                        ocorrendo.setText("Jogador " +(quemJogando+1)+ " perdeu I$ 100!");
+                                        break;
+                                    case 3:
+                                        ocorrendo.setText("Jogador " +(quemJogando+1)+ " foi visitar os processados!");
+                                        break;
+                                    case 4:
+                                        ocorrendo.setText("Jogador " +(quemJogando+1)+ " foi comprar um doce!");
+                                        break;
+                                    case 5:
+                                        ocorrendo.setText("Jogador " +(quemJogando+1)+ " tomou falta!");
+                                        break;
+                                    case 6:
+                                        ocorrendo.setText("Jogador " +(quemJogando+1)+ " tem uma aula vaga!");
+                                        break;
+                                    case 7:
+                                        ocorrendo.setText("Jogador " +(quemJogando+1)+ " voltou 3 casas!");
+                                        break;
+                                    case 8:
+                                        ocorrendo.setText("Jogador " +(quemJogando+1)+ " pulou 5 casas!");
+                                        break;
+                                    default:
+                                        ocorrendo.setText("Jogador " +(quemJogando+1)+ " tomou processo administrativo!");
+                                        break;
+                                }
                                 if(retorno.size() == 2) {
                                     hipotecar.setDisable(false);
                                 }
                             }
-                            else if(atual == 30) {
+                            
+                            if(atual == 30) {
                                 jogadores.getJogadorById(quemJogando).setPreso(true);
                                 jogadores.desenharJogador(quemJogando, 20,casas);
                                 jogadores.atualizarCasaAtual(quemJogando, 20);
+                                jogadores.atualizarCarteira(quemJogando, -200);
+                                ocorrendo.setText("Jogador " +(quemJogando+1)+ " tomou processo administrativo!");
                             }
                         }
                     }
@@ -386,6 +464,7 @@ public class Jogo {
                         comprar.setDisable(true);
                         hipotecar.setDisable(true);
                         melhorar.setDisable(true);
+                        ocorrendo.setText("Jogador " +(quemJogando+1)+ " está em processo!");
                     }
                     //SE O JOGADOR TEVE UMA ROLAGEM DE 2 DADOS IGUAIS (REPETE A RODADA)
                     if(dadoIgual) {
@@ -431,6 +510,6 @@ public class Jogo {
         comprar.setOnAction(eventoComprar);
         melhorar.setOnAction(eventoMelhorar);
         hipotecar.setOnAction(eventoHipotecar);
-
+        terminarJogo.setOnAction(eventoFim);
     }
 }

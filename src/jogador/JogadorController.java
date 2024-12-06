@@ -3,7 +3,6 @@ import java.util. *;
 import casa.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.Image;
 
 public class JogadorController {
 	protected ArrayList<Jogador> jogadores;
@@ -107,8 +106,6 @@ public class JogadorController {
 		Jogador jogador = this.jogadores.get(idJogador);
 		Casa casa;
 		int xAtual; int yAtual;
-
-		System.out.println("idCasa: " + (jogador.casaAtual+numDados) + " idCasaAtual: " + jogador.casaAtual);
 
 		for (int i = jogador.casaAtual; i < jogador.casaAtual + numDados; i++){
 			xAtual = (int) jogador.posicaoJogador.getX();
