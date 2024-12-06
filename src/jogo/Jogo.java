@@ -1,9 +1,6 @@
 package jogo;
 
-import java.io.File;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-
 import application.dadoGraphic;
 import casa.CasaController;
 import casa.Tabuleiro;
@@ -15,9 +12,6 @@ import javafx.stage.Screen;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer; 
-
 import design.GameButton;
 
 public class Jogo {
