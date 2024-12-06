@@ -1,6 +1,7 @@
 package casa;
+
 import java.util.*;
-//import carta.*;
+import jogo.Carta;
 
 public class Casa {
 	public int id;
@@ -8,7 +9,7 @@ public class Casa {
 	protected int tipo;
 	protected String nome;
 	public int position;
-	//protected Carta carta;
+	protected Carta carta;
 
 	//ID É O MESMO QUE A POSIÇÃO DELA.
 	public Casa(int id, String pathImagem, int tipo, String nome){
@@ -26,12 +27,14 @@ public class Casa {
 		if (id >= 30 && id <= 39)
 			this.position = 3;
 		
-		//this.carta = new Carta(...);
+		this.carta = new Carta();
 	}
 
 	public int getId() { return id; }
 
 	public int getTipo() { return tipo;	}
+
+	public Carta getCarta() { return carta; }
 
 	public void setImg(String img) { this.pathImagem = img; }
 

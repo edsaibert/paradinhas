@@ -133,7 +133,7 @@ public class Tabuleiro {
                     pA = 2;
                     break;
                 case 2:
-                    t = 0;
+                    t = 11;
                     pC = 0;
                     pA = 0;
                     break;
@@ -158,7 +158,7 @@ public class Tabuleiro {
                     pA = 6;
                     break;
                 case 7:
-                    t = 0;
+                    t = 11;
                     pC = 0;
                     pA = 0;
                     break;
@@ -208,7 +208,7 @@ public class Tabuleiro {
                     pA = 14;
                     break;
                 case 17:
-                    t = 0;
+                    t = 11;
                     pC = 0;
                     pA = 0;
                     break;
@@ -233,7 +233,7 @@ public class Tabuleiro {
                     pA = 18;
                     break;
                 case 22:
-                    t = 0;
+                    t = 11;
                     pC = 0;
                     pA = 0;
                     break;
@@ -288,7 +288,7 @@ public class Tabuleiro {
                     pA = 26;
                     break;
                 case 33:
-                    t = 0;
+                    t = 11;
                     pC = 0;
                     pA = 0;
                     break;
@@ -303,7 +303,7 @@ public class Tabuleiro {
                     pA = 5;
                     break;
                 case 36:
-                    t = 0;
+                    t = 11;
                     pC = 0;
                     pA = 0;
                     break;

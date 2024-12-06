@@ -116,6 +116,8 @@ public class Jogo {
                 int atuAluguel = 0;
                 if(casas.getCasabyId(jogadores.getJogadorById(quemJogando).getCasaAtual()).getTipo() == 10)
                     atuAluguel = 200;
+                else if(casas.getCasabyId(jogadores.getJogadorById(quemJogando).getCasaAtual()).getTipo() == 11)
+                    atuAluguel = 100;
                 else 
                     atuAluguel = casas.getCasaCompravelbyId(atual).getValorAluguel();
                 
@@ -272,6 +274,7 @@ public class Jogo {
                 if(comecou) {
                     //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
+                        jogadores.atualizarCasaAtual(quemJogando, dado1.valorDado()+dado2.valorDado());
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
 
                         jogadores.alterarVisibilidade(quemJogando);
@@ -341,12 +344,22 @@ public class Jogo {
                             else 
                                 hipotecar.setDisable(false);
                         }
-                        //SE A CASA NAO É COMPRÁVEL (AINDA RESTA MUITA COISA PRA FAZER AQUI, FAREI DEPOIS)
+                        //SE A CASA NAO É COMPRÁVEL 
                         else {
-                            /*CODIGO PARA CARTAS*/
                             comprar.setDisable(true);
                             hipotecar.setDisable(true);
                             melhorar.setDisable(true);
+                            ArrayList<Integer> retorno;
+                            if(casas.getCasabyId(atual).getTipo() == 11) {
+                                retorno = casas.getCasabyId(atual).getCarta().acaoCarta(jogadores, casas, quemJogando);
+                                if(retorno.size() == 2) {
+                                    hipotecar.setDisable(false);
+                                }
+                            }
+                            else if(atual == 30) {
+                                jogadores.getJogadorById(quemJogando).setPreso(true);
+                                jogadores.getJogadorById(quemJogando).setCasaAtual(10);
+                            }
                         }
                     }
                     //SE O JOGADOR ATUAL ESTIVER PRESO
