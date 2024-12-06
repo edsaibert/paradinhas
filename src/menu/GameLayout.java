@@ -40,19 +40,17 @@ public class GameLayout implements Builder<Region> {
         layout2.setStyle(
                 "-fx-background-color:#386682"
         );
-        Tabuleiro t = new Tabuleiro();
-        t.iniciaTabuleiro(4);
 
-        for(int i = 0;i < 40;i++) {
-            layout2.getChildren().add(t.getImg(i));
-        }
-
-        Jogo game = new Jogo(6);
+        Jogo game = new Jogo(2);
         layout2.getChildren().addAll(game.roleDados, game.passeTurno, game.hipotecar, game.melhorar, game.comprar, game.dadosImg.get(0), game.dadosImg.get(1));
             
-        for(int i = 0; i < 6; i++) {
+        for(int i = 0; i < 2; i++) {
             layout2.getChildren().add(game.playersFundo.get(i));
             layout2.getChildren().add(game.jogadores.getJogadorById(i).dinheiro);
+        }
+        for(int i = 0;i < 40;i++) {
+            layout2.getChildren().add(game.tabuleiro.getImg(i));
+            layout2.getChildren().add(game.tabuleiro.getSeta(i));
         }
 
         // Desenha os players

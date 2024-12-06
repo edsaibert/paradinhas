@@ -1,4 +1,5 @@
 package jogador;
+
 import java.util.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -6,8 +7,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
-
-
 
 public class Jogador {
 	public int id;
@@ -27,7 +26,7 @@ public class Jogador {
 	public Jogador(int id){
 		this.id = id;
 		this.casaAtual = 0;
-		this.carteira = 1500;
+		this.carteira = 50;
 		this.ativo = true;
 		this.casasCompraveis = new HashSet<>(); 
 		this.casasCompradas = new HashSet<>();
