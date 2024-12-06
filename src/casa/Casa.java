@@ -49,11 +49,7 @@ public class Casa {
 
 	public String getImg() { return pathImagem; }
 
-	public void setSeta(String seta) { 
-		System.out.println(pathSeta);
-		this.pathSeta = seta; 
-		System.out.println(pathSeta);
-	}
+	public void setSeta(String seta) { this.pathSeta = seta; }
 
 	public String getSeta() { return pathSeta; }
 
