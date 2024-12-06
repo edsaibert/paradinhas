@@ -256,9 +256,7 @@ public class Jogo {
                 tabuleiro.atualizaOrdem();
                 int remove = -1;
                 quemJogando = tabuleiro.getFirstOrdem();
-                System.out.println(jogadores.getJogadorById(quemJogando).getEstado());
                 while(!jogadores.getJogadorById(quemJogando).getEstado()) {
-                    System.out.println(tabuleiro.getOrdem());
                     remove = tabuleiro.getFirstOrdem();
                     tabuleiro.atualizaOrdem();
                     quemJogando = tabuleiro.getFirstOrdem();
@@ -298,8 +296,8 @@ public class Jogo {
                 if(comecou) {
                     //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
-                        jogadores.desenharJogador(quemJogando, 1/*dado1.valorDado()+dado2.valorDado()*/,casas);
-                        jogadores.atualizarCasaAtual(quemJogando,1/*dado1.valorDado()+dado2.valorDado() */);
+                        jogadores.desenharJogador(quemJogando, dado1.valorDado()+dado2.valorDado(),casas);
+                        jogadores.atualizarCasaAtual(quemJogando,dado1.valorDado()+dado2.valorDado());
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                         //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL
                         if(casas.checaCompravel(atual)) {
