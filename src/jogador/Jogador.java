@@ -2,6 +2,12 @@ package jogador;
 import java.util.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
+
+
 
 public class Jogador {
 	public int id;
@@ -11,6 +17,8 @@ public class Jogador {
 	protected boolean preso;
 	public String img;
 	public Text dinheiro;
+	public Rectangle posicaoJogador;
+	public ImageView indicador;
 
 	protected HashSet<Integer> casasCompraveis;
 	protected HashSet<Integer> casasCompradas;
@@ -25,11 +33,70 @@ public class Jogador {
 		this.casasCompradas = new HashSet<>();
 		this.casasHipotecadas = new HashSet<>();
 		this.img = "application/assets/players/player"+id+".png";
+
+		Image image = new Image("application/assets/players/setaE4.png");
+		ImageView imageView = new ImageView(image);
+		imageView.setVisible(false);
+		imageView.setX(250);
+		
+		this.posicaoJogador = new Rectangle();
+		this.posicaoJogador.setWidth(10);
+		this.posicaoJogador.setHeight(20);
+		this.posicaoJogador.setX(1365 - (id*10));
+		this.posicaoJogador.setY(920-20);
+
+		switch (id){
+			case 0:
+				this.posicaoJogador.setFill(Color.web("#4caf50", 0.75));
+				imageView.setY(150);
+				break;
+			case 1:
+				this.posicaoJogador.setFill(Color.web("#ffeb3b", 0.75));
+				imageView.setY(300);
+				break;
+			case 2:
+				this.posicaoJogador.setFill(Color.web("#f44336", 0.75));
+				imageView.setY(450);
+				break;
+			case 3:
+				this.posicaoJogador.setFill(Color.web("#673ab7", 0.75));
+				imageView.setY(600);
+				break;
+			case 4:
+				this.posicaoJogador.setFill(Color.web("#000000", 0.75));
+				imageView.setY(750);
+				break;
+			case 5:
+				this.posicaoJogador.setFill(Color.web("#9e9e9e", 0.75));
+				imageView.setY(900);
+				break;
+
+			}
+		this.indicador = imageView;
 	}
 
 	public int getCasaAtual(){ return this.casaAtual; }
 
 	public String getImg() { return this.img; }
+
+	public void mudarVisibilidadeIndicador(Boolean visivel){
+		this.indicador.setVisible(visivel);
+	}
+
+	public ImageView obterIndicador(){
+		return this.indicador;
+	}
+
+	public void alterarPosicaoJogador(int x, int y, int width, int height){
+		this.posicaoJogador.setX(x);
+		this.posicaoJogador.setY(y);
+		this.posicaoJogador.setWidth(width);
+		this.posicaoJogador.setHeight(height);
+	}
+
+	public Rectangle obterPosicaoJogador(){
+		return this.posicaoJogador;
+	}
 
 	public void setDinheiro(int x, int y) { this.dinheiro = new Text(x,y,"I$ " + carteira + " C:" + this.getCasaAtual()); }
 
