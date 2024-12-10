@@ -72,6 +72,8 @@ public class Tabuleiro {
     }
 
     public void setOrdem(ArrayList<Integer> numeros) {
+        limpaOrdem();
+
         int maior = 0;
 
         for(int j = 0;j < numeros.size(); j++) {

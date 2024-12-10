@@ -14,6 +14,14 @@ public class JogadorController {
 		this.jogadores = new ArrayList<>();
 	}	
 
+	public void resetarJogadores(){
+		Jogador jogador;
+		for (int i = 0; i < this.numJogadores; i++){
+			jogador = this.jogadores.get(i);
+			jogador.resetJogador();
+		}
+	}
+
 	public int getNumJogadores() { return numJogadores; }
 
 	public void criarJogadores(){

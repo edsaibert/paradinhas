@@ -29,10 +29,14 @@ import javafx.util.*;
 
 
 public class GameLayout implements Builder<Region> {
-    private final Runnable onAction;
+    // private final Runnable onAction;
+    Tabuleiro t;
+    Jogo game;
 
-    public GameLayout(Runnable onAction) {
-        this.onAction = onAction;
+    public GameLayout(Tabuleiro t, Jogo game) {
+        // this.onAction = onAction;
+        this.t = t;
+        this.game = game;
     }
 
     public Region build(Consumer<GameButton> buttonConfigurator) {
@@ -41,17 +45,20 @@ public class GameLayout implements Builder<Region> {
                 "-fx-background-color:#386682"
         );
 
-        Jogo game = new Jogo(6);
-        layout2.getChildren().addAll(game.roleDados, game.passeTurno, game.hipotecar, game.melhorar, game.comprar, game.terminarJogo, game.dadosImg.get(0), game.dadosImg.get(1));
+        // t.iniciaTabuleiro(4);
+
+        layout2.getChildren().addAll(game.roleDados, game.passeTurno, game.hipotecar, game.melhorar, game.comprar, game.dadosImg.get(0), game.dadosImg.get(1));
             
-        for(int i = 0; i < 6; i++) {
+        for(int i = 0; i < game.numJogadores; i++) {
             layout2.getChildren().add(game.playersFundo.get(i));
             layout2.getChildren().add(game.jogadores.getJogadorById(i).dinheiro);
         }
+
         for(int i = 0;i < 40;i++) {
-            layout2.getChildren().add(game.tabuleiro.getImg(i));
-            layout2.getChildren().add(game.tabuleiro.getSeta(i));
+            layout2.getChildren().add(t.getImg(i));
+            layout2.getChildren().add(t.getSeta(i));
         }
+
         layout2.getChildren().add(game.ocorrendo);
 
         // Desenha os players

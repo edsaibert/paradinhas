@@ -97,6 +97,23 @@ public class Jogador {
 		return this.posicaoJogador;
 	}
 
+	public void resetJogador(){
+		this.casaAtual = 0;
+		this.carteira = 1500;
+		this.ativo = true;
+		this.casasCompraveis.clear(); 
+		this.casasCompradas.clear();
+		this.casasHipotecadas.clear();
+
+		this.indicador.setVisible(false);
+		this.indicador.setX(250);
+		
+		this.posicaoJogador.setWidth(10);
+		this.posicaoJogador.setHeight(20);
+		this.posicaoJogador.setX(1365 - (id*10));
+		this.posicaoJogador.setY(920-20);
+	}
+
 	public void setDinheiro(int x, int y) { this.dinheiro = new Text(x,y,"I$ " + carteira + " C:" + this.getCasaAtual()); }
 
 	public int getCarteira(){ return this.carteira;	}
