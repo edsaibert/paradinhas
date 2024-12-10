@@ -27,6 +27,7 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
         // results.setTop(new Label("This is The Wrapper"));
         BooleanProperty vBox1Visible = new SimpleBooleanProperty(true);
         BooleanProperty vBox2Visible = new SimpleBooleanProperty(false);
+        BooleanProperty vBox3Visible = new SimpleBooleanProperty(false);
 
         Tabuleiro t = new Tabuleiro();
         // t.iniciaTabuleiro(5);
@@ -35,9 +36,8 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
 
         JogoWrapper jogo = new JogoWrapper(game);
 
+        GameLayout layout = new GameLayout(jogo.getGame().tabuleiro, jogo.getGame());
         Region component1 = new MenuLayout(() -> {
-            vBox1Visible.set(false);
-            vBox2Visible.set(true);
         }).build(button -> {
             if (button.getText().equals("Iniciar Novo Jogo")) {
                 button.setOnAction(e -> vBox1Visible.set(false));
@@ -45,14 +45,8 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
                 button.setOnAction(e -> 
                     {   
                         vBox1Visible.set(false);
-                        try {
-                            jogo.setGame(carregaJogo());
-                            System.out.println("PRINT DENTRO DO BOTAO: " + jogo.getGame().quemJogando);
-                        } catch(IOException a) {
-                            System.out.println(a.getMessage());
-                        } catch(ClassNotFoundException b) {
-                            System.out.println(b.getMessage());
-                        }
+                        vBox2Visible.set(false);
+                        vBox3Visible.set(true);
                     }
                 );
             } else if (button.getText().equals("Sair")) {
@@ -60,19 +54,18 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
             }
         });
 
-        GameLayout layout = new GameLayout(t, jogo.getGame());
         Region component2 = layout.build(button -> {
             if ("Menu".equals(button.getText())) {
                 button.setOnAction(e -> {
                     vBox1Visible.set(false);
                     vBox2Visible.set(true);
+                    vBox3Visible.set(false);
                 });
             }
 
         });
+
         Region component3 = new PauseLayout(() -> {
-            vBox1Visible.set(false);
-            vBox2Visible.set(false);
         }).build(
                 button -> {
                     if (button.getText().equals("Retomar Jogo")) {
@@ -92,7 +85,7 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
                             }
                         });
                     }
-                    else {
+                    else if (button.getText().equals("Sair")) {
                         button.setOnAction(e -> {
                             game.resetGame();
                             vBox1Visible.set(true); // Show MenuLayout
@@ -102,11 +95,23 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
         
                 });
 
-        component1.visibleProperty().bind(vBox1Visible);
-        component2.visibleProperty().bind(vBox1Visible.not().and(vBox2Visible.not()));
-        component3.visibleProperty().bind(vBox2Visible);
+        Region component4 = new LoadedGameLayout().build(button -> {
+            if ("Menu".equals(button.getText())) {
+                button.setOnAction(e -> {
+                    vBox1Visible.set(false);
+                    vBox2Visible.set(false);
+                    vBox3Visible.set(true);
+                });
+            }
 
-        results.setCenter(new StackPane(component1, component2, component3));
+        });
+
+        component1.visibleProperty().bind(vBox1Visible);
+        component2.visibleProperty().bind(vBox1Visible.not().and(vBox2Visible.not()).and(vBox3Visible.not()));
+        component3.visibleProperty().bind(vBox2Visible);
+        component4.visibleProperty().bind(vBox3Visible);
+
+        results.setCenter(new StackPane(component1, component2, component3, component4));
 
         return results;
     }
@@ -115,13 +120,6 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
         ObjectOutputStream salvar = new ObjectOutputStream(new FileOutputStream("src/application/Jogo.bin"));
 
         salvar.writeObject(jogo);
-    }
-
-    public static Jogo carregaJogo() throws IOException, ClassNotFoundException {
-        ObjectInputStream carrega = new ObjectInputStream(new FileInputStream("src/application/Jogo.bin"));
-
-        Jogo game = (Jogo) carrega.readObject();
-        return game;
     }
 
 }

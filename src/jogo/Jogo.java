@@ -26,7 +26,7 @@ public class Jogo implements Serializable {
     protected boolean comecou = false;
     protected boolean decidiu = false;
     public TextSerialize ocorrendo = new TextSerialize("Rodada do jogador 1");
-    protected Tabuleiro tabuleiro;
+    public Tabuleiro tabuleiro;
     public int numJogadores;
 
     int screenWidth = (int) Screen.getPrimary().getVisualBounds().getWidth();
@@ -518,6 +518,7 @@ public class Jogo implements Serializable {
         melhorar.setOnAction(eventoMelhorar);
         hipotecar.setOnAction(eventoHipotecar);
         terminarJogo.setOnAction(eventoFim);
+        System.out.println(tabuleiro.getOrdem());
     }
 
     /* 
