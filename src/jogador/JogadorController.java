@@ -1,10 +1,10 @@
 package jogador;
+import java.io.Serializable;
 import java.util. *;
 import casa.*;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.image.ImageView;
+import application.javafxSerializable.*;
 
-public class JogadorController {
+public class JogadorController implements Serializable{
 	protected ArrayList<Jogador> jogadores;
 	
 	protected int numJogadores;
@@ -156,20 +156,20 @@ public class JogadorController {
 		}
 	}
 
-	public ArrayList<ImageView> desenharQuemJogando(){
+	public ArrayList<ImageViewSerialize> desenharQuemJogando(){
 		Jogador jogador;
-		ArrayList<ImageView> imageView = new ArrayList<>();
+		ArrayList<ImageViewSerialize> ImageViewSerialize = new ArrayList<ImageViewSerialize>();
 
 		for (int i = 0; i < this.numJogadores; i++){
 			jogador = this.getJogadorById(i);
-			imageView.add(jogador.indicador);
+			ImageViewSerialize.add(jogador.indicador);
 		}	
 
-		return imageView;
+		return ImageViewSerialize;
 	}
 
-	public ArrayList<Rectangle> desenharJogadores(){
-		ArrayList<Rectangle> posicoes = new ArrayList<>();
+	public ArrayList<RectangleSerialize> desenharJogadores(){
+		ArrayList<RectangleSerialize> posicoes = new ArrayList<>();
 		Jogador jogador;
 
 		for (int i = 0; i < this.numJogadores; i++){
@@ -178,6 +178,15 @@ public class JogadorController {
 		}
 
 		return posicoes;
+	}
+
+	public void resetarTextos() {
+		Jogador jogador;
+
+		for(int i = 0; i < this.numJogadores; i++) {
+			jogador = this.getJogadorById(i);
+			jogador.setTexto();
+		}
 	}
 
 }

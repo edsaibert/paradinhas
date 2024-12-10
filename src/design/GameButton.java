@@ -1,9 +1,11 @@
 package design;
+import java.io.Serializable;
+
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class GameButton extends Button {
+public class GameButton extends Button implements Serializable{
     String text;
 
     public GameButton(String text, int x, int y) {

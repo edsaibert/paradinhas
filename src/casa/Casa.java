@@ -1,9 +1,10 @@
 package casa;
 
+import java.io.Serializable;
 import java.util.*;
 import jogo.Carta;
 
-public class Casa {
+public class Casa implements Serializable{
 	public int id;
 	public String pathImagem;
 	public String pathSeta;

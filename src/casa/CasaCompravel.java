@@ -1,6 +1,8 @@
 package casa;
 
-public class CasaCompravel extends Casa {
+import java.io.Serializable;
+
+public class CasaCompravel extends Casa implements Serializable{
 	protected int valorAluguel;
 	protected int valorCompra;
 	protected int idDono;

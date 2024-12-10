@@ -1,5 +1,7 @@
 package design;
 
+import java.io.Serializable;
+
 import javafx.stage.Stage;
 
 /*
@@ -8,7 +10,7 @@ import javafx.stage.Stage;
  * vw = 1% da largura da tela * size
  */
 
-public class RelativeSizing {
+public class RelativeSizing implements Serializable{
     protected double sizeX;
     protected double sizeY;
 

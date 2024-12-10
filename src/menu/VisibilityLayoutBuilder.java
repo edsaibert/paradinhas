@@ -6,6 +6,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.function.Consumer;
 import javafx.stage.Stage;
 
@@ -37,7 +43,19 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
             if (button.getText().equals("Iniciar Novo Jogo")) {
                 button.setOnAction(e -> vBox1Visible.set(false));
             } else if (button.getText().equals("Retomar Jogo")) {
-                button.setOnAction(e -> vBox1Visible.set(false));
+                button.setOnAction(e -> 
+                    {   
+                        vBox1Visible.set(false);
+                        try {
+                            carregaJogo(game);
+                            System.out.println(game.quemJogando);
+                        } catch(IOException a) {
+                            System.out.println(a.getMessage());
+                        } catch(ClassNotFoundException b) {
+                            System.out.println(b.getMessage());
+                        }
+                    }
+                );
             } else if (button.getText().equals("Sair")) {
                 button.setOnAction(e -> System.exit(0));
             }
@@ -67,6 +85,14 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
                         button.setOnAction(e -> {
                             vBox1Visible.set(true); // Show MenuLayout
                             vBox2Visible.set(false); // Hide GameLayout
+                            try {
+                                salvarJogo(game);
+                                System.out.println();
+                            } catch(IOException a) {
+                                System.out.println(a.getMessage());
+                                System.out.println("IOEXCEPTION NO SALVAR");
+                            }
+                            game.resetGame();
                         });
                     }
                     else {
@@ -86,6 +112,18 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
         results.setCenter(new StackPane(component1, component2, component3));
 
         return results;
+    }
+
+    public static void salvarJogo(Jogo jogo) throws IOException {
+        ObjectOutputStream salvar = new ObjectOutputStream(new FileOutputStream("src/application/Jogo.bin"));
+
+        salvar.writeObject(jogo);
+    }
+
+    public static void carregaJogo(Jogo game) throws IOException, ClassNotFoundException {
+        ObjectInputStream carrega = new ObjectInputStream(new FileInputStream("src/application/Jogo.bin"));
+
+        game = (Jogo) carrega.readObject();
     }
 
 }

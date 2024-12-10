@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import application.javafxSerializable.ImageViewSerialize;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import java.util.function.Consumer;
@@ -33,7 +33,7 @@ public class MenuLayout implements Builder<Region> {
          * Título
          */
         Image logo = new Image("menu/assets/monopolitecnico.png", 900, 100, false, false);
-        ImageView buildLogo = new ImageView();
+        ImageViewSerialize buildLogo = new ImageViewSerialize();
         buildLogo.setImage(logo); 
 
             // Adiciona imagem de fundo

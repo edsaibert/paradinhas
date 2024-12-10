@@ -7,7 +7,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import java.util.function.Consumer;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import application.javafxSerializable.ImageViewSerialize;
 import javafx.util.*;
 import design.*;
 

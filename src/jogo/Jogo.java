@@ -1,5 +1,6 @@
 package jogo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import application.dadoGraphic;
 import casa.CasaController;
@@ -7,25 +8,25 @@ import casa.Tabuleiro;
 import jogador.JogadorController;
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler;
-import javafx.scene.image.ImageView;
+import application.javafxSerializable.*;
 import javafx.stage.Screen;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import design.GameButton;
 
-public class Jogo {
+public class Jogo implements Serializable {
     public JogadorController jogadores;
     protected CasaController casas;
     protected dadoGraphic dado1 = new dadoGraphic();
     protected dadoGraphic dado2 = new dadoGraphic();
-    public ArrayList<ImageView> dadosImg = new ArrayList<ImageView>();
-    public ArrayList<ImageView> playersFundo = new ArrayList<ImageView>();
+    public ArrayList<ImageViewSerialize> dadosImg = new ArrayList<ImageViewSerialize>();
+    public ArrayList<ImageViewSerialize> playersFundo = new ArrayList<ImageViewSerialize>();
     public int quemJogando = 0;
     protected boolean dadoIgual = false;
     protected boolean comecou = false;
     protected boolean decidiu = false;
-    public Text ocorrendo = new Text("Decidindo início de jogo!");
+    public TextSerialize ocorrendo = new TextSerialize("Rodada do jogador 1");
     protected Tabuleiro tabuleiro;
     public int numJogadores;
 
@@ -40,8 +41,8 @@ public class Jogo {
 
     public Jogo(int quantos, Tabuleiro t) {
         terminarJogo.setVisible(false);
-        dadosImg.add(new ImageView(dado1.getImg()));
-        dadosImg.add(new ImageView(dado2.getImg()));
+        dadosImg.add(new ImageViewSerialize(dado1.getImg()));
+        dadosImg.add(new ImageViewSerialize(dado2.getImg()));
         ocorrendo.setFont(new Font(28));
         ocorrendo.setX(screenWidth-500);
         ocorrendo.setY(screenHeight-600);
@@ -56,7 +57,7 @@ public class Jogo {
         this.tabuleiro = t;
 
         for(int i = 0; i < quantos;i++) {
-            playersFundo.add(new ImageView(new Image(jogadores.getJogadorById(i).getImg())));
+            playersFundo.add(new ImageViewSerialize(new Image(jogadores.getJogadorById(i).getImg())));
             switch(i) {
                 case 0:
                     playersFundo.get(i).setX(0);
@@ -537,6 +538,10 @@ public class Jogo {
         this.tabuleiro.iniciaTabuleiro(this.numJogadores);
 
         this.tabuleiro.limpaValores();
+
+        this.jogadores.resetarTextos();
+
+        this.ocorrendo.setText("Rodada do jogador 1");
 
         dadosImg.get(0).setImage(dado1.getImg());
         dadosImg.get(1).setImage(dado2.getImg());

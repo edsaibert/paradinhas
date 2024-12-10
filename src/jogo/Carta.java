@@ -3,9 +3,11 @@ package jogo;
 import java.util.Random;
 import casa.CasaController;
 import jogador.JogadorController;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Carta {
+public class Carta implements Serializable{
     
     Random rnd = new Random();
     int valor = -1;
@@ -14,7 +16,6 @@ public class Carta {
         valor = rnd.nextInt(10);
         ArrayList<Integer> retorno = new ArrayList<Integer>();
         retorno.add(valor);
-        valor = 2;
         switch(valor) {
             case 0:
                 int quantos = 40-jogadores.getJogadorById(jogadorId).getCasaAtual();

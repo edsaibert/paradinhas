@@ -1,5 +1,6 @@
 package application;
 
+import java.io.Serializable;
 import java.util.Random;
 import javafx.scene.image.Image;
 
@@ -14,10 +15,11 @@ class dados{
     public int valorDado() { return valor; }
 }
 
-public class dadoGraphic extends dados{
-    Image img = new Image("application/assets/dados/dado5.png", 100, 100, false, false);
+public class dadoGraphic extends dados implements Serializable{
+    String img = ("application/assets/dados/dado5.png");
 
-    public Image getImg() { return img; }
+    public Image getImg() { return new Image(img, 100, 100, false, false); }
 
-    public void setaImagem(){ img = new Image("application/assets/dados/dado"+ this.valorDado() + ".png", 100, 100, false, false); }
+    public void setaImagem(){ img = ("application/assets/dados/dado"+ this.valorDado() + ".png"); }
+
 }

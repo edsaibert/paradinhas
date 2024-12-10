@@ -2,20 +2,23 @@ package design;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import application.javafxSerializable.ImageViewSerialize;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import java.io.Serializable;
+
 import javafx.geometry.Pos;
 
-public class MenuButton extends Button {
+public class MenuButton extends Button implements Serializable{
     String text;
-    ImageView buildIcon;
+    ImageViewSerialize buildIcon;
 
     public MenuButton(String text) {
     this.text = text;
 
     Image icon = new Image("menu/assets/coin.png", 50, 50, false, false);
-    ImageView buildIcon = new ImageView();
+    ImageViewSerialize buildIcon = new ImageViewSerialize();
 
     buildIcon.setImage(icon);
     buildIcon.setVisible(false);

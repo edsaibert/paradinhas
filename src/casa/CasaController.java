@@ -1,10 +1,11 @@
 package casa;
 
+import java.io.Serializable;
 import java.util. *;
 
 import jogador.Jogador;
 
-public class CasaController {
+public class CasaController implements Serializable{
 
     protected ArrayList<Casa> todasCasas = new ArrayList<Casa>();
     protected ArrayList<CasaCompravel> compraveis = new ArrayList<CasaCompravel>();
@@ -92,7 +93,6 @@ public class CasaController {
             i++;
         }
         int diff = categoria - compraveis.get(idx).getCategoria();
-        System.out.println(diff);
         compraveis.get(idx).setCategoria(categoria);
         if(diff >= 0) 
             for(i = 0;i < diff;i++) 
@@ -104,4 +104,6 @@ public class CasaController {
                 compraveis.get(idx).setValorAluguel(compraveis.get(idx).getValorAluguel()/2);
         }
     }
+
+    
 }

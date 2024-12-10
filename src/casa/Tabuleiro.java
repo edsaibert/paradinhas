@@ -1,20 +1,21 @@
 package casa;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javafx.scene.image.ImageView;
+import application.javafxSerializable.ImageViewSerialize;
 import javafx.scene.image.Image;
 
-public class Tabuleiro {
+public class Tabuleiro implements Serializable{
 
-    protected ArrayList<ImageView> casasImg = new ArrayList<ImageView>();
+    protected ArrayList<ImageViewSerialize> casasImg = new ArrayList<ImageViewSerialize>();
     protected ArrayList<Casa> todasCasas = new ArrayList<Casa>();
     protected ArrayList<CasaCompravel> compraveis = new ArrayList<CasaCompravel>();
     protected ArrayList<Casa> naoCompraveis = new ArrayList<Casa>();
     protected ArrayList<Integer> ordem = new ArrayList<Integer>();
     protected ArrayList<Integer> numDados = new ArrayList<Integer>();
-    public ArrayList<ImageView> setasCasas = new ArrayList<ImageView>();
+    public ArrayList<ImageViewSerialize> setasCasas = new ArrayList<ImageViewSerialize>();
     
     public ArrayList<CasaCompravel> getCompraveis() { return compraveis; }
 
@@ -22,13 +23,13 @@ public class Tabuleiro {
 
     public ArrayList<Casa> getTodasCasas() { return todasCasas; }
 
-    public ImageView getImg(int index) { return casasImg.get(index); }
+    public ImageViewSerialize getImg(int index) { return casasImg.get(index); }
 
-    public ImageView getSeta(int index) { return setasCasas.get(index); }
+    public ImageViewSerialize getSeta(int index) { return setasCasas.get(index); }
 
-    public ArrayList<ImageView> getTodasImg() { return casasImg; }
+    public ArrayList<ImageViewSerialize> getTodasImg() { return casasImg; }
 
-    public ArrayList<ImageView> getTodasSetas() { return setasCasas; }
+    public ArrayList<ImageViewSerialize> getTodasSetas() { return setasCasas; }
 
     public Casa getCasaIndex(int index) { return todasCasas.get(index); }  
     
@@ -144,20 +145,20 @@ public class Tabuleiro {
             }
             
 
-            casasImg.add(new ImageView(getCasaImg(i)));
+            casasImg.add(new ImageViewSerialize(getCasaImg(i)));
             casasImg.get(i).setX(xIni);
             casasImg.get(i).setY(yIni);
             if(i <= 10) {
-                setasCasas.add(new ImageView(getSetaImg(i)));
+                setasCasas.add(new ImageViewSerialize(getSetaImg(i)));
             }
             else if(i > 10 && i <= 20) {
-                setasCasas.add(new ImageView(getSetaImg(i)));
+                setasCasas.add(new ImageViewSerialize(getSetaImg(i)));
             }
             else if(i > 20 && i <= 30) {
-                setasCasas.add(new ImageView(getSetaImg(i)));
+                setasCasas.add(new ImageViewSerialize(getSetaImg(i)));
             }
             else {
-                setasCasas.add(new ImageView(getSetaImg(i)));
+                setasCasas.add(new ImageViewSerialize(getSetaImg(i)));
             }
             setasCasas.get(i).setX(xSeta);
             setasCasas.get(i).setY(ySeta);
