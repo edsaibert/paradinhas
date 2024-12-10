@@ -23,6 +23,10 @@ public class Tabuleiro implements Serializable{
 
     public ArrayList<Casa> getTodasCasas() { return todasCasas; }
 
+    public void limpaImgs() { casasImg.clear(); }
+
+    public void limpaSetas() { setasCasas.clear(); }
+
     public ImageViewSerialize getImg(int index) { return casasImg.get(index); }
 
     public ImageViewSerialize getSeta(int index) { return setasCasas.get(index); }

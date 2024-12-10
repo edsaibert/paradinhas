@@ -33,10 +33,12 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
         // t.iniciaTabuleiro(5);
 
         Jogo game = new Jogo(6, t);
+        Jogo gameSalvo = new Jogo(6, t, "eu");
 
         JogoWrapper jogo = new JogoWrapper(game);
+        JogoWrapper jogoSalvo = new JogoWrapper(gameSalvo);
 
-        GameLayout layout = new GameLayout(jogo.getGame().tabuleiro, jogo.getGame());
+        GameLayout layout = new GameLayout(t, jogo.getGame());
         Region component1 = new MenuLayout(() -> {
         }).build(button -> {
             if (button.getText().equals("Iniciar Novo Jogo")) {
@@ -95,7 +97,8 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
         
                 });
 
-        Region component4 = new LoadedGameLayout().build(button -> {
+        GameLayout layout2 = new GameLayout(jogoSalvo.getGame().tabuleiro, jogoSalvo.getGame());
+        Region component4 = layout2.build(button -> {
             if ("Menu".equals(button.getText())) {
                 button.setOnAction(e -> {
                     vBox1Visible.set(false);
@@ -107,7 +110,7 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
         });
 
         component1.visibleProperty().bind(vBox1Visible);
-        component2.visibleProperty().bind(vBox1Visible.not().and(vBox2Visible.not()).and(vBox3Visible.not()));
+        component2.visibleProperty().bind(vBox1Visible.not().and(vBox2Visible.not()) .and(vBox3Visible.not()));
         component3.visibleProperty().bind(vBox2Visible);
         component4.visibleProperty().bind(vBox3Visible);
 

@@ -67,6 +67,7 @@ public class LoadedGameLayout  implements Builder<Region> {
         t.graficoCasas(1345, 850);
         for(int i = 0;i < 40;i++) {
             System.out.println(t.getImg(i).getX());
+            System.out.println(t.get(i).get);
             layout2.getChildren().add(t.getImg(i));
             layout2.getChildren().add(t.getSeta(i));
         }
