@@ -14,7 +14,6 @@ public class Carta {
         valor = rnd.nextInt(10);
         ArrayList<Integer> retorno = new ArrayList<Integer>();
         retorno.add(valor);
-        valor = 2;
         switch(valor) {
             case 0:
                 int quantos = 40-jogadores.getJogadorById(jogadorId).getCasaAtual();
