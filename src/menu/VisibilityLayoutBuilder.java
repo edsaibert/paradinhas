@@ -10,6 +10,10 @@ import java.util.function.Consumer;
 import java.stage.Stage;
 
 import javafx.util.*;
+import jogador.*;
+import casa.*;
+import design.*;
+import jogo.*;
 
 public class VisibilityLayoutBuilder implements Builder<Region> {
     Region customComponent2;
@@ -20,6 +24,11 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
         // results.setTop(new Label("This is The Wrapper"));
         BooleanProperty vBox1Visible = new SimpleBooleanProperty(true);
         BooleanProperty vBox2Visible = new SimpleBooleanProperty(false);
+
+        Tabuleiro t = new Tabuleiro();
+        // t.iniciaTabuleiro(5);
+
+        Jogo game = new Jogo(5, t);
 
         Region component1 = new MenuLayout(() -> {
             vBox1Visible.set(false);
@@ -34,15 +43,16 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
             }
         });
 
-        Region component2 = new GameLayout(() -> {
-            vBox1Visible.set(true);
-            vBox2Visible.set(false);
-        }).build(button -> {
-            if (button.getText().equals("Menu")) {
-                button.setOnAction(e -> vBox2Visible.set(true));
+        GameLayout layout = new GameLayout(t, game);
+        Region component2 = layout.build(button -> {
+            if ("Menu".equals(button.getText())) {
+                button.setOnAction(e -> {
+                    vBox1Visible.set(false);
+                    vBox2Visible.set(true);
+                });
             }
-        });
 
+        });
         Region component3 = new PauseLayout(() -> {
             vBox1Visible.set(false);
             vBox2Visible.set(false);
@@ -53,8 +63,15 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
                             vBox1Visible.set(false); // Ensure MenuLayout stays hidden
                             vBox2Visible.set(false); // Allow GameLayout to show (binding condition)
                         });
-                    } else if (button.getText().equals("Salvar e Sair") || button.getText().equals("Sair")) {
+                    } else if (button.getText().equals("Salvar e Sair")) {
                         button.setOnAction(e -> {
+                            vBox1Visible.set(true); // Show MenuLayout
+                            vBox2Visible.set(false); // Hide GameLayout
+                        });
+                    }
+                    else {
+                        button.setOnAction(e -> {
+                            game.resetGame();
                             vBox1Visible.set(true); // Show MenuLayout
                             vBox2Visible.set(false); // Hide GameLayout
                         });

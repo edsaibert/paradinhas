@@ -26,7 +26,8 @@ public class Jogo {
     protected boolean dadoIgual = false;
     protected boolean comecou = false;
     protected boolean decidiu = false;
-    protected Tabuleiro tabuleiro = new Tabuleiro();
+    protected Tabuleiro tabuleiro;
+    public int numJogadores;
 
     int screenWidth = (int) Screen.getPrimary().getVisualBounds().getWidth();
     int screenHeight = (int) Screen.getPrimary().getVisualBounds().getHeight();
@@ -36,7 +37,7 @@ public class Jogo {
     public GameButton melhorar = new GameButton("Melhorar Propriedade", screenWidth - 500, 250);
     public GameButton hipotecar = new GameButton("Hipotecar", screenWidth - 500, 300);
 
-    public Jogo(int quantos) {
+    public Jogo(int quantos, Tabuleiro t) {
         dadosImg.add(new ImageView(dado1.getImg()));
         dadosImg.add(new ImageView(dado2.getImg()));
         dadosImg.get(0).setX(screenWidth/2);
@@ -45,6 +46,10 @@ public class Jogo {
         dadosImg.get(1).setY(screenHeight/2 + 200);
         jogadores = new JogadorController(quantos);
         jogadores.criarJogadores();
+
+        this.numJogadores = quantos;
+        this.tabuleiro = t;
+
         for(int i = 0; i < quantos;i++) {
             playersFundo.add(new ImageView(new Image(jogadores.getJogadorById(i).getImg())));
             switch(i) {
@@ -270,8 +275,10 @@ public class Jogo {
                 else
                     dadoIgual = false;
 
+
                 //NAO ESTA NA FASE DE DECISAO DE ORDEM DE JOGO
                 if(comecou) {
+
                     //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
                         jogadores.atualizarCasaAtual(quemJogando, dado1.valorDado()+dado2.valorDado());
@@ -413,5 +420,33 @@ public class Jogo {
         melhorar.setOnAction(eventoMelhorar);
         hipotecar.setOnAction(eventoHipotecar);
 
+    }
+
+    /* 
+     * Reseta todos os estados do jogo
+    */
+    public void resetGame(){
+        this.jogadores.resetarJogadores();
+
+        this.quemJogando = 0;
+        this.contadorTurno = 0;
+        this.dadoIgual = false;
+        this.comecou = false;
+        this.decidiu = false;
+
+        this.tabuleiro.limpaOrdem();
+        this.tabuleiro.limpaValores();
+        this.tabuleiro.iniciaTabuleiro(this.numJogadores);
+
+        this.tabuleiro.limpaValores();
+
+        dadosImg.get(0).setImage(dado1.getImg());
+        dadosImg.get(1).setImage(dado2.getImg());
+
+        this.passeTurno.setDisable(true);
+        this.hipotecar.setDisable(true);
+        this.comprar.setDisable(true);
+        this.roleDados.setDisable(false);
+        this.melhorar.setDisable(true);
     }
 }
