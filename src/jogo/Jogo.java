@@ -12,7 +12,6 @@ import application.javafxSerializable.*;
 import javafx.stage.Screen;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import design.GameButton;
 
 public class Jogo implements Serializable {

@@ -2,7 +2,6 @@ package menu;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -12,8 +11,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.function.Consumer;
-import javafx.stage.Stage;
 
 import javafx.util.*;
 import jogador.*;
@@ -34,7 +31,9 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
         Tabuleiro t = new Tabuleiro();
         // t.iniciaTabuleiro(5);
 
-        Jogo game = new Jogo(5, t);
+        Jogo game = new Jogo(6, t);
+
+        JogoWrapper jogo = new JogoWrapper(game);
 
         Region component1 = new MenuLayout(() -> {
             vBox1Visible.set(false);
@@ -47,8 +46,8 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
                     {   
                         vBox1Visible.set(false);
                         try {
-                            carregaJogo(game);
-                            System.out.println(game.quemJogando);
+                            jogo.setGame(carregaJogo());
+                            System.out.println("PRINT DENTRO DO BOTAO: " + jogo.getGame().quemJogando);
                         } catch(IOException a) {
                             System.out.println(a.getMessage());
                         } catch(ClassNotFoundException b) {
@@ -61,7 +60,7 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
             }
         });
 
-        GameLayout layout = new GameLayout(t, game);
+        GameLayout layout = new GameLayout(t, jogo.getGame());
         Region component2 = layout.build(button -> {
             if ("Menu".equals(button.getText())) {
                 button.setOnAction(e -> {
@@ -86,13 +85,11 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
                             vBox1Visible.set(true); // Show MenuLayout
                             vBox2Visible.set(false); // Hide GameLayout
                             try {
-                                salvarJogo(game);
-                                System.out.println();
+                                salvarJogo(jogo.getGame());
+                                
                             } catch(IOException a) {
                                 System.out.println(a.getMessage());
-                                System.out.println("IOEXCEPTION NO SALVAR");
                             }
-                            game.resetGame();
                         });
                     }
                     else {
@@ -120,10 +117,11 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
         salvar.writeObject(jogo);
     }
 
-    public static void carregaJogo(Jogo game) throws IOException, ClassNotFoundException {
+    public static Jogo carregaJogo() throws IOException, ClassNotFoundException {
         ObjectInputStream carrega = new ObjectInputStream(new FileInputStream("src/application/Jogo.bin"));
 
-        game = (Jogo) carrega.readObject();
+        Jogo game = (Jogo) carrega.readObject();
+        return game;
     }
 
 }
