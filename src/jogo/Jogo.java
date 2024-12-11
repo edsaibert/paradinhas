@@ -5,10 +5,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import application.dadoGraphic;
+
 import casa.CasaController;
 import casa.Tabuleiro;
 import jogador.JogadorController;
+import jogador.dadoGraphic;
 import javafx.event.ActionEvent; 
 import javafx.event.EventHandler;
 import application.javafxSerializable.*;
@@ -98,6 +99,7 @@ public class Jogo implements Serializable {
                     jogadores.getJogadorById(i).setTexto();
                     break;
             }
+            playersFundo.get(i).setAll();
         }
         tabuleiro.iniciaTabuleiro(quantos);
         tabuleiro.limpaValores();
@@ -534,10 +536,15 @@ public class Jogo implements Serializable {
         }
         tabuleiro = game.tabuleiro;
         game.dadosImg.clear();
-        game.playersFundo.clear();
+        // game.playersFundo.clear();
         jogadores = game.jogadores;
-        for(int i = 0; i < quantos;i++) {
-            game.playersFundo.add(new ImageViewSerialize(new Image(jogadores.getJogadorById(i).getImg())));
+        playersFundo = game.playersFundo;
+        this.comecou = true;
+        for(int i = 0; i < quantos; i++) {
+            // game.playersFundo.add(new ImageViewSerialize(new Image(jogadores.getJogadorById(i).getImg())));
+
+            game.playersFundo.get(i).setVisible(true);
+
             switch(i) {
                 case 0:
                     game.playersFundo.get(i).setX(0);
@@ -576,7 +583,12 @@ public class Jogo implements Serializable {
                     game.jogadores.getJogadorById(i).setTexto();
                     break;
             }
-        }
+
+        };
+
+        jogadores.setIndicadorJogadores();
+        jogadores.setPosicaoJogadores();
+
         casas = new CasaController(tabuleiro);
         ocorrendo.setFont(new Font(28));
         ocorrendo.setX(screenWidth-500);
@@ -830,10 +842,11 @@ public class Jogo implements Serializable {
                 //NAO ESTA NA FASE DE DECISAO DE ORDEM DE JOGO
                 if(comecou) {
 
+
                     //SE O JOGADOR ATUAL NÃO ESTÁ PRESO
                     if(!jogadores.getJogadorById(quemJogando).getPreso()){
-                        jogadores.desenharJogador(quemJogando, dado1.valorDado()+dado2.valorDado(),casas);
                         jogadores.atualizarCasaAtual(quemJogando,dado1.valorDado()+dado2.valorDado());
+                        jogadores.desenharJogador(quemJogando, dado1.valorDado()+dado2.valorDado(),casas);
                         int atual = jogadores.getJogadorById(quemJogando).getCasaAtual();
                         ocorrendo.setText("Jogador "+ (quemJogando+1) + " caiu na casa " + atual + "!");
                         //SE A CASA QUE O JOGADOR CHEGOU É COMPRÁVEL

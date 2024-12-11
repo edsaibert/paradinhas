@@ -1,4 +1,4 @@
-package application;
+package jogador;
 
 import java.io.Serializable;
 import java.util.Random;

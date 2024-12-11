@@ -110,6 +110,22 @@ public class JogadorController implements Serializable{
 		casasCompraveis.remove(idCasa);
 	}
 
+	public void setIndicadorJogadores(){
+		Jogador jogador;
+		for (int i = 0; i < this.numJogadores; i++){
+			jogador = this.jogadores.get(i);
+			jogador.setIndicador();
+		}
+	}
+
+	public void setPosicaoJogadores(){
+		Jogador jogador;
+		for (int i = 0; i < this.numJogadores; i++){
+			jogador = this.jogadores.get(i);
+			jogador.setPosicao();
+		}
+	}
+
 	public void desenharJogador(int idJogador, int numDados, CasaController casas){
 		Jogador jogador = this.jogadores.get(idJogador);
 		Casa casa;
