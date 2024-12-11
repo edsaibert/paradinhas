@@ -10,8 +10,8 @@ public class CasaCompravel extends Casa implements Serializable{
 	protected boolean hipotecado;
 	protected int categoria;	
 
-	public CasaCompravel(int id, String pathImagem, int tipo, String nome, int valorAluguel, int valorCompra, int categoria){
-		super(id, pathImagem, tipo, nome);
+	public CasaCompravel(int id, String pathImagem, int tipo, int valorAluguel, int valorCompra, int categoria){
+		super(id, pathImagem, tipo);
 		this.valorAluguel = valorAluguel;
 		this.valorCompra = valorCompra;
 		this.idDono = -1;

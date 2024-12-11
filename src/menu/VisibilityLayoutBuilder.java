@@ -47,7 +47,6 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
                         vBox1Visible.set(false);
                         try {
                             jogo.setGame(carregaJogo());
-                            System.out.println("PRINT DENTRO DO BOTAO: " + jogo.getGame().quemJogando);
                         } catch(IOException a) {
                             System.out.println(a.getMessage());
                         } catch(ClassNotFoundException b) {

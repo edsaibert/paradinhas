@@ -2,7 +2,7 @@ package jogo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import application.dadoGraphic;
+
 import casa.CasaController;
 import casa.Tabuleiro;
 import jogador.JogadorController;
