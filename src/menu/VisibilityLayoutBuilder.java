@@ -30,7 +30,7 @@ public class VisibilityLayoutBuilder implements Builder<Region> {
         BooleanProperty vBox3Visible = new SimpleBooleanProperty(false);
 
         Tabuleiro t = new Tabuleiro();
-        // t.iniciaTabuleiro(5);
+        t.iniciaTabuleiro(6);
 
         Jogo game = new Jogo(6, t);
         Jogo gameSalvo = new Jogo(6, t, "eu");

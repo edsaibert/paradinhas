@@ -9,16 +9,14 @@ public class Casa implements Serializable{
 	public String pathImagem;
 	public String pathSeta;
 	protected int tipo;
-	protected String nome;
 	public int position;
 	protected Carta carta;
 
 	//ID É O MESMO QUE A POSIÇÃO DELA.
-	public Casa(int id, String pathImagem, int tipo, String nome){
+	public Casa(int id, String pathImagem, int tipo){
 		this.id = id;
 		this.pathImagem = pathImagem;
 		this.tipo = tipo;
-		this.nome = nome;
 
 		if (id >= 0 && id <= 9) {
 			this.position = 0;
@@ -54,6 +52,5 @@ public class Casa implements Serializable{
 
 	public String getSeta() { return pathSeta; }
 
-	public String getNome() { return nome; }
 }
 

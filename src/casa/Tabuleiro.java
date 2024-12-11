@@ -377,12 +377,12 @@ public class Tabuleiro implements Serializable{
                     break;
             }
             if (t >=1 && t <= 9) {
-                todasCasas.add(new CasaCompravel(i,"application/assets/casas/casa"+i+".png",t,"JONAS",pA,pC,0));
-                compraveis.add(new CasaCompravel(i,"application/assets/casas/casa"+i+".png",t,"JONAS",pA,pC,0));
+                todasCasas.add(new CasaCompravel(i,"application/assets/casas/casa"+i+".png",t,pA,pC,0));
+                compraveis.add(new CasaCompravel(i,"application/assets/casas/casa"+i+".png",t,pA,pC,0));
             }
             else {
-                todasCasas.add(new Casa(i,"application/assets/casas/casa"+i+".png",t,"JONAS"));
-                naoCompraveis.add(new Casa(i,"application/assets/casas/casa"+i+".png",t,"JONAS"));
+                todasCasas.add(new Casa(i,"application/assets/casas/casa"+i+".png",t));
+                naoCompraveis.add(new Casa(i,"application/assets/casas/casa"+i+".png",t));
             }
         }
     }
